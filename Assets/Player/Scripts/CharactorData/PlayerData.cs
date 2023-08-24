@@ -8,5 +8,5 @@ public class PlayerData : CharactorData
 
     public float HealthPoint;
     public float ManaPoint;
-    //public Weapon CurrentWeapon;
+    public Weapon CurrentWeapon;
 }
