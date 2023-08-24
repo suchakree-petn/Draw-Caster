@@ -6,5 +6,5 @@ public class Weapon : Item
 {
     public SpellElement elementType;
 
-    virtual public void Attack(){}
+    virtual public void Attack(CharactorData attacker){}
 }
