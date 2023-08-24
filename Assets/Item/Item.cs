@@ -5,23 +5,30 @@ using UnityEngine;
 public enum ItemType
 {
     Default,
-    Weapon,
-    Consumable,
-    Matterial
+    Wand
+}
+public enum ItemRarity
+{
+    Common,
+    Rare,
+    Epic,
+    Legendary
 }
 public class Item : ScriptableObject
 {
-    public string Name;
-    public ItemType itemType;
-    public bool Is_Stackable;
+    [Header("Info")]
+    public string _name;
+    public string _description;
     public Sprite icon;
+    public ItemType _itemType;
+    public ItemRarity _itemRarity;
+    public bool _isStackable;
+
+    [Header("Prefab")]
     public GameObject itemPrefab;
+
     void Awake()
     {
-        itemType = ItemType.Default;
+        _itemType = ItemType.Default;
     }
-
-    public virtual void PrepareItem(GameObject itemObj) { }
-    public virtual void UseItem(GameObject parent) { }
-
 }
