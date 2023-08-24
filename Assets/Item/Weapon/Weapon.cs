@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon : Item
 {
-    public ElementalType elementalType;
+    public SpellElement elementType;
 
     virtual public void Attack(){}
 }
