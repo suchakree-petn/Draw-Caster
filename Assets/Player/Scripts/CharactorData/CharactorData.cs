@@ -2,10 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+
 public class CharactorData : ScriptableObject
 {
-   public string Name;
-   public float MovementSpeed;
-   public GameObject CharactorPrefab;   
+
+
+   [Header("Info")]
+   public string _name;
+
+   [Header("Movement")]
+   public float _moveSpeed;
+
+   [Header("Status")]
+   public float _attackBase;
+   public float _attackMultiplier;
+   public float _attackBonus;
+   public float _bonusDamage;
+   public float _defenseBase;
+   public float _defenseMultiplier;
+   public float _defenseBonus;
+   public float _bonusDamageReduction;
+
+   [Header("Prefab")]
+   public GameObject CharactorPrefab;
+
+   private void Awake()
+   {
+      _name = "Default Charactor";
+   }
 }
