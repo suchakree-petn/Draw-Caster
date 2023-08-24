@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CharactorData : ScriptableObject
 {
 
@@ -22,6 +21,10 @@ public class CharactorData : ScriptableObject
    public float _defenseMultiplier;
    public float _defenseBonus;
    public float _bonusDamageReduction;
+   public float _fireBonusDamage;
+   public float _thunderBonusDamage;
+   public float _frostBonusDamage;
+   public float _windBonusDamage;
 
    [Header("Prefab")]
    public GameObject CharactorPrefab;
