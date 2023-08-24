@@ -12,18 +12,20 @@ public class Elemental
         this._spellElement = type;
         this._damage = damage;
     }
-    static Elemental DamageCalculation(SpellElement type, CharactorData attacker, float _baseSkillDamageMultiplier)
+    public static Elemental DamageCalculation(SpellElement type, CharactorData attacker, float _baseSkillDamageMultiplier)
     {
         return new Elemental(type, CalcDamage(attacker,_baseSkillDamageMultiplier,type));
     }
 
     static private float CalcAttack(CharactorData attacker)
     {
+        Debug.Log((attacker._attackBase * attacker._attackMultiplier) + attacker._attackBonus);
         return (attacker._attackBase * attacker._attackMultiplier) + attacker._attackBonus;
     }
 
     static private float CalcBaseDamage(CharactorData attacker, float _baseSkillDamageMultiplier)
     {
+        Debug.Log(CalcAttack(attacker) * _baseSkillDamageMultiplier);
         return CalcAttack(attacker) * _baseSkillDamageMultiplier;
     }
 
@@ -48,6 +50,7 @@ public class Elemental
                 Debug.Log("Elemental Not Found");
                 break;
         }
+        Debug.Log(CalcBaseDamage(attacker, _baseSkillDamageMultiplier) * (attacker._bonusDamage + _elementBonusDamage));
         return CalcBaseDamage(attacker, _baseSkillDamageMultiplier) * (attacker._bonusDamage + _elementBonusDamage);
     }
 }

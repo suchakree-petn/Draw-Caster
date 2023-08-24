@@ -32,5 +32,7 @@ public class CharactorData : ScriptableObject
    private void Awake()
    {
       _name = "Default Charactor";
+
    }
+
 }
