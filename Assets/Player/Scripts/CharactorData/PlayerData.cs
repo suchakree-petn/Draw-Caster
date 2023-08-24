@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+[CreateAssetMenu(fileName = "New Player Data", menuName = "Charactor Data/Player Data")]
+public class PlayerData : CharactorData
 {
-    public CharactorData charactorData;
+
+    public float HealthPoint;
+    public float ManaPoint;
+    //public Weapon CurrentWeapon;
 }
