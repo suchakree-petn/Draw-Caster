@@ -7,14 +7,16 @@ public class Elemental
 
     public SpellElement _spellElement;
     public float _damage;
-    public Elemental(SpellElement type, float damage)
+    public CharactorData _attacker ;
+    public Elemental(SpellElement type, float damage, CharactorData attacker)
     {
         this._spellElement = type;
         this._damage = damage;
+        this._attacker = attacker;
     }
     public static Elemental DamageCalculation(SpellElement type, CharactorData attacker, float _baseSkillDamageMultiplier)
     {
-        return new Elemental(type, CalcDamage(attacker,_baseSkillDamageMultiplier,type));
+        return new Elemental(type, CalcDamage(attacker,_baseSkillDamageMultiplier,type),attacker);
     }
 
     static private float CalcAttack(CharactorData attacker)
