@@ -5,27 +5,12 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour, IDamageable
 {
     public PlayerData playerData;
-    public Rigidbody2D _playerRb;
 
-    public void TakeDamage(Elemental damage)
+    public void TakeDamage(Elemental elementalDamage)
     {
         if (playerData.HealthPoint > 0)
         {
-            playerData.HealthPoint -= CalcDamageRecieve(playerData, damage);
+            // playerData.HealthPoint -= elementalDamage._damage; เปลี่ยนเป็น CalcDefense ก่อน ค่อยเอามาหักเลือด
         }
-    }
-    float CalcDefense(CharactorData target)
-    {
-        return (target._defenseBase * (1 + target._defenseMultiplier)) + target._defenseBonus;
-    }
-
-    float CalcDMGReduction(CharactorData target,Elemental damage)
-    {
-        float _targetDefense = CalcDefense(target);
-        return 1-(_targetDefense / (_targetDefense + (5 * damage._attacker._level) +500));
-    }
-    float CalcDamageRecieve(CharactorData target, Elemental damage)
-    {
-        return damage._damage * CalcDMGReduction(target, damage) * (1 - target._bonusDamageReduction);
     }
 }
