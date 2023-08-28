@@ -7,11 +7,15 @@ public class PlayerManager : MonoBehaviour, IDamageable
     public PlayerData playerData;
     public Rigidbody2D _playerRb;
 
+    void IntialStats(){
+        
+    }
+
     public void TakeDamage(Elemental damage)
     {
-        if (playerData.HealthPoint > 0)
+        if (playerData._currentHp > 0)
         {
-            playerData.HealthPoint -= CalcDamageRecieve(playerData, damage);
+            playerData._currentHp -= CalcDamageRecieve(playerData, damage);
         }
     }
     float CalcDefense(CharactorData target)
