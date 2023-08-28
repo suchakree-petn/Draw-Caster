@@ -2,19 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum ElementalType{
+    Default,
+    Fire,
+    Thunder,
+    Frost,
+    Wind
+}
 public class Elemental
 {
 
-    public SpellElement _spellElement;
+    public ElementalType _elementalType;
     public float _damage;
     public CharactorData _attacker ;
-    public Elemental(SpellElement type, float damage, CharactorData attacker)
+    public Elemental(ElementalType type, float damage, CharactorData attacker)
     {
-        this._spellElement = type;
+        this._elementalType = type;
         this._damage = damage;
         this._attacker = attacker;
     }
-    public static Elemental DamageCalculation(SpellElement type, CharactorData attacker, float _baseSkillDamageMultiplier)
+    public static Elemental DamageCalculation(ElementalType type, CharactorData attacker, float _baseSkillDamageMultiplier)
     {
         return new Elemental(type, CalcDamage(attacker,_baseSkillDamageMultiplier,type),attacker);
     }
@@ -29,21 +37,21 @@ public class Elemental
         return CalcAttack(attacker) * _baseSkillDamageMultiplier;
     }
 
-    static private float CalcDamage(CharactorData attacker, float _baseSkillDamageMultiplier, SpellElement type)
+    static private float CalcDamage(CharactorData attacker, float _baseSkillDamageMultiplier, ElementalType type)
     {
         float _elementBonusDamage = 0;
         switch (type)
         {
-            case SpellElement.Fire:
+            case ElementalType.Fire:
                 _elementBonusDamage = attacker._fireBonusDamage;
                 break;
-            case SpellElement.Thunder:
+            case ElementalType.Thunder:
                 _elementBonusDamage = attacker._thunderBonusDamage;
                 break;
-            case SpellElement.Frost:
+            case ElementalType.Frost:
                 _elementBonusDamage = attacker._frostBonusDamage;
                 break;
-            case SpellElement.Wind:
+            case ElementalType.Wind:
                 _elementBonusDamage = attacker._windBonusDamage;
                 break;
             default:
