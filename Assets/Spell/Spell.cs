@@ -11,7 +11,7 @@ public class Spell : ScriptableObject
     public float _manaCost;
     public Sprite _icon;
     public SpellType _spellType;
-    public SpellElement _spellElement;
+    public ElementalType _elementalType;
     public KeyCode _activateKey;
     public virtual void Attack(){}
 }
@@ -20,11 +20,5 @@ public enum SpellType{
     QuickCast,
     Consentrade
 }
-public enum SpellElement{
-    Default,
-    Fire,
-    Thunder,
-    Frost,
-    Wind
-}
+
 
