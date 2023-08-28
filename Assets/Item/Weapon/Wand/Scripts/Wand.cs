@@ -7,9 +7,9 @@ public class Wand : Weapon
 {
     public float _baseSkillDamageMultiplier;
 
-    public override void Attack(CharactorData attacker)
+    public override void Attack(GameObject attacker)
     {
-        Elemental elemental = Elemental.DamageCalculation(elementType, attacker, _baseSkillDamageMultiplier);
+        Elemental elemental = Elemental.DamageCalculation(elementType, attacker.GetComponent<PlayerManager>().playerData, _baseSkillDamageMultiplier);
         Debug.Log(elemental._damage);
     }
 

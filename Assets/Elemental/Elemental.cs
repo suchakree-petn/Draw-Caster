@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ElementalType{
+public enum ElementalType
+{
     Default,
     Fire,
     Thunder,
@@ -15,7 +16,7 @@ public class Elemental
 
     public ElementalType _elementalType;
     public float _damage;
-    public CharactorData _attacker ;
+    public CharactorData _attacker;
     public Elemental(ElementalType type, float damage, CharactorData attacker)
     {
         this._elementalType = type;
@@ -24,12 +25,12 @@ public class Elemental
     }
     public static Elemental DamageCalculation(ElementalType type, CharactorData attacker, float _baseSkillDamageMultiplier)
     {
-        return new Elemental(type, CalcDamage(attacker,_baseSkillDamageMultiplier,type),attacker);
+        return new Elemental(type, CalcDamage(attacker, _baseSkillDamageMultiplier, type), attacker);
     }
 
     static private float CalcAttack(CharactorData attacker)
     {
-        return (attacker._attackBase * (1+attacker._attackMultiplier)) + attacker._attackBonus;
+        return (attacker._attackBase * (1 + attacker._attackMultiplier)) + attacker._attackBonus;
     }
 
     static private float CalcBaseDamage(CharactorData attacker, float _baseSkillDamageMultiplier)
@@ -58,6 +59,6 @@ public class Elemental
                 Debug.Log("Elemental Not Found");
                 break;
         }
-        return CalcBaseDamage(attacker, _baseSkillDamageMultiplier) * (1+(attacker._bonusDamage + _elementBonusDamage));
+        return CalcBaseDamage(attacker, _baseSkillDamageMultiplier) * (1 + (attacker._bonusDamage + _elementBonusDamage));
     }
 }

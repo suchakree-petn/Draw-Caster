@@ -10,14 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7af54ea05f3337541bdd9146fbfedb13, type: 3}
-  m_Name: Wand
+  m_Name: Fire Wand
   m_EditorClassIdentifier: 
-  _name: wand
-  _description: d
+  _name: Fire Wand
+  _description: Shoot the fire shard  forward
   icon: {fileID: 0}
-  _itemType: 0
-  _itemRarity: 0
+  _itemType: 1
+  _itemRarity: 1
   _isStackable: 0
   itemPrefab: {fileID: 0}
-  elementType: 0
-  _baseSkillDamageMultiplier: 0.6
+  elementType: 1
+  fireRate: 0.1
+  _baseSkillDamageMultiplier: 0.3
+  spreadAngle: 90
+  fireBallMoveSpeed: 1600
+  fireBallAmount: 1
+  fireBallPrefab: {fileID: 9143974807770408128, guid: 0c485803db5715046b3cba2726e0122a, type: 3}
