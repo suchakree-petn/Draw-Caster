@@ -8,6 +8,7 @@ public class CharactorData : ScriptableObject
 
    [Header("Info")]
    public string _name;
+   public int _level;
 
    [Header("Movement")]
    public float _moveSpeed;
