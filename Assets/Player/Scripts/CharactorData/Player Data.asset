@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
+  _currentHp: 0
+  _level: 0
   _moveSpeed: 1
-  _attackBase: 100
+  _hpBase: 0
+  _hpBonus: 0
+  _attackBase: 200
   _attackMultiplier: 0
   _attackBonus: 0
   _bonusDamage: 0
@@ -27,6 +31,5 @@ MonoBehaviour:
   _frostBonusDamage: 0
   _windBonusDamage: 0
   CharactorPrefab: {fileID: 3348656821667477746, guid: f59e9d8ae7cdb924b9f4a1610a633abf, type: 3}
-  HealthPoint: 0
   ManaPoint: 0
   CurrentWeapon: {fileID: 0}
