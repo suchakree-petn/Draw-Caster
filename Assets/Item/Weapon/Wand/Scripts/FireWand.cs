@@ -50,22 +50,24 @@ public class FireWand : Weapon
     }
     private void ShootSpreadingFireBall(Transform transform)
     {
-
+        // Spawn and init dmg
         GameObject fireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity);
         AttackHit attackHit = fireBall.transform.GetComponentInChildren<AttackHit>();
         attackHit.elementalDamage = Elemental.DamageCalculation(elementType,
                                                                 transform.GetComponent<PlayerManager>().playerData,
                                                                 _baseSkillDamageMultiplier);
 
+        // Calc spread angle
         Rigidbody2D fireBallRB = fireBall.GetComponent<Rigidbody2D>();
         Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         float randomSpread = Random.Range(0, spreadAngle) * Mathf.Deg2Rad;
         Vector2 spawnPos = new Vector2(Mathf.Cos(randomSpread), Mathf.Sin(randomSpread));
 
+        // Shoot it
         if (fireBallRB != null)
         {
-            Vector2 direction = (mousePos - spawnPos).normalized;
-            fireBallRB.AddForce(direction * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
+            Vector2 direction = (mousePos.normalized - (spawnPos + (Vector2)transform.position));
+            fireBallRB.AddForce(direction.normalized * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
             fireBallRB.transform.up = direction;
         }
         else
