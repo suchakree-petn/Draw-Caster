@@ -5,6 +5,11 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public CharactorData player;
+    public List<GameObject> allEnemyInList = new List<GameObject>();
+    public static GameController Instance;
+    void Awake(){
+        Instance = this;
+    }
     void Start()
     {
         Instantiate(player.CharactorPrefab);
