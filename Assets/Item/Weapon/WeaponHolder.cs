@@ -59,7 +59,7 @@ public class WeaponHolder : MonoBehaviour
         if (isReady)
         {
             weapon.HoldAttack(transform.parent.gameObject);
-            Invoke(nameof(Fire), weapon.fireRate);
+            Invoke(nameof(Fire), weapon.activeRate);
         }
     }
 

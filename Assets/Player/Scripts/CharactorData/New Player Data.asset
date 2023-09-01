@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Player Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
-  _currentHp: 2985.727
+  _currentHp: 12399.352
   _level: 0
   _moveSpeed: 0
   _hpBase: 0
