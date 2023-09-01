@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "New Fire Wand", menuName = "Item/Wand/Fire Wand")]
-public class FireWand : Weapon
+[CreateAssetMenu(fileName = "New Fire Staff", menuName = "Item/Wand/Fire Staff")]
+public class FireStaff : Weapon
 {
     [Header("Damage Multiplier")]
     public float _baseSkillDamageMultiplier;
@@ -48,7 +48,7 @@ public class FireWand : Weapon
         }
 
     }
-    private void ShootSpreadingFireBall(Transform transform)
+   private void ShootSpreadingFireBall(Transform transform)
     {
         // Spawn and init dmg
         GameObject fireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity);
@@ -60,13 +60,14 @@ public class FireWand : Weapon
         // Calc spread angle
         Rigidbody2D fireBallRB = fireBall.GetComponent<Rigidbody2D>();
         Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        float randomSpread = Random.Range(0, spreadAngle) * Mathf.Deg2Rad;
-        Vector2 spawnPos = new Vector2(Mathf.Cos(randomSpread), Mathf.Sin(randomSpread));
+        float randomSpread = Random.Range(-spreadAngle, spreadAngle) * Mathf.Deg2Rad;
+        Vector2 spawnPos = new Vector2(Mathf.Cos(randomSpread), Mathf.Sin(randomSpread)) + (Vector2)transform.position;
 
         // Shoot it
         if (fireBallRB != null)
         {
-            Vector2 direction = (mousePos.normalized - (spawnPos + (Vector2)transform.position));
+            Vector2 direction = (mousePos - spawnPos);
+            Debug.Log(direction.normalized);
             fireBallRB.AddForce(direction.normalized * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
             fireBallRB.transform.up = direction;
         }
