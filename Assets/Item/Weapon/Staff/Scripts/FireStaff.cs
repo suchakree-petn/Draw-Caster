@@ -17,7 +17,6 @@ public class FireStaff : Weapon
 
     public override void Attack(GameObject attacker)
     {
-
         for (int i = 0; i < fireBallAmount; i++)
         {
             if (fireBallPrefab != null)
@@ -48,7 +47,7 @@ public class FireStaff : Weapon
         }
 
     }
-   private void ShootSpreadingFireBall(Transform transform)
+    private void ShootSpreadingFireBall(Transform transform)
     {
         // Spawn and init dmg
         GameObject fireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity);
@@ -61,14 +60,14 @@ public class FireStaff : Weapon
         Rigidbody2D fireBallRB = fireBall.GetComponent<Rigidbody2D>();
         Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         float randomSpread = Random.Range(-spreadAngle, spreadAngle) * Mathf.Deg2Rad;
-        Vector2 spawnPos = new Vector2(Mathf.Cos(randomSpread), Mathf.Sin(randomSpread)) + (Vector2)transform.position;
+        Vector2 spawnPos = new Vector2(Mathf.Cos(randomSpread), Mathf.Sin(randomSpread));
 
         // Shoot it
         if (fireBallRB != null)
         {
-            Vector2 direction = (mousePos - spawnPos);
-            Debug.Log(direction.normalized);
-            fireBallRB.AddForce(direction.normalized * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
+            Vector2 direction = mousePos - (Vector2)transform.position;
+            //fireBallRB.rotation = randomSpread;
+            fireBallRB.AddForce((direction + new Vector2(randomSpread, randomSpread)).normalized * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
             fireBallRB.transform.up = direction;
         }
         else
