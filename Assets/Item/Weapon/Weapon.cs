@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Weapon : Item
 {
-    public SpellElement elementType;
+    public ElementalType elementType;
+    public float activeRate;
 
-    virtual public void Attack(CharactorData attacker){}
+    virtual public void Attack(GameObject attacker){}
+    virtual public void HoldAttack(GameObject attacker){}
 }

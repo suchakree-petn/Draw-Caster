@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98679a293153c9941ad164f6465d7760, type: 3}
-  m_Name: Player Data
+  m_Name: New Player Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
-  _currentHp: 0
+  _currentHp: 12399.352
   _level: 0
-  _moveSpeed: 5
+  _moveSpeed: 0
   _hpBase: 0
   _hpBonus: 0
-  _attackBase: 200
+  _attackBase: 0
   _attackMultiplier: 0
   _attackBonus: 0
   _bonusDamage: 0
-  _defenseBase: 0
+  _defenseBase: 200
   _defenseMultiplier: 0
   _defenseBonus: 0
   _bonusDamageReduction: 0
@@ -30,6 +30,6 @@ MonoBehaviour:
   _thunderBonusDamage: 0
   _frostBonusDamage: 0
   _windBonusDamage: 0
-  CharactorPrefab: {fileID: 3348656821667477746, guid: f59e9d8ae7cdb924b9f4a1610a633abf, type: 3}
+  CharactorPrefab: {fileID: 0}
   ManaPoint: 0
   CurrentWeapon: {fileID: 0}
