@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Player Data", menuName = "Charactor Data/Player Data")]
-public class PlayerData : CharactorData
+[CreateAssetMenu(fileName = "New Enemy Data", menuName = "Charactor Data/Enemy Data")]
+public class EnemyData : CharactorData
 {
 
     public float ManaPoint;

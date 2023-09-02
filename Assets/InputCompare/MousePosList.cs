@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEditor;
+using UnityEngine.InputSystem;
 
 public class MousePosList : MonoBehaviour
 {
-    public static MousePosList Instance;
-    public List<Vector2> pos;
+    [SerializeField] private Vector2[] inputPos;
     public Vector2[] templatePos;
     public int sideLenght;
+    PlayerAction _playerAction => PlayerInputSystem.Instance.playerAction; 
 
     [Header("Matrix Dimension")]
     public float mostLeft;
@@ -20,54 +20,41 @@ public class MousePosList : MonoBehaviour
     [Header("New Matrix Dimension")]
     public float newMostRight;
 
-
+    [Header("Draw List")]
     [SerializeField] private GameObject prefab;
-    public delegate void MouseEvent();
+    public delegate void MouseEvent(Vector2[] templatePos);
     public static MouseEvent up;
     public static MouseEvent down;
-    public delegate void CosSim(Vector2[] input, Vector2[] template, int sideLenght);
-    public static CosSim CalcCosSim;
+    public delegate void CalcCosSim(Vector2[] input, Vector2[] template, int sideLenght);
+    public static CalcCosSim calcCosSim;
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            pos.Clear();
-        }
-        if (Input.GetMouseButton(1))
-        {
-            down?.Invoke();
-        }
-        if (Input.GetMouseButtonUp(1))
-        {
-            up?.Invoke();
-        }
 
-    }
-    void Draw()
+    void Draw(InputAction.CallbackContext context)
     {
         Vector3 mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (!pos.Contains(mosPos))
+        if (!inputPos.ToList().Contains(mosPos))
         {
             mosPos.z = 0;
-            pos.Add(mosPos);
+            inputPos.ToList().Add(mosPos);
 
         }
     }
-    void TranslatePos()
+    void ResamplingMouseInputPos(InputAction.CallbackContext context)
     {
         mostLeft = float.PositiveInfinity;
-        foreach (Vector2 p in pos)
+        foreach (Vector2 p in inputPos)
         {
             if (p.x < mostLeft)
             {
                 mostLeft = p.x;
+
+
                 GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
                 go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
         mostButtom = float.PositiveInfinity;
-        foreach (Vector2 p in pos)
+        foreach (Vector2 p in inputPos)
         {
             if (p.y < mostButtom)
             {
@@ -77,7 +64,7 @@ public class MousePosList : MonoBehaviour
             }
         }
         mostAbove = float.NegativeInfinity;
-        foreach (Vector2 p in pos)
+        foreach (Vector2 p in inputPos)
         {
             if (p.y > mostAbove)
             {
@@ -88,37 +75,38 @@ public class MousePosList : MonoBehaviour
         }
 
         mostRight = float.NegativeInfinity;
-        foreach (Vector2 p in pos)
+        foreach (Vector2 p in inputPos)
         {
             if (p.x > mostRight)
             {
                 mostRight = p.x;
+
+                // Show raw draw input
                 GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
                 go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
-        templatePos = BlackShadePositions.Instance.FindBlackShadePositions();
-        pos = Resample(pos.ToArray(), templatePos.Length).ToList();
+        inputPos = Resample(inputPos, templatePos.Length);
 
-        for (int i = 0; i < pos.Count; i++)
+        for (int i = 0; i < inputPos.Length; i++)
         {
             if (mostLeft > 0)
             {
 
-                pos[i] = new Vector2((pos[i].x - mostLeft), pos[i].y);
+                inputPos[i] = new Vector2(inputPos[i].x - mostLeft, inputPos[i].y);
             }
             else if (mostLeft < 0)
             {
-                pos[i] = new Vector2(pos[i].x - mostLeft, pos[i].y);
+                inputPos[i] = new Vector2(inputPos[i].x - mostLeft, inputPos[i].y);
             }
 
             if (mostButtom > 0)
             {
-                pos[i] = new Vector2(pos[i].x, pos[i].y - mostButtom);
+                inputPos[i] = new Vector2(inputPos[i].x, inputPos[i].y - mostButtom);
             }
             else if (mostButtom < 0)
             {
-                pos[i] = new Vector2(pos[i].x, pos[i].y - mostButtom);
+                inputPos[i] = new Vector2(inputPos[i].x, inputPos[i].y - mostButtom);
             }
         }
 
@@ -161,11 +149,14 @@ public class MousePosList : MonoBehaviour
             templatePos[i] = new Vector2(templatePos[i].x, templatePos[i].y - TmostButtom);
 
         }
-        foreach (Vector2 pos in templatePos)
-        {
-            GameObject go = Instantiate(prefab, pos, Quaternion.identity);
-            go.GetComponent<SpriteRenderer>().color = Color.red;
-        }
+
+        // Show template img
+        // foreach (Vector2 pos in templatePos)
+        // {
+        //     GameObject go = Instantiate(prefab, pos, Quaternion.identity);
+        //     go.GetComponent<SpriteRenderer>().color = Color.red;
+        // }
+
         // re-scale
         float TWidth = (TmostRight - TmostLeft);
         float width = (mostRight - mostLeft);
@@ -189,20 +180,19 @@ public class MousePosList : MonoBehaviour
         {
             height += (width - height);
         }
-        float sqrTeamplate = TWidth * THeight;
-        float sqrInput = width * height;
-        scale = TWidth / width;
-        Debug.Log(scale);
-        for (int i = 0; i < pos.Count; i++)
-        {
-            pos[i] *= scale;
-            Vector2 roundPixel = new Vector2(Mathf.Round(pos[i].x), Mathf.Round(pos[i].y));
-            pos[i] = roundPixel;
 
-            Instantiate(prefab, new Vector3(pos[i].x, pos[i].y, 0), Quaternion.identity);
+        scale = TWidth / width;
+        for (int i = 0; i < inputPos.Length; i++)
+        {
+            inputPos[i] *= scale;
+            Vector2 roundPixel = new Vector2(Mathf.Round(inputPos[i].x), Mathf.Round(inputPos[i].y));
+            inputPos[i] = roundPixel;
+
+            // Show draw input resampled img
+            //Instantiate(prefab, new Vector3(pos[i].x, pos[i].y, 0), Quaternion.identity);
         }
-        pos = RemoveDuplicates(pos.ToArray()).ToList();
-        pos = sortList(pos);
+        inputPos = RemoveDuplicates(inputPos);
+        inputPos = sortList(inputPos.ToList()).ToArray();
 
 
         newMostRight = float.NegativeInfinity;
@@ -214,13 +204,9 @@ public class MousePosList : MonoBehaviour
             }
         }
         sideLenght = 16;
-        CalcCosSim(pos.ToArray(),
-                    BlackShadePositions.Instance.FindBlackShadePositions(),
-                    sideLenght);
-        
-        // CalcCosSim(pos.ToArray(),
-        //             BlackShadePositions.Instance.FindBlackShadePositions(),
-        //             sideLenght);
+        CosSim.CosineSimilarity(inputPos,
+                                templatePos,
+                                sideLenght);
     }
 
     private Vector2[] Resample(Vector2[] originalArray, int newLength)
@@ -260,6 +246,7 @@ public class MousePosList : MonoBehaviour
     }
     private List<Vector2> sortList(List<Vector2> list)
     {
+        
         List<Vector2> sortList = list;
         sortList.Sort((v1, v2) =>
         {
@@ -274,16 +261,22 @@ public class MousePosList : MonoBehaviour
     }
     private void OnEnable()
     {
-        up += TranslatePos;
-        down += Draw;
+        _playerAction.Player.DrawInput.Enable();
+        _playerAction.Player.DrawInput.performed += Draw;
+        _playerAction.Player.DrawInput.canceled += ResamplingMouseInputPos;
+
+        //up += ResamplingMouseInputPos;
+        //down += Draw;
 
     }
     private void OnDisable()
     {
-        up -= TranslatePos;
-        down -= Draw;
+        _playerAction.Player.DrawInput.Disable();
+        _playerAction.Player.DrawInput.performed -= Draw;
+        _playerAction.Player.DrawInput.canceled -= ResamplingMouseInputPos;
 
-
+        //up -= ResamplingMouseInputPos;
+        //down -= Draw;
     }
 }
 

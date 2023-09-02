@@ -33,40 +33,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Spell_Q",
-                    "type": "Button",
-                    "id": "e3138add-e09e-4b3a-92ea-e3379383beca",
-                    "expectedControlType": "Button",
+                    "name": "DrawInput",
+                    "type": "Value",
+                    "id": "b356e6ee-d978-4ecd-ac76-ed04e4745baa",
+                    "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Spell_E",
-                    "type": "Button",
-                    "id": "5358e4f6-84e0-4605-9d1c-ab365bed25a2",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Spell_R",
-                    "type": "Button",
-                    "id": "4ad1c132-e717-467e-ba1c-16635f674685",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Spell_Shift",
-                    "type": "Button",
-                    "id": "2ca38f5f-5fb3-4440-b4e8-bdd05496a763",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": "Hold(duration=0.1)",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -149,45 +122,12 @@
                 },
                 {
                     "name": "",
-                    "id": "af0b16bd-5690-46f4-a86d-63f8e7667b1e",
-                    "path": "<Keyboard>/q",
+                    "id": "f45b215b-ff34-4c35-bbb5-d27178b4c5a6",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Spell_Q",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "35f6eb86-2b1a-4715-b9d2-f1cedec3644c",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Spell_E",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "eda7dba0-d069-4ed5-aff3-6a17f7bc1803",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Spell_R",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "868308be-ba8e-40e9-9060-8b70d98b4ca4",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Spell_Shift",
+                    "action": "DrawInput",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

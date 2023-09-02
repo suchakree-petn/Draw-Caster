@@ -1,19 +1,8 @@
 using UnityEngine;
 
-public class BlackShadePositions : MonoBehaviour
+public class BlackShadePositions
 {
-    public static BlackShadePositions Instance;
-
-    public Texture2D sourceTexture;
-    public Color targetColor; // The color you want to consider as "black"
-    public float colorTolerance = 0.1f; // Tolerance value for color comparison
-
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-    public Vector2[] FindBlackShadePositions()
+    public static Vector2[] FindBlackShadePositions(Texture2D sourceTexture)
     {
         Color[] pixels = sourceTexture.GetPixels();
         int width = sourceTexture.width;
@@ -23,7 +12,7 @@ public class BlackShadePositions : MonoBehaviour
         // Count the number of pixels within the desired color tolerance range
         for (int i = 0; i < pixels.Length; i++)
         {
-            if (ColorWithinTolerance(pixels[i], targetColor, colorTolerance))
+            if (ColorWithinTolerance(pixels[i], Color.black, 0.1f))
             {
                 count++;
             }
@@ -38,7 +27,7 @@ public class BlackShadePositions : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 int pixelIndex = y * width + x;
-                if (ColorWithinTolerance(pixels[pixelIndex], targetColor, colorTolerance))
+                if (ColorWithinTolerance(pixels[pixelIndex], Color.black, 0.1f))
                 {
                     positions[index] = new Vector2(x, y);
                     index++;
@@ -49,7 +38,7 @@ public class BlackShadePositions : MonoBehaviour
         return positions;
     }
 
-    private bool ColorWithinTolerance(Color colorA, Color colorB, float tolerance)
+    private static bool ColorWithinTolerance(Color colorA, Color colorB, float tolerance)
     {
         float colorDifference = Mathf.Abs(colorA.r - colorB.r) + Mathf.Abs(colorA.g - colorB.g) + Mathf.Abs(colorA.b - colorB.b);
         return colorDifference <= tolerance;
