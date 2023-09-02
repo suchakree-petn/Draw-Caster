@@ -53,6 +53,15 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=0.1)"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DrawInput"",
+                    ""type"": ""Value"",
+                    ""id"": ""b356e6ee-d978-4ecd-ac76-ed04e4745baa"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=0.1)"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""action"": ""HoldAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f45b215b-ff34-4c35-bbb5-d27178b4c5a6"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DrawInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_PressAttack = m_Player.FindAction("PressAttack", throwIfNotFound: true);
         m_Player_HoldAttack = m_Player.FindAction("HoldAttack", throwIfNotFound: true);
+        m_Player_DrawInput = m_Player.FindAction("DrawInput", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,6 +226,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_PressAttack;
     private readonly InputAction m_Player_HoldAttack;
+    private readonly InputAction m_Player_DrawInput;
     public struct PlayerActions
     {
         private @PlayerAction m_Wrapper;
@@ -212,6 +234,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @PressAttack => m_Wrapper.m_Player_PressAttack;
         public InputAction @HoldAttack => m_Wrapper.m_Player_HoldAttack;
+        public InputAction @DrawInput => m_Wrapper.m_Player_DrawInput;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -230,6 +253,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @HoldAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
                 @HoldAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
                 @HoldAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
+                @DrawInput.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawInput;
+                @DrawInput.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawInput;
+                @DrawInput.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawInput;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -243,6 +269,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @HoldAttack.started += instance.OnHoldAttack;
                 @HoldAttack.performed += instance.OnHoldAttack;
                 @HoldAttack.canceled += instance.OnHoldAttack;
+                @DrawInput.started += instance.OnDrawInput;
+                @DrawInput.performed += instance.OnDrawInput;
+                @DrawInput.canceled += instance.OnDrawInput;
             }
         }
     }
@@ -252,5 +281,6 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnPressAttack(InputAction.CallbackContext context);
         void OnHoldAttack(InputAction.CallbackContext context);
+        void OnDrawInput(InputAction.CallbackContext context);
     }
 }

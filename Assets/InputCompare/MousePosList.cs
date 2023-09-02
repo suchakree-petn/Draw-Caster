@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEditor;
+using UnityEngine.InputSystem;
 
 public class MousePosList : MonoBehaviour
 {
-    public static MousePosList Instance;
-    public List<Vector2> pos;
-    //public Vector2[] templatePos;
-    [SerializeField] private Texture2D template;
+    [SerializeField] private Vector2[] inputPos;
+    public Vector2[] templatePos;
     public int sideLenght;
+    PlayerAction _playerAction => PlayerInputSystem.Instance.playerAction; 
 
     [Header("Matrix Dimension")]
     public float mostLeft;
@@ -29,36 +28,21 @@ public class MousePosList : MonoBehaviour
     public delegate void CalcCosSim(Vector2[] input, Vector2[] template, int sideLenght);
     public static CalcCosSim calcCosSim;
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            pos.Clear();
-        }
-        if (Input.GetMouseButton(1))
-        {
-            down?.Invoke(BlackShadePositions.FindBlackShadePositions(template));
-        }
-        if (Input.GetMouseButtonUp(1))
-        {
-            up?.Invoke(BlackShadePositions.FindBlackShadePositions(template));
-        }
 
-    }
-    void Draw(Vector2[] templatePos)
+    void Draw(InputAction.CallbackContext context)
     {
         Vector3 mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (!pos.Contains(mosPos))
+        if (!inputPos.ToList().Contains(mosPos))
         {
             mosPos.z = 0;
-            pos.Add(mosPos);
+            inputPos.ToList().Add(mosPos);
 
         }
     }
-    void ResamplingMouseInputPos(Vector2[] templatePos)
+    void ResamplingMouseInputPos(InputAction.CallbackContext context)
     {
         mostLeft = float.PositiveInfinity;
-        foreach (Vector2 p in pos)
+        foreach (Vector2 p in inputPos)
         {
             if (p.x < mostLeft)
             {
@@ -70,7 +54,7 @@ public class MousePosList : MonoBehaviour
             }
         }
         mostButtom = float.PositiveInfinity;
-        foreach (Vector2 p in pos)
+        foreach (Vector2 p in inputPos)
         {
             if (p.y < mostButtom)
             {
@@ -80,7 +64,7 @@ public class MousePosList : MonoBehaviour
             }
         }
         mostAbove = float.NegativeInfinity;
-        foreach (Vector2 p in pos)
+        foreach (Vector2 p in inputPos)
         {
             if (p.y > mostAbove)
             {
@@ -91,7 +75,7 @@ public class MousePosList : MonoBehaviour
         }
 
         mostRight = float.NegativeInfinity;
-        foreach (Vector2 p in pos)
+        foreach (Vector2 p in inputPos)
         {
             if (p.x > mostRight)
             {
@@ -102,27 +86,27 @@ public class MousePosList : MonoBehaviour
                 go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
-        pos = Resample(pos.ToArray(), templatePos.Length).ToList();
+        inputPos = Resample(inputPos, templatePos.Length);
 
-        for (int i = 0; i < pos.Count; i++)
+        for (int i = 0; i < inputPos.Length; i++)
         {
             if (mostLeft > 0)
             {
 
-                pos[i] = new Vector2((pos[i].x - mostLeft), pos[i].y);
+                inputPos[i] = new Vector2(inputPos[i].x - mostLeft, inputPos[i].y);
             }
             else if (mostLeft < 0)
             {
-                pos[i] = new Vector2(pos[i].x - mostLeft, pos[i].y);
+                inputPos[i] = new Vector2(inputPos[i].x - mostLeft, inputPos[i].y);
             }
 
             if (mostButtom > 0)
             {
-                pos[i] = new Vector2(pos[i].x, pos[i].y - mostButtom);
+                inputPos[i] = new Vector2(inputPos[i].x, inputPos[i].y - mostButtom);
             }
             else if (mostButtom < 0)
             {
-                pos[i] = new Vector2(pos[i].x, pos[i].y - mostButtom);
+                inputPos[i] = new Vector2(inputPos[i].x, inputPos[i].y - mostButtom);
             }
         }
 
@@ -198,17 +182,17 @@ public class MousePosList : MonoBehaviour
         }
 
         scale = TWidth / width;
-        for (int i = 0; i < pos.Count; i++)
+        for (int i = 0; i < inputPos.Length; i++)
         {
-            pos[i] *= scale;
-            Vector2 roundPixel = new Vector2(Mathf.Round(pos[i].x), Mathf.Round(pos[i].y));
-            pos[i] = roundPixel;
+            inputPos[i] *= scale;
+            Vector2 roundPixel = new Vector2(Mathf.Round(inputPos[i].x), Mathf.Round(inputPos[i].y));
+            inputPos[i] = roundPixel;
 
             // Show draw input resampled img
             //Instantiate(prefab, new Vector3(pos[i].x, pos[i].y, 0), Quaternion.identity);
         }
-        pos = RemoveDuplicates(pos.ToArray()).ToList();
-        pos = sortList(pos);
+        inputPos = RemoveDuplicates(inputPos);
+        inputPos = sortList(inputPos.ToList()).ToArray();
 
 
         newMostRight = float.NegativeInfinity;
@@ -220,7 +204,7 @@ public class MousePosList : MonoBehaviour
             }
         }
         sideLenght = 16;
-        CosSim.CosineSimilarity(pos.ToArray(),
+        CosSim.CosineSimilarity(inputPos,
                                 templatePos,
                                 sideLenght);
     }
@@ -262,6 +246,7 @@ public class MousePosList : MonoBehaviour
     }
     private List<Vector2> sortList(List<Vector2> list)
     {
+        
         List<Vector2> sortList = list;
         sortList.Sort((v1, v2) =>
         {
@@ -276,16 +261,22 @@ public class MousePosList : MonoBehaviour
     }
     private void OnEnable()
     {
-        up += ResamplingMouseInputPos;
-        down += Draw;
+        _playerAction.Player.DrawInput.Enable();
+        _playerAction.Player.DrawInput.performed += Draw;
+        _playerAction.Player.DrawInput.canceled += ResamplingMouseInputPos;
+
+        //up += ResamplingMouseInputPos;
+        //down += Draw;
 
     }
     private void OnDisable()
     {
-        up -= ResamplingMouseInputPos;
-        down -= Draw;
+        _playerAction.Player.DrawInput.Disable();
+        _playerAction.Player.DrawInput.performed -= Draw;
+        _playerAction.Player.DrawInput.canceled -= ResamplingMouseInputPos;
 
-
+        //up -= ResamplingMouseInputPos;
+        //down -= Draw;
     }
 }
 
