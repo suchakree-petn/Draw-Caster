@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         {
             playerData._currentHp -= CalcDamageRecieve(playerData, damage);
         }
+        
     }
     float CalcDefense(CharactorData target)
     {

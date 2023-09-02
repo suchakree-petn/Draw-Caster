@@ -62,6 +62,42 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=0.1)"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Spell_Q"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f2eda01-205f-4374-8f3c-6807301ee2f6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spell_E"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd72ba59-7c1b-495b-9872-86fd1a2bc372"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spell_R"",
+                    ""type"": ""Button"",
+                    ""id"": ""106c03a1-cbe4-4d48-8e99-32a719cd2abd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spell_Shift"",
+                    ""type"": ""Button"",
+                    ""id"": ""6773be5f-3267-46a0-8894-a2d31228795d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +188,50 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""action"": ""DrawInput"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5cb337bd-e993-4ac4-ba23-5475e407d2d9"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell_Q"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ffe5122d-467b-4c6d-9da4-7838252fae46"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell_E"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d16edf5b-7871-4784-8730-b656df099ec7"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell_R"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c77b9cd-d232-4629-abc7-17328dc55612"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell_Shift"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +244,10 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         m_Player_PressAttack = m_Player.FindAction("PressAttack", throwIfNotFound: true);
         m_Player_HoldAttack = m_Player.FindAction("HoldAttack", throwIfNotFound: true);
         m_Player_DrawInput = m_Player.FindAction("DrawInput", throwIfNotFound: true);
+        m_Player_Spell_Q = m_Player.FindAction("Spell_Q", throwIfNotFound: true);
+        m_Player_Spell_E = m_Player.FindAction("Spell_E", throwIfNotFound: true);
+        m_Player_Spell_R = m_Player.FindAction("Spell_R", throwIfNotFound: true);
+        m_Player_Spell_Shift = m_Player.FindAction("Spell_Shift", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +311,10 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PressAttack;
     private readonly InputAction m_Player_HoldAttack;
     private readonly InputAction m_Player_DrawInput;
+    private readonly InputAction m_Player_Spell_Q;
+    private readonly InputAction m_Player_Spell_E;
+    private readonly InputAction m_Player_Spell_R;
+    private readonly InputAction m_Player_Spell_Shift;
     public struct PlayerActions
     {
         private @PlayerAction m_Wrapper;
@@ -235,6 +323,10 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         public InputAction @PressAttack => m_Wrapper.m_Player_PressAttack;
         public InputAction @HoldAttack => m_Wrapper.m_Player_HoldAttack;
         public InputAction @DrawInput => m_Wrapper.m_Player_DrawInput;
+        public InputAction @Spell_Q => m_Wrapper.m_Player_Spell_Q;
+        public InputAction @Spell_E => m_Wrapper.m_Player_Spell_E;
+        public InputAction @Spell_R => m_Wrapper.m_Player_Spell_R;
+        public InputAction @Spell_Shift => m_Wrapper.m_Player_Spell_Shift;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +348,18 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @DrawInput.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawInput;
                 @DrawInput.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawInput;
                 @DrawInput.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawInput;
+                @Spell_Q.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Q;
+                @Spell_Q.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Q;
+                @Spell_Q.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Q;
+                @Spell_E.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_E;
+                @Spell_E.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_E;
+                @Spell_E.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_E;
+                @Spell_R.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_R;
+                @Spell_R.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_R;
+                @Spell_R.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_R;
+                @Spell_Shift.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Shift;
+                @Spell_Shift.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Shift;
+                @Spell_Shift.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Shift;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -272,6 +376,18 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @DrawInput.started += instance.OnDrawInput;
                 @DrawInput.performed += instance.OnDrawInput;
                 @DrawInput.canceled += instance.OnDrawInput;
+                @Spell_Q.started += instance.OnSpell_Q;
+                @Spell_Q.performed += instance.OnSpell_Q;
+                @Spell_Q.canceled += instance.OnSpell_Q;
+                @Spell_E.started += instance.OnSpell_E;
+                @Spell_E.performed += instance.OnSpell_E;
+                @Spell_E.canceled += instance.OnSpell_E;
+                @Spell_R.started += instance.OnSpell_R;
+                @Spell_R.performed += instance.OnSpell_R;
+                @Spell_R.canceled += instance.OnSpell_R;
+                @Spell_Shift.started += instance.OnSpell_Shift;
+                @Spell_Shift.performed += instance.OnSpell_Shift;
+                @Spell_Shift.canceled += instance.OnSpell_Shift;
             }
         }
     }
@@ -282,5 +398,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         void OnPressAttack(InputAction.CallbackContext context);
         void OnHoldAttack(InputAction.CallbackContext context);
         void OnDrawInput(InputAction.CallbackContext context);
+        void OnSpell_Q(InputAction.CallbackContext context);
+        void OnSpell_E(InputAction.CallbackContext context);
+        void OnSpell_R(InputAction.CallbackContext context);
+        void OnSpell_Shift(InputAction.CallbackContext context);
     }
 }

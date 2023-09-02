@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AttackHit : MonoBehaviour
 {
-    [SerializeField] private float selfDestructTime;
+    public float selfDestructTime;
     public Elemental elementalDamage;
     private void OnTriggerEnter2D(Collider2D other)
     {
         IDamageable damageable = other.transform.GetComponentInParent<IDamageable>();
         {
-            if (damageable != null)
+            if (damageable != null && elementalDamage != null)
             {
                 damageable.TakeDamage(elementalDamage);
             }
@@ -18,6 +18,6 @@ public class AttackHit : MonoBehaviour
     }
 
     private void Start() {
-        Destroy(transform.parent.gameObject,selfDestructTime);
+        Destroy(transform.root.gameObject,selfDestructTime);
     }
 }

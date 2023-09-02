@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class SpellHolder_E : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Spell spell;
+    PlayerInputSystem playerInputSystem;
+    // public void Cast_E(InputActions.CallbackContext context)
+    // {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //     int castLevel = CalThreshold();
+    //     float delay = _spellList[0].GetDelayTime();
+    //     int amount = _spellList[0].GetAmount(castLevel);
+    //     StartCoroutine(RepeatCast(castLevel, delay, amount));
+
+    // }
+
 }

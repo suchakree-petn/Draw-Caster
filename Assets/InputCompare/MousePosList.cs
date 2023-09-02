@@ -8,6 +8,7 @@ public class MousePosList : MonoBehaviour
 {
     [SerializeField] private Vector2[] inputPos;
     public Vector2[] templatePos;
+    public float score;
     public int sideLenght;
     PlayerAction _playerAction => PlayerInputSystem.Instance.playerAction; 
 
@@ -204,7 +205,7 @@ public class MousePosList : MonoBehaviour
             }
         }
         sideLenght = 16;
-        CosSim.CosineSimilarity(inputPos,
+        score = CosSim.CosineSimilarity(inputPos,
                                 templatePos,
                                 sideLenght);
     }
