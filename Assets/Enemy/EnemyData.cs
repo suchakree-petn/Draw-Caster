@@ -6,6 +6,6 @@ using UnityEngine;
 public class PlayerData : CharactorData
 {
 
-    public float ManaPoint;
+    public float currentMana;
     public Weapon CurrentWeapon;
 }

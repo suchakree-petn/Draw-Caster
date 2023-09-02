@@ -7,7 +7,7 @@ public class LightningStorm : Spell
 {
     [SerializeField] private float _baseSkillDamageMultiplier;
     [SerializeField] private GameObject _gameObjectSprite;
-    [SerializeField] private float _delayTime;
+
     [SerializeField] private float _range;
     
 
@@ -16,8 +16,7 @@ public class LightningStorm : Spell
     public override void Cast1(GameObject player, GameObject target)
     {
         base.Cast1(player,target);
-        // Collider2D lightningHit = _gameObjectSprite.transform.GetComponentInChildren<Collider2D>(); State Machine
-        // Animate
+        
             Instantiate(_gameObjectSprite,target.transform.position,Quaternion.identity);
         // เล่นsound
     }
@@ -29,11 +28,9 @@ public class LightningStorm : Spell
     {
         // เล่นsound
     }
-    public float GetRange(){
-        return _range;
-    }
-    public float GetDelayTime(){
-        return _delayTime;
+    public override void BeginCooldown(GameObject gameObject)
+    {
+        base.BeginCooldown(gameObject);
     }
     
 
