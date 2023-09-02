@@ -9,3 +9,4 @@ public class EnemyData : CharactorData
     public float ManaPoint;
     public Weapon CurrentWeapon;
 }
+
