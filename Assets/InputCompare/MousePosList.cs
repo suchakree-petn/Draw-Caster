@@ -8,7 +8,8 @@ public class MousePosList : MonoBehaviour
 {
     public static MousePosList Instance;
     public List<Vector2> pos;
-    public Vector2[] templatePos;
+    //public Vector2[] templatePos;
+    [SerializeField] private Texture2D template;
     public int sideLenght;
 
     [Header("Matrix Dimension")]
@@ -20,13 +21,13 @@ public class MousePosList : MonoBehaviour
     [Header("New Matrix Dimension")]
     public float newMostRight;
 
-
+    [Header("Draw List")]
     [SerializeField] private GameObject prefab;
-    public delegate void MouseEvent();
+    public delegate void MouseEvent(Vector2[] templatePos);
     public static MouseEvent up;
     public static MouseEvent down;
-    public delegate void CosSim(Vector2[] input, Vector2[] template, int sideLenght);
-    public static CosSim CalcCosSim;
+    public delegate void CalcCosSim(Vector2[] input, Vector2[] template, int sideLenght);
+    public static CalcCosSim calcCosSim;
 
     void Update()
     {
@@ -36,15 +37,15 @@ public class MousePosList : MonoBehaviour
         }
         if (Input.GetMouseButton(1))
         {
-            down?.Invoke();
+            down?.Invoke(BlackShadePositions.FindBlackShadePositions(template));
         }
         if (Input.GetMouseButtonUp(1))
         {
-            up?.Invoke();
+            up?.Invoke(BlackShadePositions.FindBlackShadePositions(template));
         }
 
     }
-    void Draw()
+    void Draw(Vector2[] templatePos)
     {
         Vector3 mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (!pos.Contains(mosPos))
@@ -54,7 +55,7 @@ public class MousePosList : MonoBehaviour
 
         }
     }
-    void TranslatePos()
+    void ResamplingMouseInputPos(Vector2[] templatePos)
     {
         mostLeft = float.PositiveInfinity;
         foreach (Vector2 p in pos)
@@ -62,6 +63,8 @@ public class MousePosList : MonoBehaviour
             if (p.x < mostLeft)
             {
                 mostLeft = p.x;
+
+
                 GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
                 go.GetComponent<SpriteRenderer>().color = Color.green;
             }
@@ -93,11 +96,12 @@ public class MousePosList : MonoBehaviour
             if (p.x > mostRight)
             {
                 mostRight = p.x;
+
+                // Show raw draw input
                 GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
                 go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
-        templatePos = BlackShadePositions.Instance.FindBlackShadePositions();
         pos = Resample(pos.ToArray(), templatePos.Length).ToList();
 
         for (int i = 0; i < pos.Count; i++)
@@ -161,11 +165,14 @@ public class MousePosList : MonoBehaviour
             templatePos[i] = new Vector2(templatePos[i].x, templatePos[i].y - TmostButtom);
 
         }
-        foreach (Vector2 pos in templatePos)
-        {
-            GameObject go = Instantiate(prefab, pos, Quaternion.identity);
-            go.GetComponent<SpriteRenderer>().color = Color.red;
-        }
+
+        // Show template img
+        // foreach (Vector2 pos in templatePos)
+        // {
+        //     GameObject go = Instantiate(prefab, pos, Quaternion.identity);
+        //     go.GetComponent<SpriteRenderer>().color = Color.red;
+        // }
+
         // re-scale
         float TWidth = (TmostRight - TmostLeft);
         float width = (mostRight - mostLeft);
@@ -189,17 +196,16 @@ public class MousePosList : MonoBehaviour
         {
             height += (width - height);
         }
-        float sqrTeamplate = TWidth * THeight;
-        float sqrInput = width * height;
+
         scale = TWidth / width;
-        Debug.Log(scale);
         for (int i = 0; i < pos.Count; i++)
         {
             pos[i] *= scale;
             Vector2 roundPixel = new Vector2(Mathf.Round(pos[i].x), Mathf.Round(pos[i].y));
             pos[i] = roundPixel;
 
-            Instantiate(prefab, new Vector3(pos[i].x, pos[i].y, 0), Quaternion.identity);
+            // Show draw input resampled img
+            //Instantiate(prefab, new Vector3(pos[i].x, pos[i].y, 0), Quaternion.identity);
         }
         pos = RemoveDuplicates(pos.ToArray()).ToList();
         pos = sortList(pos);
@@ -214,13 +220,9 @@ public class MousePosList : MonoBehaviour
             }
         }
         sideLenght = 16;
-        CalcCosSim(pos.ToArray(),
-                    BlackShadePositions.Instance.FindBlackShadePositions(),
-                    sideLenght);
-        
-        // CalcCosSim(pos.ToArray(),
-        //             BlackShadePositions.Instance.FindBlackShadePositions(),
-        //             sideLenght);
+        CosSim.CosineSimilarity(pos.ToArray(),
+                                templatePos,
+                                sideLenght);
     }
 
     private Vector2[] Resample(Vector2[] originalArray, int newLength)
@@ -274,13 +276,13 @@ public class MousePosList : MonoBehaviour
     }
     private void OnEnable()
     {
-        up += TranslatePos;
+        up += ResamplingMouseInputPos;
         down += Draw;
 
     }
     private void OnDisable()
     {
-        up -= TranslatePos;
+        up -= ResamplingMouseInputPos;
         down -= Draw;
 
 
