@@ -6,11 +6,11 @@ using UnityEngine.InputSystem;
 
 public class MousePosList : MonoBehaviour
 {
-    [SerializeField] private Vector2[] inputPos;
+    [SerializeField] private List<Vector2> inputPos = new List<Vector2>();
     public Vector2[] templatePos;
     public float score;
     public int sideLenght;
-    PlayerAction _playerAction => PlayerInputSystem.Instance.playerAction; 
+    PlayerAction _playerAction => PlayerInputSystem.Instance.playerAction;
 
     [Header("Matrix Dimension")]
     public float mostLeft;
@@ -29,15 +29,20 @@ public class MousePosList : MonoBehaviour
     public delegate void CalcCosSim(Vector2[] input, Vector2[] template, int sideLenght);
     public static CalcCosSim calcCosSim;
 
-
-    void Draw(InputAction.CallbackContext context)
+    private void Update()
     {
-        Vector3 mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (!inputPos.ToList().Contains(mosPos))
+        if (_playerAction.Player.DrawInput.IsPressed())
         {
-            mosPos.z = 0;
-            inputPos.ToList().Add(mosPos);
+            Draw();
+        }
 
+    }
+    void Draw()
+    {
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        if (!inputPos.Contains(mousePos))
+        {
+            inputPos.Add(mousePos);
         }
     }
     void ResamplingMouseInputPos(InputAction.CallbackContext context)
@@ -87,9 +92,9 @@ public class MousePosList : MonoBehaviour
                 go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
-        inputPos = Resample(inputPos, templatePos.Length);
+        inputPos = Resample(inputPos.ToArray(), templatePos.Length);
 
-        for (int i = 0; i < inputPos.Length; i++)
+        for (int i = 0; i < inputPos.Count; i++)
         {
             if (mostLeft > 0)
             {
@@ -183,7 +188,7 @@ public class MousePosList : MonoBehaviour
         }
 
         scale = TWidth / width;
-        for (int i = 0; i < inputPos.Length; i++)
+        for (int i = 0; i < inputPos.Count; i++)
         {
             inputPos[i] *= scale;
             Vector2 roundPixel = new Vector2(Mathf.Round(inputPos[i].x), Mathf.Round(inputPos[i].y));
@@ -193,7 +198,7 @@ public class MousePosList : MonoBehaviour
             //Instantiate(prefab, new Vector3(pos[i].x, pos[i].y, 0), Quaternion.identity);
         }
         inputPos = RemoveDuplicates(inputPos);
-        inputPos = sortList(inputPos.ToList()).ToArray();
+        inputPos = sortList(inputPos);
 
 
         newMostRight = float.NegativeInfinity;
@@ -205,12 +210,12 @@ public class MousePosList : MonoBehaviour
             }
         }
         sideLenght = 16;
-        score = CosSim.CosineSimilarity(inputPos,
+        score = CosSim.CosineSimilarity(inputPos.ToArray(),
                                 templatePos,
                                 sideLenght);
     }
 
-    private Vector2[] Resample(Vector2[] originalArray, int newLength)
+    private List<Vector2> Resample(Vector2[] originalArray, int newLength)
     {
         Vector2[] resampledArray = new Vector2[newLength];
 
@@ -227,14 +232,14 @@ public class MousePosList : MonoBehaviour
             resampledArray[i] = interpValue;
         }
 
-        return resampledArray;
+        return resampledArray.ToList();
     }
-    private Vector2[] RemoveDuplicates(Vector2[] array)
+    private List<Vector2> RemoveDuplicates(List<Vector2> list)
     {
         HashSet<Vector2> seenElements = new HashSet<Vector2>();
         List<Vector2> uniqueElements = new List<Vector2>();
 
-        foreach (Vector2 element in array)
+        foreach (Vector2 element in list)
         {
             if (seenElements.Add(element))
             {
@@ -243,11 +248,11 @@ public class MousePosList : MonoBehaviour
             }
         }
 
-        return uniqueElements.ToArray();
+        return uniqueElements;
     }
     private List<Vector2> sortList(List<Vector2> list)
     {
-        
+
         List<Vector2> sortList = list;
         sortList.Sort((v1, v2) =>
         {
@@ -263,21 +268,17 @@ public class MousePosList : MonoBehaviour
     private void OnEnable()
     {
         _playerAction.Player.DrawInput.Enable();
-        _playerAction.Player.DrawInput.performed += Draw;
         _playerAction.Player.DrawInput.canceled += ResamplingMouseInputPos;
 
-        //up += ResamplingMouseInputPos;
-        //down += Draw;
+
 
     }
     private void OnDisable()
     {
         _playerAction.Player.DrawInput.Disable();
-        _playerAction.Player.DrawInput.performed -= Draw;
         _playerAction.Player.DrawInput.canceled -= ResamplingMouseInputPos;
 
-        //up -= ResamplingMouseInputPos;
-        //down -= Draw;
+
     }
 }
 
