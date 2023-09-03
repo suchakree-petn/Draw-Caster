@@ -42,21 +42,6 @@ public class SpellHolder_Q : MonoBehaviour
         }
         return false;
     }
-    // private bool CheakCooldown(Spell spell){
-
-    // }
-
-    // private bool EnemyInRange(GameObject target)
-    // {
-    //     if (Vector2.Distance(transform.root.position, target.transform.position) < _spellList[0].GetRange())
-    //     {
-    //         return true;
-    //     }
-    //     else
-    //     {
-    //         return false;
-    //     }
-    // }
 
     private int CalThreshold(float score)//
     {

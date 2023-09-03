@@ -13,6 +13,7 @@ public class EnemyManager : MonoBehaviour, IDamageable
 
     public void TakeDamage(Elemental damage)
     {
+        Debug.Log("TakeDamage" + damage._damage);
         if (EnemyData._currentHp > 0)
         {
             EnemyData._currentHp -= CalcDamageRecieve(EnemyData, damage);
