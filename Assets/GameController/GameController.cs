@@ -39,8 +39,6 @@ public class GameController : MonoBehaviour
     public static EnemyBehavior OnEnemyDead;
     public static EnemyBehavior OnEnemyTakeDamage;
 
-
-
     private void Update()
     {
         switch (currentState)
@@ -82,8 +80,12 @@ public class GameController : MonoBehaviour
             {
                 GameObject entity = Instantiate(entityToSpawn.entityData.CharactorPrefab,
                 entityToSpawn.transform.position, Quaternion.identity);
+                if(entity.tag != "Player"){
+                    allEnemyInList.Add(entity);
+                }
             }
         }
+
     }
     private bool IsObjectInCameraView(GameObject target)
     {

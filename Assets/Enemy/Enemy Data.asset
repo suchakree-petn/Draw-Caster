@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
-  _currentHp: -88
+  _currentHp: 38002.125
   _level: 0
   _moveSpeed: 0
   _hpBase: 0
@@ -22,10 +22,10 @@ MonoBehaviour:
   _attackMultiplier: 0
   _attackBonus: 0
   _bonusDamage: 0
-  _defenseBase: 0
-  _defenseMultiplier: 0
-  _defenseBonus: 0
-  _bonusDamageReduction: 0
+  _defenseBase: 300
+  _defenseMultiplier: 0.12
+  _defenseBonus: 25
+  _bonusDamageReduction: 0.06
   _fireBonusDamage: 0
   _thunderBonusDamage: 0
   _frostBonusDamage: 0

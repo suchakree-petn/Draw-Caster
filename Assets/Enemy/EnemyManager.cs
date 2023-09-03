@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour, IDamageable
 {
-    public CharactorData enemyData;
-    public Rigidbody2D _playerRb;
+    public EnemyData enemyData;
+    public DamagePopup damagePopup;
 
     public void TakeDamage(Elemental damage)
     {
         if (enemyData._currentHp > 0)
         {
-            enemyData._currentHp -= CalcDamageRecieve(enemyData, damage);
-        }else{
-            GameController.OnEnemyDead?.Invoke(gameObject);
+            float damageDeal = CalcDamageRecieve(enemyData, damage);
+            enemyData._currentHp -= damageDeal;
+            DamagePopup.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
         }
+        GameController.OnEnemyTakeDamage?.Invoke(gameObject);
     }
     float CalcDefense(CharactorData target)
     {
@@ -32,8 +33,10 @@ public class EnemyManager : MonoBehaviour, IDamageable
     }
     private void OnEnable() {
         GameController.OnEnemyDead += enemyData.Dead;
+        GameController.OnEnemyTakeDamage += enemyData.CheckDead;
     }
     private void OnDisable() {
         GameController.OnEnemyDead -= enemyData.Dead;
+        GameController.OnEnemyTakeDamage -= enemyData.CheckDead;
     }
 }
