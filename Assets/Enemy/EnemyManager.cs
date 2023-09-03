@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour, IDamageable
 {
-    public EnemyData enemyData;
+    public CharactorData enemyData;
     public Rigidbody2D _playerRb;
 
     public void TakeDamage(Elemental damage)
