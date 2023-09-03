@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
 
 
     [Header("Entity in scene")]
-    public List<EntityToSpawn> entityToSpawn = new List<EntityToSpawn>();
+    //public List<EntityToSpawn> entityToSpawn = new List<EntityToSpawn>();
     public List<GameObject> allEnemyInList = new List<GameObject>();
     public List<GameObject> allEnemyInScene = new List<GameObject>();
 
@@ -74,17 +74,17 @@ public class GameController : MonoBehaviour
         Instance = this;
     }
 
-    void InitialEntity()
-    {
-        foreach (EntityToSpawn entityToSpawn in entityToSpawn)
-        {
-            if (entityToSpawn != null)
-            {
-                GameObject entity = Instantiate(entityToSpawn.entityData.CharactorPrefab,
-                entityToSpawn.transform.position, Quaternion.identity);
-            }
-        }
-    }
+    // void InitialEntity()
+    // {
+    //     foreach (EntityToSpawn entityToSpawn in entityToSpawn)
+    //     {
+    //         if (entityToSpawn != null)
+    //         {
+    //             GameObject entity = Instantiate(entityToSpawn.entityData.CharactorPrefab,
+    //             entityToSpawn.transform.position, Quaternion.identity);
+    //         }
+    //     }
+    // }
     private bool IsObjectInCameraView(GameObject target)
     {
         if (target == null)
@@ -131,24 +131,24 @@ public class GameController : MonoBehaviour
     }
     private void OnEnable()
     {
-        OnBeforeStart += InitialEntity;
+        //OnBeforeStart += InitialEntity;
         OnEnemyDead += RemoveEnemyDead;
     }
     private void OnDisable()
     {
-        OnBeforeStart += InitialEntity;
+        //OnBeforeStart += InitialEntity;
         OnEnemyDead -= RemoveEnemyDead;
     }
 }
 
-[Serializable]
-public class EntityToSpawn
-{
-    public CharactorData entityData;
-    public Transform transform;
-    public EntityToSpawn(CharactorData entityData, Transform transform)
-    {
-        this.entityData = entityData;
-        this.transform = transform;
-    }
-}
+// [Serializable]
+// public class EntityToSpawn
+// {
+//     public CharactorData entityData;
+//     public Transform transform;
+//     public EntityToSpawn(CharactorData entityData, Transform transform)
+//     {
+//         this.entityData = entityData;
+//         this.transform = transform;
+//     }
+// }
