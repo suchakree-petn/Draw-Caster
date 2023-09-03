@@ -11,9 +11,12 @@ public class SpellHolder_Q : MonoBehaviour
     [SerializeField] private DrawInput_Q _mousePosList;
     public delegate void FinishDraw();
     public static FinishDraw finishDraw;
-    private void Awake()
+    private void Start()
     {
         _playerAction = PlayerInputSystem.Instance.playerAction;
+        _playerAction.Player.Spell_Q.Enable();
+        _playerAction.Player.Spell_Q.canceled += ReceiveDrawInput;
+        finishDraw = Cast_Q;
     }
     public void ReceiveDrawInput(InputAction.CallbackContext context)
     {
@@ -147,9 +150,7 @@ public class SpellHolder_Q : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerAction.Player.Spell_Q.Enable();
-        _playerAction.Player.Spell_Q.canceled += ReceiveDrawInput;
-        finishDraw = Cast_Q;
+        
 
     }
     private void OnDisable()

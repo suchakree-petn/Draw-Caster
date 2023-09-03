@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
-  _currentHp: 38002.125
+  _currentHp: 170690.94
   _level: 0
   _moveSpeed: 0
   _hpBase: 0

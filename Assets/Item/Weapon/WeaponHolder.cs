@@ -7,22 +7,26 @@ public class WeaponHolder : MonoBehaviour
 {
     public Weapon weapon;
     public bool isReady = true;
-    [SerializeField] private PlayerAction playerActions => PlayerInputSystem.Instance.playerAction;
+    [SerializeField] private PlayerAction playerActions;
 
-
-    // Draws a red line from the the world-space origin to the point (1, 0, 0)
-    void Update()
+    private void Start()
     {
-        Debug.DrawLine(transform.root.position, Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
-    }
-    private void OnEnable()
-    {
+        playerActions = PlayerInputSystem.Instance.playerAction;
+        
         playerActions.Player.PressAttack.Enable();
         playerActions.Player.PressAttack.performed += PressAttack;
 
         playerActions.Player.HoldAttack.Enable();
         playerActions.Player.HoldAttack.performed += OnStartAttack;
         playerActions.Player.HoldAttack.canceled += OnEndAttack;
+    }
+    void Update()
+    {
+        Debug.DrawLine(transform.root.position, Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
+    }
+    private void OnEnable()
+    {
+        
 
 
     }

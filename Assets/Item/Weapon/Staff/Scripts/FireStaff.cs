@@ -59,6 +59,7 @@ public class FireStaff : Weapon
         // Calc spread angle
         Rigidbody2D fireBallRB = fireBall.GetComponent<Rigidbody2D>();
         Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
         float randomSpread = Random.Range(-spreadAngle, spreadAngle) * Mathf.Deg2Rad;
         Vector2 spawnPos = new Vector2(Mathf.Cos(randomSpread), Mathf.Sin(randomSpread));
 
@@ -66,8 +67,8 @@ public class FireStaff : Weapon
         if (fireBallRB != null)
         {
             Vector2 direction = mousePos - (Vector2)transform.position;
-            //fireBallRB.rotation = randomSpread;
-            fireBallRB.AddForce((direction + new Vector2(randomSpread, randomSpread)).normalized * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
+            Debug.Log("2: " + new Vector2(direction.x + randomSpread, direction.y + randomSpread).normalized);
+            fireBallRB.AddForce(new Vector2(direction.x + randomSpread, direction.y + randomSpread).normalized * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
             fireBallRB.transform.up = direction;
         }
         else

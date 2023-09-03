@@ -10,11 +10,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerAction playerAction;
     public Vector2 movement;
 
-    private void Awake()
+    private void Start()
     {
         playerAction = PlayerInputSystem.Instance.playerAction;
         playerData = transform.GetComponentInParent<PlayerManager>().playerData;
         playerRb = transform.GetComponentInParent<Rigidbody2D>();
+        playerAction.Player.Movement.Enable();
+
     }
 
 
@@ -25,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnEnable()
     {
-        playerAction.Player.Movement.Enable();
     }
     private void OnDisable()
     {
