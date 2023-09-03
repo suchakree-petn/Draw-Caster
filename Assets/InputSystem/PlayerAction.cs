@@ -58,7 +58,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""name"": ""DrawInput"",
                     ""type"": ""Value"",
                     ""id"": ""b356e6ee-d978-4ecd-ac76-ed04e4745baa"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=0.1)"",
                     ""initialStateCheck"": true
