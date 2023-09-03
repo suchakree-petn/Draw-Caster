@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class CharactorData : ScriptableObject
 {
-
-
    [Header("Info")]
    public string _name;
    public float _currentHp;
@@ -38,5 +37,7 @@ public class CharactorData : ScriptableObject
       _name = "Default Charactor";
 
    }
+   public virtual void Dead(GameObject deadCharactor){
 
+   }
 }

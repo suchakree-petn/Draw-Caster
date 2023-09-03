@@ -24,7 +24,6 @@ public class Spell : ScriptableObject
 
     [Header("Draw Input")]
     public Texture2D _templateImage;
-    public GameObject _checkInputPrefab;
     public float _lowThreshold;
     public float _midThreshold;
 

@@ -8,10 +8,6 @@ public class PlayerManager : MonoBehaviour, IDamageable
     public PlayerData playerData;
     public Rigidbody2D _playerRb;
 
-    void IntialStats(){
-        
-    }
-
     public void TakeDamage(Elemental damage)
     {
         if (playerData._currentHp > 0)

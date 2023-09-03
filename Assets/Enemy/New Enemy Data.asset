@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Enemy Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
-  _currentHp: 3225
+  _currentHp: -88
   _level: 0
   _moveSpeed: 0
   _hpBase: 0
@@ -30,6 +30,4 @@ MonoBehaviour:
   _thunderBonusDamage: 0
   _frostBonusDamage: 0
   _windBonusDamage: 0
-  CharactorPrefab: {fileID: 0}
-  ManaPoint: 0
-  CurrentWeapon: {fileID: 0}
+  CharactorPrefab: {fileID: 8032879043305235568, guid: e21aa0c3aca997b4aafa73c4d20a9baa, type: 3}

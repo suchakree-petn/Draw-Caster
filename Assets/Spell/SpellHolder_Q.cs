@@ -8,29 +8,37 @@ public class SpellHolder_Q : MonoBehaviour
 {
     [SerializeField] private Spell spell_Q;
     [SerializeField] private PlayerAction _playerAction;
-
+    [SerializeField] private DrawInput_Q _mousePosList;
+    public delegate void FinishDraw();
+    public static FinishDraw finishDraw;
     private void Awake()
     {
         _playerAction = PlayerInputSystem.Instance.playerAction;
     }
-    public void Cast_Q(InputAction.CallbackContext context)
+    public void ReceiveDrawInput(InputAction.CallbackContext context)
     {
-        GameObject checkInput = Instantiate(spell_Q._checkInputPrefab, transform);
-        MousePosList calInput = checkInput.GetComponent<MousePosList>();
-        calInput.templatePos = BlackShadePositions.FindBlackShadePositions(spell_Q._templateImage);
-
         if (CheckMana(spell_Q) && spell_Q._isReadyToCast)
         {
-            int castLevel = CalThreshold(calInput.score);
-            float delay = spell_Q._delayTime;
-            int amount = spell_Q.GetAmount(castLevel);
-
-            GameObject[] enemyList = GameController.Instance.GetAllEnemyInScene();
-            StartCoroutine(RepeatCast(castLevel, delay, amount, enemyList));
-
-            spell_Q._isReadyToCast = false;
-            StartCoroutine(Cooldown(spell_Q));
+            _mousePosList.gameObject.SetActive(true);
+            _mousePosList.inputPos.Clear();
+            _mousePosList.templatePos = BlackShadePositions.FindBlackShadePositions(spell_Q._templateImage);
         }
+    }
+    public void Cast_Q()
+    {
+        int castLevel = CalThreshold(_mousePosList.score);
+        Debug.Log("score " + _mousePosList.score);
+        Debug.Log("castLecel " + castLevel);
+        _mousePosList.gameObject.SetActive(false);
+        float delay = spell_Q._delayTime;
+        int amount = spell_Q.GetAmount(castLevel);
+
+        GameObject[] enemyList = GameController.Instance.GetAllEnemyInScene();
+        StartCoroutine(RepeatCast(castLevel, delay, amount, enemyList));
+
+        spell_Q._isReadyToCast = false;
+        StartCoroutine(Cooldown(spell_Q));
+
     }
 
     private bool CheckMana(Spell spell)
@@ -66,13 +74,6 @@ public class SpellHolder_Q : MonoBehaviour
             Debug.Log("CastThershold ERROR");
         }
         return castLevel;
-    }
-
-    private void InitialDrawInput()
-    {
-        GameObject checkInput = Instantiate(spell_Q._checkInputPrefab, transform);
-        MousePosList calInput = checkInput.GetComponent<MousePosList>();
-        calInput.templatePos = BlackShadePositions.FindBlackShadePositions(spell_Q._templateImage);
     }
 
     IEnumerator RepeatCast(int castLevel, float delay, int amount, GameObject[] enemyList)
@@ -113,7 +114,7 @@ public class SpellHolder_Q : MonoBehaviour
                 Debug.Log("ERROR!! Cast Level More Than 3");
                 break;
         }
-        
+
         _amount--;
         List<GameObject> temp = _enemyList.ToList();
         temp.Remove(enemyTarget);
@@ -147,12 +148,15 @@ public class SpellHolder_Q : MonoBehaviour
     private void OnEnable()
     {
         _playerAction.Player.Spell_Q.Enable();
-        _playerAction.Player.Spell_Q.canceled += Cast_Q;
+        _playerAction.Player.Spell_Q.canceled += ReceiveDrawInput;
+        finishDraw = Cast_Q;
+
     }
     private void OnDisable()
     {
         _playerAction.Player.Spell_Q.Disable();
-        _playerAction.Player.Spell_Q.canceled -= Cast_Q;
+        _playerAction.Player.Spell_Q.canceled -= ReceiveDrawInput;
+        finishDraw -= Cast_Q;
     }
 
 

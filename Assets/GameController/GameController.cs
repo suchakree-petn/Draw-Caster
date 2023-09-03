@@ -5,24 +5,31 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public CharactorData player;
+    public CharactorData enemy;
     public List<GameObject> allEnemyInList = new List<GameObject>();
     public List<GameObject> allEnemyInScene = new List<GameObject>();
     public static GameController Instance;
+    public delegate void EnemyBehavior(GameObject enemy);
+    public static EnemyBehavior OnEnemyDead;
+    void RemoveEnemyDead(GameObject enemy){
+        allEnemyInList.Remove(enemy);
+        allEnemyInScene.Remove(enemy);
+    }
     void Awake(){
         Instance = this;
     }
     void Start()
     {
         Instantiate(player.CharactorPrefab);
+        GameObject _enemy = Instantiate(enemy.CharactorPrefab);
+        allEnemyInList.Add(_enemy);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private bool IsObjectInCameraView(GameObject target)
     {
+        if(target == null){
+            return false;
+        }
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
@@ -57,5 +64,11 @@ public class GameController : MonoBehaviour
             }
         }
         return allEnemyInScene.ToArray();
+    }
+    private void OnEnable() {
+        OnEnemyDead += RemoveEnemyDead;
+    }
+    private void OnDisable() {
+        OnEnemyDead -= RemoveEnemyDead;
     }
 }

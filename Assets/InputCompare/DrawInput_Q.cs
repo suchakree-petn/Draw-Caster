@@ -4,9 +4,9 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
 
-public class MousePosList : MonoBehaviour
+public class DrawInput_Q : MonoBehaviour
 {
-    [SerializeField] private List<Vector2> inputPos = new List<Vector2>();
+    public List<Vector2> inputPos = new List<Vector2>();
     public Vector2[] templatePos;
     public float score;
     public int sideLenght;
@@ -55,8 +55,8 @@ public class MousePosList : MonoBehaviour
                 mostLeft = p.x;
 
 
-                GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
-                go.GetComponent<SpriteRenderer>().color = Color.green;
+                // GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
+                // go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
         mostButtom = float.PositiveInfinity;
@@ -65,8 +65,8 @@ public class MousePosList : MonoBehaviour
             if (p.y < mostButtom)
             {
                 mostButtom = p.y;
-                GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
-                go.GetComponent<SpriteRenderer>().color = Color.green;
+                // GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
+                // go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
         mostAbove = float.NegativeInfinity;
@@ -75,8 +75,8 @@ public class MousePosList : MonoBehaviour
             if (p.y > mostAbove)
             {
                 mostAbove = p.y;
-                GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
-                go.GetComponent<SpriteRenderer>().color = Color.green;
+                // GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
+                // go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
 
@@ -88,8 +88,8 @@ public class MousePosList : MonoBehaviour
                 mostRight = p.x;
 
                 // Show raw draw input
-                GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
-                go.GetComponent<SpriteRenderer>().color = Color.green;
+                // GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
+                // go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
         inputPos = Resample(inputPos.ToArray(), templatePos.Length);
@@ -213,6 +213,7 @@ public class MousePosList : MonoBehaviour
         score = CosSim.CosineSimilarity(inputPos.ToArray(),
                                 templatePos,
                                 sideLenght);
+        SpellHolder_Q.finishDraw?.Invoke();
     }
 
     private List<Vector2> Resample(Vector2[] originalArray, int newLength)
