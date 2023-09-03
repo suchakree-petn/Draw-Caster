@@ -40,4 +40,7 @@ public class CharactorData : ScriptableObject
    public virtual void Dead(GameObject deadCharactor){
 
    }
+   public virtual void CheckDead(GameObject charactor){
+      
+   }
 }

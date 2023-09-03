@@ -434,25 +434,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 894491475397668628, guid: 07ade20c3f977c5428ab6a39c3e3757a, type: 3}
-      propertyPath: allEnemyInList.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 894491475397668628, guid: 07ade20c3f977c5428ab6a39c3e3757a, type: 3}
-      propertyPath: allEnemyInList.Array.data[0]
+      propertyPath: entityToSpawn.Array.data[1].transform
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8032879043305235564, guid: e21aa0c3aca997b4aafa73c4d20a9baa, type: 3}
     - target: {fileID: 894491475397668628, guid: 07ade20c3f977c5428ab6a39c3e3757a, type: 3}
-      propertyPath: allEnemyInList.Array.data[1]
+      propertyPath: entityToSpawn.Array.data[1].entityData
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 894491475397668628, guid: 07ade20c3f977c5428ab6a39c3e3757a, type: 3}
-      propertyPath: allEnemyInList.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 894491475397668628, guid: 07ade20c3f977c5428ab6a39c3e3757a, type: 3}
-      propertyPath: allEnemyInList.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 803916aa81a830e479f695fc0bfcc0b1, type: 2}
     - target: {fileID: 894491475397668629, guid: 07ade20c3f977c5428ab6a39c3e3757a, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -518,7 +506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1976442419
 Transform:
   m_ObjectHideFlags: 0

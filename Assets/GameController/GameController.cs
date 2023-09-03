@@ -39,8 +39,6 @@ public class GameController : MonoBehaviour
     public static EnemyBehavior OnEnemyDead;
     public static EnemyBehavior OnEnemyTakeDamage;
 
-
-
     private void Update()
     {
         switch (currentState)

@@ -9,4 +9,12 @@ public class EnemyData : CharactorData
         base.Dead(deadCharactor);
         Destroy(deadCharactor);
     }
+    public override void CheckDead(GameObject charactor){
+        base.CheckDead(charactor);
+        Debug.Log("CheckDead");
+      if(_currentHp <=0){
+        GameController.OnEnemyDead?.Invoke(charactor);
+      }
+    }
+    
 }
