@@ -15,7 +15,6 @@ public class Spell : ScriptableObject
     public ElementalType _elementalType;
     public float _cooldown;
     public float _manaCost;
-    public bool _isReadyToCast;
     public float _delayTime;
     public int _amountLevel1;
     public int _amountLevel2;
@@ -54,7 +53,7 @@ public enum SpellType
 {
     Default,
     QuickCast,
-    Consentrade
+    Concentrate
 }
 
 

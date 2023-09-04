@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class SpellHolder_Q : MonoBehaviour
 {
     [SerializeField] private Spell spell_Q;
+    [SerializeField] private bool _isReadyToCast;
+
     [SerializeField] private PlayerAction _playerAction;
     [SerializeField] private DrawInput_Q _mousePosList;
     public delegate void FinishDraw();
     public static FinishDraw finishDraw;
-    private void Start()
-    {
-        _playerAction = PlayerInputSystem.Instance.playerAction;
-        _playerAction.Player.Spell_Q.Enable();
-        _playerAction.Player.Spell_Q.canceled += ReceiveDrawInput;
-        finishDraw = Cast_Q;
-    }
+
     public void ReceiveDrawInput(InputAction.CallbackContext context)
     {
-        if (CheckMana(spell_Q) && spell_Q._isReadyToCast)
+        if (CheckMana(spell_Q) && _isReadyToCast)
         {
             _mousePosList.gameObject.SetActive(true);
             _mousePosList.inputPos.Clear();
@@ -32,14 +29,13 @@ public class SpellHolder_Q : MonoBehaviour
         int castLevel = CalThreshold(_mousePosList.score);
         Debug.Log("score " + _mousePosList.score);
         Debug.Log("castLecel " + castLevel);
-        _mousePosList.gameObject.SetActive(false);
         float delay = spell_Q._delayTime;
         int amount = spell_Q.GetAmount(castLevel);
 
         GameObject[] enemyList = GameController.Instance.GetAllEnemyInScene();
         StartCoroutine(RepeatCast(castLevel, delay, amount, enemyList));
 
-        spell_Q._isReadyToCast = false;
+        _isReadyToCast = false;
         StartCoroutine(Cooldown(spell_Q));
 
     }
@@ -129,7 +125,7 @@ public class SpellHolder_Q : MonoBehaviour
     IEnumerator Cooldown(Spell spell)
     {
         yield return new WaitForSeconds(spell._cooldown);
-        spell._isReadyToCast = true;
+        _isReadyToCast = true;
     }
 
     private GameObject RandomTransform()
@@ -148,9 +144,22 @@ public class SpellHolder_Q : MonoBehaviour
         return randomTransform;
     }
 
+    void ShowDrawScore()
+    {
+        GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text = "Draw Score: " + (_mousePosList.score * 100).ToString("F2");
+        GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "Cast Level: " + CalThreshold(_mousePosList.score);
+        _mousePosList.gameObject.SetActive(false);
+
+    }
+
     private void OnEnable()
     {
-        
+        _playerAction = PlayerInputSystem.Instance.playerAction;
+
+        _playerAction.Player.Spell_Q.Enable();
+        _playerAction.Player.Spell_Q.canceled += ReceiveDrawInput;
+        finishDraw += Cast_Q;
+        finishDraw += ShowDrawScore;
 
     }
     private void OnDisable()
@@ -158,6 +167,10 @@ public class SpellHolder_Q : MonoBehaviour
         _playerAction.Player.Spell_Q.Disable();
         _playerAction.Player.Spell_Q.canceled -= ReceiveDrawInput;
         finishDraw -= Cast_Q;
+        finishDraw -= ShowDrawScore;
+
+        _playerAction = null;
+
     }
 
 

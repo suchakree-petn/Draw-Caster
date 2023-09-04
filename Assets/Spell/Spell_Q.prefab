@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spell_Q: {fileID: 11400000, guid: 19f8c3a3adac91d44b5218fa27db8ce0, type: 2}
+  _isReadyToCast: 1
   _mousePosList: {fileID: 3785640215921825597}
 --- !u!1001 &709017134183652292
 PrefabInstance:
