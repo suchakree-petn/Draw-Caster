@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382b1f0c99fef804080d0dd3c27f61ab, type: 3}
+  m_Name: Enemy Data
+  m_EditorClassIdentifier: 
+  _name: Default Charactor
+  _maxHp: 1220
+  _level: 0
+  _moveSpeed: 0
+  _hpBase: 1000
+  _hpMultiplier: 0.2
+  _hpBonus: 20
+  _attackBase: 0
+  _attackMultiplier: 0
+  _attackBonus: 0
+  _bonusDamage: 0
+  _defenseBase: 800
+  _defenseMultiplier: 0.25
+  _defenseBonus: 400
+  _bonusDamageReduction: 0.1
+  _fireBonusDamage: 0
+  _thunderBonusDamage: 0
+  _frostBonusDamage: 0
+  _windBonusDamage: 0
+  CharactorPrefab: {fileID: 8032879043305235568, guid: e21aa0c3aca997b4aafa73c4d20a9baa, type: 3}
