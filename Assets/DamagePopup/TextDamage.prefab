@@ -78,7 +78,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1975194751
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 99
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7548139379776026722
@@ -185,6 +185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3600ab4d263a40d4ba65dec5b7059051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textMesh: {fileID: 0}
+  textMesh: {fileID: 7548139379776026722}
   disappearTime: 0.3
   textColor: {r: 0, g: 0, b: 0, a: 0}

@@ -12,16 +12,12 @@ public class DamagePopup : MonoBehaviour
 
     public static void CreateTextDamage(Vector3 position, float damage, ElementalType elementalType)
     {
-        Transform damagePopTransform = Instantiate(TextDamageAsset.Instance.textDamagePrefab, position, Quaternion.identity);
+        Transform damagePopTransform = Instantiate(TextDamageAsset.Instance.textDamagePrefab, position, Quaternion.identity,TextDamageAsset.Instance.transform);
         DamagePopup damagePopup = damagePopTransform.GetComponent<DamagePopup>();
         Debug.Log(damagePopup);
         damagePopup.SetDamagePopup(damage, elementalType);
 
         // return damagePopup;
-    }
-    void Awake()
-    {
-        textMesh = transform.GetComponent<TextMeshPro>();
     }
 
     public void SetDamagePopup(float damage, ElementalType elementalType)
