@@ -13,6 +13,8 @@ public class LightningStorm : Spell
     [SerializeField] private GameObject _lightningStormPrefab;
     public override void Cast1(GameObject player, GameObject target)
     {
+        if (player == null && target == null) { return; }
+
         base.Cast1(player, target);
         Vector2 spawnPos = target.transform.position;
         float offSet = 2f;
@@ -21,13 +23,15 @@ public class LightningStorm : Spell
         attackHit.elementalDamage =
         Elemental.DamageCalculation(_elementalType,
                         player.GetComponent<PlayerManager>().playerData,
-                        _baseSkillDamageMultiplier*_damageSpellLevelMultiplier1);
+                        _baseSkillDamageMultiplier * _damageSpellLevelMultiplier1);
         Debug.Log(attackHit.elementalDamage._damage + ", " + attackHit.elementalDamage._elementalType);
         Debug.Log("Cast1");
         // เล่นsound
     }
     public override void Cast2(GameObject player, GameObject target)
     {
+        if (player == null && target == null) { return; }
+
         base.Cast2(player, target);
         Vector2 spawnPos = target.transform.position;
         float offSet = 2f;
@@ -36,13 +40,15 @@ public class LightningStorm : Spell
         attackHit.elementalDamage =
         Elemental.DamageCalculation(_elementalType,
                         player.GetComponent<PlayerManager>().playerData,
-                        _baseSkillDamageMultiplier*_damageSpellLevelMultiplier2);
+                        _baseSkillDamageMultiplier * _damageSpellLevelMultiplier2);
         Debug.Log(attackHit.elementalDamage._damage + ", " + attackHit.elementalDamage._elementalType);
         Debug.Log("Cast2");
         // เล่นsound
     }
     public override void Cast3(GameObject player, GameObject target)
     {
+        if (player == null && target == null) { return; }
+
         base.Cast3(player, target);
         Vector2 spawnPos = target.transform.position;
         float offSet = 2f;
@@ -51,7 +57,7 @@ public class LightningStorm : Spell
         attackHit.elementalDamage =
         Elemental.DamageCalculation(_elementalType,
                         player.GetComponent<PlayerManager>().playerData,
-                        _baseSkillDamageMultiplier*_damageSpellLevelMultiplier3);
+                        _baseSkillDamageMultiplier * _damageSpellLevelMultiplier3);
         Debug.Log(attackHit.elementalDamage._damage + ", " + attackHit.elementalDamage._elementalType);
         Debug.Log("Cast3");
         // เล่นsound
