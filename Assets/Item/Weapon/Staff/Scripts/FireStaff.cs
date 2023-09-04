@@ -61,14 +61,16 @@ public class FireStaff : Weapon
         Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
         float randomSpread = Random.Range(-spreadAngle, spreadAngle) * Mathf.Deg2Rad;
-        Vector2 spawnPos = new Vector2(Mathf.Cos(randomSpread), Mathf.Sin(randomSpread));
+        //Vector2 spawnPos = new Vector2(Mathf.Cos(randomSpread), Mathf.Sin(randomSpread));
 
         // Shoot it
         if (fireBallRB != null)
         {
             Vector2 direction = mousePos - (Vector2)transform.position;
-            Debug.Log("2: " + new Vector2(direction.x + randomSpread, direction.y + randomSpread).normalized);
-            fireBallRB.AddForce(new Vector2(direction.x + randomSpread, direction.y + randomSpread).normalized * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
+            fireBallRB.AddForce(
+                new Vector2(direction.x + randomSpread, direction.y + randomSpread).normalized 
+                * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse
+                );
             fireBallRB.transform.up = direction;
         }
         else
