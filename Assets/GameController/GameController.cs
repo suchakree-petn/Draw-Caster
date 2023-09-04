@@ -27,9 +27,8 @@ public class GameController : MonoBehaviour
 
 
     [Header("Entity in scene")]
-    //public List<EntityToSpawn> entityToSpawn = new List<EntityToSpawn>();
-    public List<GameObject> allEnemyInList = new List<GameObject>();
     public List<GameObject> allEnemyInScene = new List<GameObject>();
+    public List<GameObject> allEnemyInCamera = new List<GameObject>();
 
     public delegate void PlayerBehavior(GameObject enemy);
     public static PlayerBehavior OnPlayerDead;
@@ -64,25 +63,15 @@ public class GameController : MonoBehaviour
     }
     void RemoveEnemyDead(GameObject enemy)
     {
-        allEnemyInList.Remove(enemy);
         allEnemyInScene.Remove(enemy);
+        allEnemyInCamera.Remove(enemy);
     }
     void Awake()
     {
         Instance = this;
     }
 
-    // void InitialEntity()
-    // {
-    //     foreach (EntityToSpawn entityToSpawn in entityToSpawn)
-    //     {
-    //         if (entityToSpawn != null)
-    //         {
-    //             GameObject entity = Instantiate(entityToSpawn.entityData.CharactorPrefab,
-    //             entityToSpawn.transform.position, Quaternion.identity);
-    //         }
-    //     }
-    // }
+
     private bool IsObjectInCameraView(GameObject target)
     {
         if (target == null)
@@ -115,38 +104,37 @@ public class GameController : MonoBehaviour
         return bounds.min.x < cameraMax.x && bounds.max.x > cameraMin.x &&
                bounds.min.y < cameraMax.y && bounds.max.y > cameraMin.y;
     }
+
+    void AddAllEnemyInSceneToList()
+    {
+        GameObject[] allEnemyInScene = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in allEnemyInScene)
+        {
+            this.allEnemyInScene.Add(enemy);
+        }
+    }
     public GameObject[] GetAllEnemyInScene()
     {
-        allEnemyInScene.Clear();
-        foreach (GameObject enemy in allEnemyInList)
+        allEnemyInCamera.Clear();
+        foreach (GameObject enemy in allEnemyInScene)
         {
             if (IsObjectInCameraView(enemy))
             {
-                allEnemyInScene.Add(enemy);
+                allEnemyInCamera.Add(enemy);
             }
         }
-        return allEnemyInScene.ToArray();
+        return allEnemyInCamera.ToArray();
     }
     private void OnEnable()
     {
-        //OnBeforeStart += InitialEntity;
+        OnBeforeStart += AddAllEnemyInSceneToList;
         OnEnemyDead += RemoveEnemyDead;
     }
     private void OnDisable()
     {
-        //OnBeforeStart += InitialEntity;
+        OnBeforeStart -= AddAllEnemyInSceneToList;
         OnEnemyDead -= RemoveEnemyDead;
     }
 }
 
-// [Serializable]
-// public class EntityToSpawn
-// {
-//     public CharactorData entityData;
-//     public Transform transform;
-//     public EntityToSpawn(CharactorData entityData, Transform transform)
-//     {
-//         this.entityData = entityData;
-//         this.transform = transform;
-//     }
-// }
+
