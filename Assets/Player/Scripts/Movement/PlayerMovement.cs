@@ -12,10 +12,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        playerAction = PlayerInputSystem.Instance.playerAction;
         playerData = transform.GetComponentInParent<PlayerManager>().playerData;
         playerRb = transform.GetComponentInParent<Rigidbody2D>();
-        playerAction.Player.Movement.Enable();
 
     }
 
@@ -27,10 +25,15 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnEnable()
     {
+        playerAction = PlayerInputSystem.Instance.playerAction;
+        playerAction.Player.Movement.Enable();
+
     }
     private void OnDisable()
     {
         playerAction.Player.Movement.Disable();
+        playerAction = null;
+
     }
 
 }
