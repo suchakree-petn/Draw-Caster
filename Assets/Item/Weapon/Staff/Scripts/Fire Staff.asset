@@ -20,8 +20,8 @@ MonoBehaviour:
   _isStackable: 0
   itemPrefab: {fileID: 0}
   elementType: 1
-  activeRate: 0.5
-  _baseSkillDamageMultiplier: 0.3
+  activeRate: 0.15
+  _baseSkillDamageMultiplier: 0.05
   spreadAngle: 60
   fireBallMoveSpeed: 1600
   fireBallAmount: 1

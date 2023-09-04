@@ -14,7 +14,7 @@ public class EnemyData : CharactorData
   {
     base.CheckDead(charactor);
     Debug.Log("CheckDead");
-    if (_maxHp <= 0)
+    if (charactor.GetComponent<EnemyManager>().currentHp <= 0)
     {
       GameController.OnEnemyDead?.Invoke(charactor);
     }
