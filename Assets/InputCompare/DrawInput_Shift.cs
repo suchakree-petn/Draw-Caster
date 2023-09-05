@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.InputSystem;
 
-public class DrawInput_Q : MonoBehaviour
+public class DrawInput_Shift : MonoBehaviour
 {
+    public Sprite UI_image;
+    public Image templateUI;
     public List<Vector2> inputPos = new List<Vector2>();
     public Vector2[] templatePos;
     public float score;
@@ -213,7 +216,7 @@ public class DrawInput_Q : MonoBehaviour
         score = CosSim.CosineSimilarity(inputPos.ToArray(),
                                 templatePos,
                                 sideLenght);
-        SpellHolder_Q.finishDraw?.Invoke();
+        SpellHolder_Shift.finishDraw?.Invoke();
     }
 
     private List<Vector2> Resample(Vector2[] originalArray, int newLength)
@@ -268,18 +271,15 @@ public class DrawInput_Q : MonoBehaviour
     }
     private void OnEnable()
     {
+        templateUI.sprite = UI_image;
         _playerAction.Player.DrawInput.Enable();
         _playerAction.Player.DrawInput.canceled += ResamplingMouseInputPos;
-
-
-
     }
     private void OnDisable()
     {
+        templateUI.sprite = null;
         _playerAction.Player.DrawInput.Disable();
         _playerAction.Player.DrawInput.canceled -= ResamplingMouseInputPos;
-
-
     }
 }
 

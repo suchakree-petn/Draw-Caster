@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,8 +12,6 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         playerData = transform.GetComponentInParent<PlayerManager>().playerData;
-        playerRb = transform.GetComponentInParent<Rigidbody2D>();
-
     }
 
 

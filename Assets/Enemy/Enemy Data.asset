@@ -23,7 +23,7 @@ MonoBehaviour:
   _attackMultiplier: 0
   _attackBonus: 0
   _bonusDamage: 0
-  _defenseBase: 800
+  _defenseBase: 100
   _defenseMultiplier: 0.25
   _defenseBonus: 400
   _bonusDamageReduction: 0.1
