@@ -155,22 +155,34 @@ public class SpellHolder_Q : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerAction = PlayerInputSystem.Instance.playerAction;
+        if (spell_Q != null)
+        {
+            _playerAction = PlayerInputSystem.Instance.playerAction;
 
-        _playerAction.Player.Spell_Q.Enable();
-        _playerAction.Player.Spell_Q.canceled += ReceiveDrawInput;
-        finishDraw += Cast_Q;
-        finishDraw += ShowDrawScore;
+            _playerAction.Player.Spell_Q.Enable();
+            _playerAction.Player.Spell_Q.canceled += ReceiveDrawInput;
+            finishDraw += Cast_Q;
+            finishDraw += ShowDrawScore;
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+
 
     }
     private void OnDisable()
     {
-        _playerAction.Player.Spell_Q.Disable();
-        _playerAction.Player.Spell_Q.canceled -= ReceiveDrawInput;
-        finishDraw -= Cast_Q;
-        finishDraw -= ShowDrawScore;
+        if (spell_Q != null)
+        {
+            _playerAction.Player.Spell_Q.Disable();
+            _playerAction.Player.Spell_Q.canceled -= ReceiveDrawInput;
+            finishDraw -= Cast_Q;
+            finishDraw -= ShowDrawScore;
 
-        //_playerAction = null;
+            //_playerAction = null;
+        }
+
 
     }
 

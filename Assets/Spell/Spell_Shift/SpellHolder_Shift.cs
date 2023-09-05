@@ -155,22 +155,34 @@ public class SpellHolder_Shift : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerAction = PlayerInputSystem.Instance.playerAction;
+        if (spell_Shift != null)
+        {
+            _playerAction = PlayerInputSystem.Instance.playerAction;
 
-        _playerAction.Player.Spell_Shift.Enable();
-        _playerAction.Player.Spell_Shift.canceled += ReceiveDrawInput;
-        finishDraw += Cast_Shift;
-        finishDraw += ShowDrawScore;
+            _playerAction.Player.Spell_Shift.Enable();
+            _playerAction.Player.Spell_Shift.canceled += ReceiveDrawInput;
+            finishDraw += Cast_Shift;
+            finishDraw += ShowDrawScore;
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+
 
     }
     private void OnDisable()
     {
-        _playerAction.Player.Spell_Shift.Disable();
-        _playerAction.Player.Spell_Shift.canceled -= ReceiveDrawInput;
-        finishDraw -= Cast_Shift;
-        finishDraw -= ShowDrawScore;
+        if (spell_Shift != null)
+        {
+            _playerAction.Player.Spell_Shift.Disable();
+            _playerAction.Player.Spell_Shift.canceled -= ReceiveDrawInput;
+            finishDraw -= Cast_Shift;
+            finishDraw -= ShowDrawScore;
 
-        //_playerAction = null;
+            //_playerAction = null; 
+        }
+
 
     }
 

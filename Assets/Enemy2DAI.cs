@@ -94,7 +94,7 @@ public class Enemy2DAI : MonoBehaviour
     {
         // Move towards the target
         Vector2 direction = target.position - transform.position;
-        float step = speed * Time.deltaTime;
+        float step = speed * Time.deltaTime * 1.5f;
         transform.position = Vector2.MoveTowards(transform.position, target.position, step);
 
         // Condition to stop chasing. For this example, let's use a distance check.
