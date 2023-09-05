@@ -77,8 +77,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1975194751
-  m_SortingLayer: 3
+  m_SortingLayerID: -105541197
+  m_SortingLayer: 4
   m_SortingOrder: 99
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7548139379776026722
@@ -104,7 +104,8 @@ MonoBehaviour:
   m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fb254b1e88be9c9479712610f686b37f, type: 2}
-  m_sharedMaterial: {fileID: 7823521574207388683, guid: fb254b1e88be9c9479712610f686b37f, type: 2}
+  m_sharedMaterial: {fileID: 7823521574207388683, guid: fb254b1e88be9c9479712610f686b37f,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
