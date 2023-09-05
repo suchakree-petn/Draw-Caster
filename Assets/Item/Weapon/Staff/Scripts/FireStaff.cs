@@ -71,7 +71,7 @@ public class FireStaff : Weapon
                 new Vector2(direction.x + randomSpread, direction.y + randomSpread).normalized 
                 * fireBallMoveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse
                 );
-            fireBallRB.transform.up = direction;
+            fireBallRB.transform.right = direction;
         }
         else
         {
