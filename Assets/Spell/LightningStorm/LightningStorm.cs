@@ -17,7 +17,7 @@ public class LightningStorm : Spell
 
         base.Cast1(player, target);
         Vector2 spawnPos = target.transform.position;
-        float offSet = 2f;
+        float offSet = 0f;
         GameObject lightningStorm = Instantiate(_lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y + offSet, 0f), Quaternion.identity);
         AttackHit attackHit = lightningStorm.transform.GetComponentInChildren<AttackHit>();
         attackHit.elementalDamage =
@@ -34,7 +34,7 @@ public class LightningStorm : Spell
 
         base.Cast2(player, target);
         Vector2 spawnPos = target.transform.position;
-        float offSet = 2f;
+        float offSet = 0f;
         GameObject lightningStorm = Instantiate(_lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y + offSet, 0f), Quaternion.identity);
         AttackHit attackHit = lightningStorm.transform.GetComponentInChildren<AttackHit>();
         attackHit.elementalDamage =
@@ -51,7 +51,7 @@ public class LightningStorm : Spell
 
         base.Cast3(player, target);
         Vector2 spawnPos = target.transform.position;
-        float offSet = 2f;
+        float offSet = 0f;
         GameObject lightningStorm = Instantiate(_lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y + offSet, 0f), Quaternion.identity);
         AttackHit attackHit = lightningStorm.transform.GetComponentInChildren<AttackHit>();
         attackHit.elementalDamage =
