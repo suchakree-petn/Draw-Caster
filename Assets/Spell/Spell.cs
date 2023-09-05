@@ -9,6 +9,7 @@ public class Spell : ScriptableObject
     public string _name;
     public string _description;
     public Sprite _icon;
+
     [Header("Spell Setting")]
     public int _level;
     public SpellType _spellType;
@@ -23,6 +24,7 @@ public class Spell : ScriptableObject
 
     [Header("Draw Input")]
     public Texture2D _templateImage;
+    public Sprite UI_image;
     public float _lowThreshold;
     public float _midThreshold;
 

@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 299, y: 293.1}
+  m_SizeDelta: {x: 1360.661, y: 789.6835}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5435919137870719801
 CanvasRenderer:
@@ -187,14 +187,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4422434691208613116}
   - component: {fileID: 4422434691208613119}
-  - component: {fileID: 4422434691208613113}
+  - component: {fileID: 6625904830882447090}
   m_Layer: 0
-  m_Name: InputCompare
+  m_Name: InputCompareQ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4422434691208613116
 Transform:
   m_ObjectHideFlags: 0
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dde3f71aeadfba44907323d1e5a20d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4422434691208613113
+--- !u!114 &6625904830882447090
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,13 +235,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4929eed8f8f6afb40b559415a557c696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI_image: {fileID: 0}
+  templateUI: {fileID: 5684766979294589205}
   inputPos: []
   templatePos: []
   score: 0
-  sideLenght: 16
+  sideLenght: 0
   mostLeft: 0
   mostRight: 0
   mostAbove: 0
   mostButtom: 0
   newMostRight: 0
-  prefab: {fileID: 2792028505011184367, guid: b975da128b06c134da0ec8371e9f5ac2, type: 3}
+  prefab: {fileID: 0}

@@ -11,7 +11,7 @@ public class SpellHolder_Q : MonoBehaviour
     [SerializeField] private bool _isReadyToCast;
 
     [SerializeField] private PlayerAction _playerAction;
-    [SerializeField] private DrawInput_Q _mousePosList;
+    [SerializeField] private DrawInput_Q drawInputQ;
     public delegate void FinishDraw();
     public static FinishDraw finishDraw;
 
@@ -19,15 +19,16 @@ public class SpellHolder_Q : MonoBehaviour
     {
         if (CheckMana(spell_Q) && _isReadyToCast)
         {
-            _mousePosList.gameObject.SetActive(true);
-            _mousePosList.inputPos.Clear();
-            _mousePosList.templatePos = BlackShadePositions.FindBlackShadePositions(spell_Q._templateImage);
+            drawInputQ.UI_image = spell_Q.UI_image;
+            drawInputQ.gameObject.SetActive(true);
+            drawInputQ.inputPos.Clear();
+            drawInputQ.templatePos = BlackShadePositions.FindBlackShadePositions(spell_Q._templateImage);
         }
     }
     public void Cast_Q()
     {
-        int castLevel = CalThreshold(_mousePosList.score);
-        Debug.Log("score " + _mousePosList.score);
+        int castLevel = CalThreshold(drawInputQ.score);
+        Debug.Log("score " + drawInputQ.score);
         Debug.Log("castLecel " + castLevel);
         float delay = spell_Q._delayTime;
         int amount = spell_Q.GetAmount(castLevel);
@@ -146,9 +147,9 @@ public class SpellHolder_Q : MonoBehaviour
 
     void ShowDrawScore()
     {
-        GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text = "Draw Score: " + (_mousePosList.score * 100).ToString("F2");
-        GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "Cast Level: " + CalThreshold(_mousePosList.score);
-        _mousePosList.gameObject.SetActive(false);
+        GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text = "Draw Score: " + (drawInputQ.score * 100).ToString("F2");
+        GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "Cast Level: " + CalThreshold(drawInputQ.score);
+        drawInputQ.gameObject.SetActive(false);
 
     }
 
@@ -169,7 +170,7 @@ public class SpellHolder_Q : MonoBehaviour
         finishDraw -= Cast_Q;
         finishDraw -= ShowDrawScore;
 
-        _playerAction = null;
+        //_playerAction = null;
 
     }
 
