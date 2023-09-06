@@ -180,7 +180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 803916aa81a830e479f695fc0bfcc0b1, type: 2}
-  damagePopup: {fileID: 0}
   currentHp: 0
 --- !u!114 &8032879043305235565
 MonoBehaviour:
