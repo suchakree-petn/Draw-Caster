@@ -15,7 +15,7 @@ public class Enemy2DAI : MonoBehaviour
     public Transform[] patrolPoints;
     private int currentPatrolIndex = 0;
     public float speed = 2.0f;
-
+    [SerializeField] private Rigidbody2D enemyRb;
     private void Start()
     {
         currentState = State.Idle;
@@ -77,8 +77,9 @@ public class Enemy2DAI : MonoBehaviour
 
         // Move towards the current patrol point
         Vector2 direction = patrolPoints[currentPatrolIndex].position - transform.position;
-        float step = speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, patrolPoints[currentPatrolIndex].position, step);
+        float step = speed;
+        enemyRb.MovePosition(enemyRb.position + direction.normalized * step * Time.fixedDeltaTime);
+        //transform.position = Vector2.MoveTowards(transform.position, patrolPoints[currentPatrolIndex].position, step);
 
         if (Vector2.Distance(transform.position, patrolPoints[currentPatrolIndex].position) < 0.1f)
             GoToNextPatrolPoint();
@@ -94,8 +95,10 @@ public class Enemy2DAI : MonoBehaviour
     {
         // Move towards the target
         Vector2 direction = target.position - transform.position;
-        float step = speed * Time.deltaTime * 1.5f;
-        transform.position = Vector2.MoveTowards(transform.position, target.position, step);
+        float step = speed * 1.5f;
+        enemyRb.MovePosition(enemyRb.position + direction.normalized * step * Time.fixedDeltaTime);
+
+        //transform.position = Vector2.MoveTowards(transform.position, target.position, step);
 
         // Condition to stop chasing. For this example, let's use a distance check.
         if (Vector2.Distance(target.position, transform.position) > 10f) // arbitrary distance

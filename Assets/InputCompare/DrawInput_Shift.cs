@@ -230,7 +230,14 @@ public class DrawInput_Shift : MonoBehaviour
             float origIndex = i * scale;
             int index0 = Mathf.FloorToInt(origIndex);
             int index1 = Mathf.CeilToInt(origIndex);
-
+            if (index0 < 0)
+            {
+                index0 = 0;
+            }
+            else if (index1 > originalArray.Length - 1)
+            {
+                index1 = originalArray.Length;
+            }
             Vector2 interpValue = Vector2.Lerp(originalArray[index0], originalArray[index1], origIndex - index0);
 
             resampledArray[i] = interpValue;
