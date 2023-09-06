@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Enemy Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
-  _maxHp: 1220
+  _maxHp: 740
   _level: 0
   _moveSpeed: 0
-  _hpBase: 1000
+  _hpBase: 600
   _hpMultiplier: 0.2
   _hpBonus: 20
   _attackBase: 0
@@ -31,4 +31,5 @@ MonoBehaviour:
   _thunderBonusDamage: 0
   _frostBonusDamage: 0
   _windBonusDamage: 0
-  CharactorPrefab: {fileID: 8032879043305235568, guid: e21aa0c3aca997b4aafa73c4d20a9baa, type: 3}
+  CharactorPrefab: {fileID: 8032879043305235568, guid: e21aa0c3aca997b4aafa73c4d20a9baa,
+    type: 3}

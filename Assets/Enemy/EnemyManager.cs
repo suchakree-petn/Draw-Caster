@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour, IDamageable
 {
     public EnemyData enemyData;
-    public DamagePopup damagePopup;
+    private DamagePopup damagePopup;
     public float currentHp;
 
     private void Start()
