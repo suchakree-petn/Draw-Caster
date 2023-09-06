@@ -13,14 +13,10 @@ public class CheckVelocityWalk : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Enemy2DAI patrol = animator.transform.GetComponentInParent<Enemy2DAI>();
-        if (patrol.currentState == Enemy2DAI.State.Chase)
-        {
-            animator.SetFloat("Velocity", 0.2f);
-        }
-        else
-        {
-            animator.SetFloat("Velocity", 0f);
-        }
+
+        animator.SetFloat("Velocity", 0.2f);
+
+
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

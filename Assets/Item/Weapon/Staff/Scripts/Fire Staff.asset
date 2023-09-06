@@ -25,4 +25,5 @@ MonoBehaviour:
   spreadAngle: 60
   fireBallMoveSpeed: 1600
   fireBallAmount: 1
-  fireBallPrefab: {fileID: 9143974807770408128, guid: 0c485803db5715046b3cba2726e0122a, type: 3}
+  fireBallPrefab: {fileID: 9143974807770408128, guid: 0c485803db5715046b3cba2726e0122a,
+    type: 3}
