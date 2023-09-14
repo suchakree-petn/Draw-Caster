@@ -16,9 +16,16 @@ public class SpellHolder_Shift : MonoBehaviour
 
     public void Cast(InputAction.CallbackContext context)
     {
-        if (CheckMana(spell.spellObj) && spell._isReadyToCast)
+        if (spell != null)
         {
-            ReceiveDrawInput();
+            if (CheckMana(spell.spellObj) && spell._isReadyToCast)
+            {
+                ReceiveDrawInput();
+            }
+        }
+        else
+        {
+            Debug.Log("No spell equip on this slot Shift");
         }
     }
     public bool CheckMana(SpellObj spellObj)
@@ -41,21 +48,28 @@ public class SpellHolder_Shift : MonoBehaviour
     }
     private void OnEnable()
     {
-
         _playerAction = PlayerInputSystem.Instance.playerAction;
-
         _playerAction.Player.Spell_Shift.Enable();
         _playerAction.Player.Spell_Shift.canceled += Cast;
-        OnFinishDraw += spell.CastSpell;
-        OnFinishDraw += ShowDrawScore;
-
+        if (spell != null)
+        {
+            OnFinishDraw += spell.CastSpell;
+            OnFinishDraw += ShowDrawScore;
+        }
     }
     private void OnDisable()
     {
-        _playerAction.Player.Spell_Shift.Disable();
-        _playerAction.Player.Spell_Shift.canceled -= Cast;
-        OnFinishDraw -= spell.CastSpell;
-        OnFinishDraw -= ShowDrawScore;
+        if (_playerAction != null)
+        {
+            _playerAction.Player.Spell_Shift.Disable();
+            _playerAction.Player.Spell_Shift.canceled -= Cast;
+        }
+        if (spell != null)
+        {
+
+            OnFinishDraw -= spell.CastSpell;
+            OnFinishDraw -= ShowDrawScore;
+        }
     }
     void ShowDrawScore(float score)
     {

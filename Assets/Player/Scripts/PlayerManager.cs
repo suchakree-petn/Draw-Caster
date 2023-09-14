@@ -6,7 +6,6 @@ public class PlayerManager : MonoBehaviour, IDamageable
 {
 
     public PlayerData playerData;
-    public Rigidbody2D _playerRb;
     public float currentHp;
 
     private void Start()

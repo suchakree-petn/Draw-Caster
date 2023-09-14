@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public abstract class Spell : MonoBehaviour
 {
-    public SpellObj spellObj;
+    public SpellObj spellObj { get; set; }
     public bool _isReadyToCast;
 
     public abstract void CastSpell(float score);
@@ -15,20 +15,20 @@ public abstract class Spell : MonoBehaviour
     public abstract void Cast3(GameObject player, GameObject target);
 
     public abstract int CalThreshold(float score);
-    
-    
+
+
     public virtual void BeginCooldown(GameObject gameObject)
     {
 
     }
-    
-    
+
+
     public IEnumerator Cooldown(SpellObj spell)
     {
         yield return new WaitForSeconds(spell._cooldown);
         _isReadyToCast = true;
     }
-   
+
 }
 
 

@@ -16,9 +16,16 @@ public class SpellHolder_R : MonoBehaviour
 
     public void Cast(InputAction.CallbackContext context)
     {
-        if (CheckMana(spell.spellObj) && spell._isReadyToCast)
+        if (spell != null)
         {
-            ReceiveDrawInput();
+            if (CheckMana(spell.spellObj) && spell._isReadyToCast)
+            {
+                ReceiveDrawInput();
+            }
+        }
+        else
+        {
+            Debug.Log("No spell equip on this slot " + name[name.Length-1]);
         }
     }
     public bool CheckMana(SpellObj spellObj)
@@ -41,21 +48,28 @@ public class SpellHolder_R : MonoBehaviour
     }
     private void OnEnable()
     {
-
         _playerAction = PlayerInputSystem.Instance.playerAction;
-
         _playerAction.Player.Spell_R.Enable();
         _playerAction.Player.Spell_R.canceled += Cast;
-        OnFinishDraw += spell.CastSpell;
-        OnFinishDraw += ShowDrawScore;
-
+        if (spell != null)
+        {
+            OnFinishDraw += spell.CastSpell;
+            OnFinishDraw += ShowDrawScore;
+        }
     }
     private void OnDisable()
     {
-        _playerAction.Player.Spell_R.Disable();
-        _playerAction.Player.Spell_R.canceled -= Cast;
-        OnFinishDraw -= spell.CastSpell;
-        OnFinishDraw -= ShowDrawScore;
+        if (_playerAction != null)
+        {
+            _playerAction.Player.Spell_R.Disable();
+            _playerAction.Player.Spell_R.canceled -= Cast;
+        }
+        if (spell != null)
+        {
+
+            OnFinishDraw -= spell.CastSpell;
+            OnFinishDraw -= ShowDrawScore;
+        }
     }
     void ShowDrawScore(float score)
     {
