@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +7,7 @@ using UnityEngine.InputSystem;
 public class DrawInput_Q : MonoBehaviour
 {
     public Sprite UI_image;
-    [SerializeField] private  Image templateUI;
+    public Image templateUI;
     public List<Vector2> inputPos = new List<Vector2>();
     public Vector2[] templatePos;
     public float score;
@@ -56,10 +55,6 @@ public class DrawInput_Q : MonoBehaviour
             if (p.x < mostLeft)
             {
                 mostLeft = p.x;
-
-
-                // GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
-                // go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
         mostButtom = float.PositiveInfinity;
@@ -68,8 +63,6 @@ public class DrawInput_Q : MonoBehaviour
             if (p.y < mostButtom)
             {
                 mostButtom = p.y;
-                // GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
-                // go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
         mostAbove = float.NegativeInfinity;
@@ -78,8 +71,6 @@ public class DrawInput_Q : MonoBehaviour
             if (p.y > mostAbove)
             {
                 mostAbove = p.y;
-                // GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
-                // go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
 
@@ -89,10 +80,6 @@ public class DrawInput_Q : MonoBehaviour
             if (p.x > mostRight)
             {
                 mostRight = p.x;
-
-                // Show raw draw input
-                // GameObject go = Instantiate(prefab, new Vector3(p.x, p.y, 0), Quaternion.identity);
-                // go.GetComponent<SpriteRenderer>().color = Color.green;
             }
         }
         inputPos = Resample(inputPos.ToArray(), templatePos.Length);
@@ -158,20 +145,10 @@ public class DrawInput_Q : MonoBehaviour
             templatePos[i] = new Vector2(templatePos[i].x, templatePos[i].y - TmostButtom);
 
         }
-
-        // Show template img
-        // foreach (Vector2 pos in templatePos)
-        // {
-        //     GameObject go = Instantiate(prefab, pos, Quaternion.identity);
-        //     go.GetComponent<SpriteRenderer>().color = Color.red;
-        // }
-
-        // re-scale
-        float TWidth = (TmostRight - TmostLeft);
-        float width = (mostRight - mostLeft);
-        float THeight = (TmostAbove - TmostButtom);
-        float height = (mostAbove - mostButtom);
-        float scale = 1;
+        float TWidth = TmostRight - TmostLeft;
+        float width = mostRight - mostLeft;
+        float THeight = TmostAbove - TmostButtom;
+        float height = mostAbove - mostButtom;
         if (TWidth < THeight)
         {
             TWidth += THeight - TWidth;
@@ -183,22 +160,19 @@ public class DrawInput_Q : MonoBehaviour
 
         if (width < height)
         {
-            width += (height - width);
+            width += height - width;
         }
         else if (width > height)
         {
-            height += (width - height);
+            height += width - height;
         }
 
-        scale = TWidth / width;
+        float scale = TWidth / width;
         for (int i = 0; i < inputPos.Count; i++)
         {
             inputPos[i] *= scale;
             Vector2 roundPixel = new Vector2(Mathf.Round(inputPos[i].x), Mathf.Round(inputPos[i].y));
             inputPos[i] = roundPixel;
-
-            // Show draw input resampled img
-            //Instantiate(prefab, new Vector3(pos[i].x, pos[i].y, 0), Quaternion.identity);
         }
         inputPos = RemoveDuplicates(inputPos);
         inputPos = sortList(inputPos);
@@ -216,7 +190,7 @@ public class DrawInput_Q : MonoBehaviour
         score = CosSim.CosineSimilarity(inputPos.ToArray(),
                                 templatePos,
                                 sideLenght);
-        SpellHolder_Q.finishDraw?.Invoke();
+        SpellHolder_Q.OnFinishDraw?.Invoke(score);
     }
 
     private List<Vector2> Resample(Vector2[] originalArray, int newLength)
@@ -230,7 +204,14 @@ public class DrawInput_Q : MonoBehaviour
             float origIndex = i * scale;
             int index0 = Mathf.FloorToInt(origIndex);
             int index1 = Mathf.CeilToInt(origIndex);
-
+            if (index0 < 0)
+            {
+                index0 = 0;
+            }
+            else if (index1 > originalArray.Length - 1)
+            {
+                index1 = originalArray.Length;
+            }
             Vector2 interpValue = Vector2.Lerp(originalArray[index0], originalArray[index1], origIndex - index0);
 
             resampledArray[i] = interpValue;
@@ -271,20 +252,19 @@ public class DrawInput_Q : MonoBehaviour
     }
     private void OnEnable()
     {
-        templateUI.sprite = UI_image;
+        Time.timeScale = 0.5f;
+        Time.fixedDeltaTime = Time.timeScale * 0.01f;
+
         _playerAction.Player.DrawInput.Enable();
         _playerAction.Player.DrawInput.canceled += ResamplingMouseInputPos;
-
-
-
     }
     private void OnDisable()
     {
-        templateUI.sprite = null;
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02f;
+
         _playerAction.Player.DrawInput.Disable();
         _playerAction.Player.DrawInput.canceled -= ResamplingMouseInputPos;
-
-
     }
 }
 

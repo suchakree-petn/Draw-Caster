@@ -4,16 +4,10 @@ using System.Linq;
 
 public class CosSim : MonoBehaviour
 {
-    // [SerializeField] private Texture2D userInput;
-    // [SerializeField] private Texture2D template;
-   
-
-    // Assumes the images are grayscale and have the same dimensions
     public static float CosineSimilarity(Vector2[] input, Vector2[] template, int sideLenght)
     {
         float[] vectorA;
         float[] vectorB;
-        // Convert to float[]
         int index = 0;
         vectorA = new float[sideLenght * sideLenght];
         for (int x = 0; x < sideLenght; x++)

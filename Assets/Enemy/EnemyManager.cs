@@ -46,6 +46,7 @@ public class EnemyManager : MonoBehaviour, IDamageable
         GameController.OnBeforeStart += CalcMaxHp;
         GameController.OnEnemyDead += enemyData.Dead;
         GameController.OnEnemyTakeDamage += enemyData.CheckDead;
+        
     }
     private void OnDisable()
     {
