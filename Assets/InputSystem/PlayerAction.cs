@@ -98,6 +98,15 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""6505e482-7654-43ac-befb-7f6eaa5c90cf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +241,17 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""action"": ""Spell_Shift"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12ef0273-49ca-4e83-b64c-cd04bb9b836a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,6 +268,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         m_Player_Spell_E = m_Player.FindAction("Spell_E", throwIfNotFound: true);
         m_Player_Spell_R = m_Player.FindAction("Spell_R", throwIfNotFound: true);
         m_Player_Spell_Shift = m_Player.FindAction("Spell_Shift", throwIfNotFound: true);
+        m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -315,6 +336,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Spell_E;
     private readonly InputAction m_Player_Spell_R;
     private readonly InputAction m_Player_Spell_Shift;
+    private readonly InputAction m_Player_LeftClick;
     public struct PlayerActions
     {
         private @PlayerAction m_Wrapper;
@@ -327,6 +349,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         public InputAction @Spell_E => m_Wrapper.m_Player_Spell_E;
         public InputAction @Spell_R => m_Wrapper.m_Player_Spell_R;
         public InputAction @Spell_Shift => m_Wrapper.m_Player_Spell_Shift;
+        public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -360,6 +383,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @Spell_Shift.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Shift;
                 @Spell_Shift.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Shift;
                 @Spell_Shift.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Shift;
+                @LeftClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                @LeftClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                @LeftClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -388,6 +414,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @Spell_Shift.started += instance.OnSpell_Shift;
                 @Spell_Shift.performed += instance.OnSpell_Shift;
                 @Spell_Shift.canceled += instance.OnSpell_Shift;
+                @LeftClick.started += instance.OnLeftClick;
+                @LeftClick.performed += instance.OnLeftClick;
+                @LeftClick.canceled += instance.OnLeftClick;
             }
         }
     }
@@ -402,5 +431,6 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         void OnSpell_E(InputAction.CallbackContext context);
         void OnSpell_R(InputAction.CallbackContext context);
         void OnSpell_Shift(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
     }
 }

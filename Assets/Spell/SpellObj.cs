@@ -16,10 +16,7 @@ public class SpellObj : ScriptableObject
     public ElementalType _elementalType;
     public float _cooldown;
     public float _manaCost;
-    public float _delayTime;
-    public int _amountLevel1;
-    public int _amountLevel2;
-    public int _amountLevel3;
+
 
     [Header("Draw Input")]
     public Texture2D _templateImage;

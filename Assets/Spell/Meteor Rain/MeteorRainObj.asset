@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3d1302f0eb1ac41b23b4cd88b2a27a, type: 3}
+  m_Name: MeteorRainObj
+  m_EditorClassIdentifier: 
+  _name: Meteor Rain
+  _description: 
+  _icon: {fileID: 0}
+  _level: 0
+  _spellType: 2
+  _elementalType: 1
+  _cooldown: 3
+  _manaCost: 0
+  _templateImage: {fileID: 2800000, guid: dec5c62b7c9bc7f4dab7f0fba6d42057, type: 3}
+  UI_image: {fileID: 21300000, guid: c17f8e48cdb3d1040b9af86cd528210d, type: 3}
+  _lowThreshold: 0.2
+  _midThreshold: 0.5
+  _baseSkillDamageMultiplier: 0.2
+  _damageSpellLevelMultiplier1: 0
+  _damageSpellLevelMultiplier2: 0
+  _damageSpellLevelMultiplier3: 0
+  meteorAmount1: 15
+  meteorAmount2: 30
+  meteorAmount3: 45
+  _meteorPrefab: {fileID: 9143974807770408128, guid: 0c485803db5715046b3cba2726e0122a,
+    type: 3}
