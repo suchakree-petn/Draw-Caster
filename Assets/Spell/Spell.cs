@@ -1,27 +1,56 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.InputSystem;
-using DG.Tweening;
-using System.Linq;
 
-
-public abstract class Spell : MonoBehaviour
+public abstract class Spell : ScriptableObject
 {
-    public SpellObj spellObj { get; set; }
-    public bool _isReadyToCast;
-    public int castLevel;
+    [Header("Infomation")]
+    public string _name;
+    public string _description;
+    public Sprite _icon;
 
-    public abstract void CastSpell(float score);
+    [Header("Spell Setting")]
+    public int _level;
+    public SpellType _spellType;
+    public ElementalType _elementalType;
+    public float _cooldown;
+    public float _manaCost;
+
+
+    [Header("Draw Input")]
+    public Texture2D _templateImage;
+    public Sprite UI_image;
+    public float _lowThreshold;
+    public float _midThreshold;
+
+    public abstract void CastSpell(float score, GameObject player);
     public abstract void Cast1(GameObject player, GameObject target);
     public abstract void Cast2(GameObject player, GameObject target);
     public abstract void Cast3(GameObject player, GameObject target);
 
+    public void CastByLevel(int level, GameObject player, GameObject target)
+    {
+        switch (level)
+        {
+            case 1:
+                Cast1(player, target);
+                break;
+            case 2:
+                Cast2(player, target);
+                break;
+            case 3:
+                Cast3(player, target);
+                break;
+            default:
+                Debug.LogWarning("Level Error");
+                break;
+        }
+    }
+
+    public abstract void BeginCooldown(GameObject player);
     public int CalThreshold(float score)
     {
-        float low = spellObj._lowThreshold;
-        float mid = spellObj._midThreshold;
+        float low = _lowThreshold;
+        float mid = _midThreshold;
 
         int castLevel = 1;
         if (score >= 0 && score <= low)
@@ -42,18 +71,13 @@ public abstract class Spell : MonoBehaviour
         }
         return castLevel;
     }
-    public virtual void BeginCooldown(GameObject gameObject)
-    {
+}
 
-    }
-
-
-    public IEnumerator Cooldown(SpellObj spell)
-    {
-        yield return new WaitForSeconds(spell._cooldown);
-        _isReadyToCast = true;
-    }
-
+public enum SpellType
+{
+    Default,
+    QuickCast,
+    Concentrate
 }
 
 

@@ -13,7 +13,7 @@ public class EnemyData : CharactorData
   public override void CheckDead(GameObject charactor)
   {
     base.CheckDead(charactor);
-    Debug.Log("CheckDead");
+    //Debug.Log("CheckDead");
     if (charactor.GetComponent<EnemyManager>().currentHp <= 0)
     {
       GameController.OnEnemyDead?.Invoke(charactor);

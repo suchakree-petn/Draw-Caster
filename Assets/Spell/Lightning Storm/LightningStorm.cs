@@ -1,104 +1,140 @@
-using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "new Lightning Storm", menuName = "Spell/Lightning Storm")]
 public class LightningStorm : Spell
 {
-    [SerializeField] private LightningStormObj lightningStormObj;
+    [Header("Damage Multiplier")]
+    public float _baseSkillDamageMultiplier;
+    public float _damageSpellLevelMultiplier1;
+    public float _damageSpellLevelMultiplier2;
+    public float _damageSpellLevelMultiplier3;
 
-    private void Awake()
+    [Header("Lighning Storm Setting")]
+    public float _delayTime;
+    public int _amountLevel1;
+    public int _amountLevel2;
+    public int _amountLevel3;
+    [SerializeField] private GameObject lightningStormPrefab;
+
+    public override void CastSpell(float score, GameObject player)
     {
-        spellObj = lightningStormObj;
-    }
-    public override void CastSpell(float score)
-    {
-        
+
         int castLevel = CalThreshold(score);
-        float delay = lightningStormObj._delayTime;
         int amount = GetAmount(castLevel);
-
         GameObject[] enemyList = GameController.Instance.GetAllEnemyInScene();
-        StartCoroutine(RepeatCast(castLevel, delay, amount, enemyList));
+        while (amount > enemyList.Length && enemyList.Length > 0)
+        {
+            enemyList = enemyList.Concat(GameController.Instance.GetAllEnemyInScene()).ToArray();
+        }
+        var sequence = DOTween.Sequence();
+        List<GameObject> targetList = new();
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject target = null;
 
-        _isReadyToCast = false;
-        StartCoroutine(Cooldown(lightningStormObj));
+            if (enemyList.Length > 0)
+            {
+                target = enemyList[i];
+            }
+
+            targetList.Add(target);
+        }
+        foreach (var target in targetList)
+        {
+            sequence.AppendCallback(() => CastByLevel(castLevel, player, target)).AppendInterval(_delayTime);
+        }
+        sequence.OnComplete(() => BeginCooldown(player));
     }
-    
+
     public override void Cast1(GameObject player, GameObject target)
     {
-        if (player == null && target == null) { return; }
-
-        Vector2 spawnPos = target.transform.position;
-        float offSet = 0f;
-        GameObject lightningStorm = Instantiate(lightningStormObj._lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y + offSet, 0f), Quaternion.identity);
-        AttackHit attackHit = lightningStorm.transform.GetComponentInChildren<AttackHit>();
-        attackHit.elementalDamage =
-        Elemental.DamageCalculation(lightningStormObj._elementalType,
-                        player.GetComponent<PlayerManager>().playerData,
-                        lightningStormObj._baseSkillDamageMultiplier * lightningStormObj._damageSpellLevelMultiplier1);
-        Debug.Log(attackHit.elementalDamage._damage + ", " + attackHit.elementalDamage._elementalType);
         Debug.Log("Cast1");
+
+        if (player == null) { return; }
+        Vector2 spawnPos = new Vector2();
+        if (target != null)
+        {
+            spawnPos = target.transform.position;
+        }
+        else
+        {
+            spawnPos = RandomTransform(player.transform).transform.position;
+        }
+        GameObject lightningStorm = SpawnLightning(player, spawnPos);
         CinemachineShake.Instance.Shake(target);
-        // เล่นsound
     }
+
+
+
     public override void Cast2(GameObject player, GameObject target)
     {
-        if (player == null && target == null) { return; }
-
-        Vector2 spawnPos = target.transform.position;
-        float offSet = 0f;
-        GameObject lightningStorm = Instantiate(lightningStormObj._lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y + offSet, 0f), Quaternion.identity);
-        AttackHit attackHit = lightningStorm.transform.GetComponentInChildren<AttackHit>();
-        attackHit.elementalDamage =
-        Elemental.DamageCalculation(lightningStormObj._elementalType,
-                        player.GetComponent<PlayerManager>().playerData,
-                        lightningStormObj._baseSkillDamageMultiplier * lightningStormObj._damageSpellLevelMultiplier1);
-        Debug.Log(attackHit.elementalDamage._damage + ", " + attackHit.elementalDamage._elementalType);
         Debug.Log("Cast2");
+
+        if (player == null) { return; }
+        Vector2 spawnPos = new Vector2();
+        if (target != null)
+        {
+            spawnPos = target.transform.position;
+        }
+        else
+        {
+            spawnPos = RandomTransform(player.transform).transform.position;
+        }
+        GameObject lightningStorm = SpawnLightning(player, spawnPos);
         CinemachineShake.Instance.Shake(target);
-        // เล่นsound
     }
     public override void Cast3(GameObject player, GameObject target)
     {
-        if (player == null && target == null) { return; }
-
-        Vector2 spawnPos = target.transform.position;
-        float offSet = 0f;
-        GameObject lightningStorm = Instantiate(lightningStormObj._lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y + offSet, 0f), Quaternion.identity);
-        AttackHit attackHit = lightningStorm.transform.GetComponentInChildren<AttackHit>();
-        attackHit.elementalDamage =
-        Elemental.DamageCalculation(lightningStormObj._elementalType,
-                        player.GetComponent<PlayerManager>().playerData,
-                        lightningStormObj._baseSkillDamageMultiplier * lightningStormObj._damageSpellLevelMultiplier1);
-        Debug.Log(attackHit.elementalDamage._damage + ", " + attackHit.elementalDamage._elementalType);
         Debug.Log("Cast3");
+
+        if (player == null) { return; }
+        Vector2 spawnPos = new Vector2();
+        if (target != null)
+        {
+            spawnPos = target.transform.position;
+        }
+        else
+        {
+            spawnPos = RandomTransform(player.transform).transform.position;
+        }
+        GameObject lightningStorm = SpawnLightning(player, spawnPos);
         CinemachineShake.Instance.Shake(target);
-        // เล่นsound
+    }
+    private GameObject SpawnLightning(GameObject player, Vector2 spawnPos)
+    {
+        GameObject lightningStorm = Instantiate(lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y, 0f), Quaternion.identity);
+        AttackHit attackHit = lightningStorm.transform.GetComponentInChildren<AttackHit>();
+        attackHit.elementalDamage = Elemental.DamageCalculation(_elementalType,
+                        player.GetComponent<PlayerManager>().playerData,
+                        _baseSkillDamageMultiplier * _damageSpellLevelMultiplier1);
+        return lightningStorm;
     }
     public int GetAmount(int castLevel)
     {
         if (castLevel == 1)
         {
-            return lightningStormObj._amountLevel1;
+            return _amountLevel1;
         }
         else if (castLevel == 2)
         {
-            return lightningStormObj._amountLevel2;
+            return _amountLevel2;
         }
-        return lightningStormObj._amountLevel3;
+        return _amountLevel3;
     }
-    public override void BeginCooldown(GameObject gameObject)
+    public override void BeginCooldown(GameObject player)
     {
-        base.BeginCooldown(gameObject);
+        
     }
-    private GameObject RandomTransform()
+    private GameObject RandomTransform(Transform center)
     {
         // Generate a random angle in radians
         float randomAngle = Random.Range(0f, Mathf.PI * 2);
 
         // Calculate a random position within the spawn radius
-        Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * 5f;
+        Vector3 spawnPosition = center.position + new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * 5f;
 
         GameObject obj = new GameObject();
         obj.AddComponent<AttackHit>();
@@ -106,52 +142,5 @@ public class LightningStorm : Spell
         GameObject randomTransform = Instantiate(obj, spawnPosition, Quaternion.identity);
 
         return randomTransform;
-    }
-    IEnumerator RepeatCast(int castLevel, float delay, int amount, GameObject[] enemyList)
-    {
-        if (amount == 0)
-        {
-            yield break;
-        }
-        GameObject[] _enemyList = enemyList;
-        GameObject enemyTarget = null;
-        int _amount = amount;
-        if (GameController.Instance.GetAllEnemyInScene().Length == 0)
-        {
-            enemyTarget = RandomTransform();
-        }
-        else if (enemyList.Length == 0)
-        {
-            _enemyList = GameController.Instance.GetAllEnemyInScene();
-            enemyTarget = _enemyList[Random.Range(0, _enemyList.Length)];
-        }
-        else
-        {
-            enemyTarget = _enemyList[Random.Range(0, _enemyList.Length)];
-        }
-
-        switch (castLevel)
-        {
-            case 1:
-                Cast1(transform.root.gameObject, enemyTarget);
-                break;
-            case 2:
-                Cast2(transform.root.gameObject, enemyTarget);
-                break;
-            case 3:
-                Cast3(transform.root.gameObject, enemyTarget);
-                break;
-            default:
-                Debug.Log("ERROR!! Cast Level More Than 3");
-                break;
-        }
-
-        _amount--;
-        List<GameObject> temp = _enemyList.ToList();
-        temp.Remove(enemyTarget);
-        _enemyList = temp.ToArray();
-        BeginCooldown(transform.root.gameObject);
-        yield return new WaitForSeconds(delay);
-        StartCoroutine(RepeatCast(castLevel, delay, _amount, _enemyList));
     }
 }

@@ -6,7 +6,7 @@ public class ItemCollect : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Enter: " + other.gameObject.name);
+        //Debug.Log("Enter: " + other.gameObject.name);
         ICollectable collectable = other.transform.GetComponentInParent<ICollectable>();
         if (collectable != null)
         {

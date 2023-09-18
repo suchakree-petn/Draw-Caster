@@ -190,7 +190,7 @@ public class DrawInput_Shift : MonoBehaviour
         score = CosSim.CosineSimilarity(inputPos.ToArray(),
                                 templatePos,
                                 sideLenght);
-        SpellHolder_Shift.OnFinishDraw?.Invoke(score);
+        SpellHolder_Shift.OnFinishDraw?.Invoke(score,transform.root.gameObject);
     }
 
     private List<Vector2> Resample(Vector2[] originalArray, int newLength)

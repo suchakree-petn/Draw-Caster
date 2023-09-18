@@ -14,7 +14,6 @@ public class DamagePopup : MonoBehaviour
     {
         Transform damagePopTransform = Instantiate(TextDamageAsset.Instance.textDamagePrefab, position, Quaternion.identity,TextDamageAsset.Instance.transform);
         DamagePopup damagePopup = damagePopTransform.GetComponent<DamagePopup>();
-        Debug.Log(damagePopup);
         damagePopup.SetDamagePopup(damage, elementalType);
 
         // return damagePopup;
