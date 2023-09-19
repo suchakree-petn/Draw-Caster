@@ -1,0 +1,37 @@
+diff a/Assets/Enemy2DAI.cs b/Assets/Enemy2DAI.cs	(rejected hunks)
+@@ -93,20 +93,27 @@
+ 
+     void ChaseUpdate()
+     {
+-        // Move towards the target
+-        Vector2 direction = target.position - transform.position;
+-        float step = speed * 1.5f;
+-        enemyRb.MovePosition(enemyRb.position + direction.normalized * step * Time.fixedDeltaTime);
+-
+-        //transform.position = Vector2.MoveTowards(transform.position, target.position, step);
++        float distanceToTarget = Vector2.Distance(target.position, transform.position);
+ 
+-        // Condition to stop chasing. For this example, let's use a distance check.
+-        if (Vector2.Distance(target.position, transform.position) > 10f) // arbitrary distance
++        if (distanceToTarget < 0.75f)
++        {
++            currentState = State.Idle;
++            return;  // Return here to prevent the enemy from moving further
++        }
++        else if (distanceToTarget > 10f) // arbitrary distance
+         {
+             currentState = State.Patrol;
+         }
++        else
++        {
++            // Move towards the target
++            Vector2 direction = target.position - transform.position;
++            float step = speed * 1.5f;
++            enemyRb.MovePosition(enemyRb.position + direction.normalized * step * Time.fixedDeltaTime);
++        }
+     }
+ 
++
+     void GoToNextPatrolPoint()
+     {
+         if (patrolPoints.Length == 0) return;
