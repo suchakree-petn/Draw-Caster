@@ -34,12 +34,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log("Enable");
         playerAction = PlayerInputSystem.Instance.playerAction;
         playerAction.Player.Movement.Enable();
 
     }
     private void OnDisable()
     {
+        Debug.Log("Disable");
         playerAction.Player.Movement.Disable();
 
     }
