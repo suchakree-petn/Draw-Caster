@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 8921857527158219750}
   - component: {fileID: 2823832267985962532}
   - component: {fileID: 8884064045877392306}
-  - component: {fileID: 80341336}
+  - component: {fileID: 1161872065}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -482,7 +482,7 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
---- !u!114 &80341336
+--- !u!114 &1161872065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -497,8 +497,8 @@ MonoBehaviour:
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
-  m_FrequencyGain: 3
-  mNoiseOffsets: {x: 665.49255, y: -674.71594, z: 695.58997}
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &6247303807117621606
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,7 +880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isReadyToCast: 1
   castLevel: 0
-  spell: {fileID: 11400000, guid: 4c9cf4eb2c073f94f82f962a34f869d6, type: 2}
+  spell: {fileID: 11400000, guid: 2c1897851bbae41439674375ab576a20, type: 2}
   drawInput: {fileID: 3255373487842983407}
 --- !u!114 &3255373487842983407 stripped
 MonoBehaviour:

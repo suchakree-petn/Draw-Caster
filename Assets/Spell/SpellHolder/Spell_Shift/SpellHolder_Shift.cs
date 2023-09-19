@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using DG.Tweening;
 
 public class SpellHolder_Shift : MonoBehaviour
 {
@@ -11,8 +12,10 @@ public class SpellHolder_Shift : MonoBehaviour
     [SerializeField] private Spell spell;
     [Header("Draw Input")]
     public DrawInput_Shift drawInput;
-    public delegate void InputCompare(float score,GameObject player);
+    public delegate void InputCompare(float score, GameObject player);
     public static InputCompare OnFinishDraw;
+    public delegate void CastBehaviour(GameObject player);
+    public static CastBehaviour OnFinishCast;
 
 
 
@@ -23,11 +26,12 @@ public class SpellHolder_Shift : MonoBehaviour
             if (CheckMana(spell) && _isReadyToCast)
             {
                 ReceiveDrawInput();
+                OnFinishCast?.Invoke(transform.root.gameObject);
             }
         }
         else
         {
-            Debug.Log("No spell equip on this slot " + name[name.Length-1]);
+            Debug.Log("No spell equip on this slot " + name[name.Length - 1]);
         }
     }
     public bool CheckMana(Spell spell)
@@ -57,6 +61,9 @@ public class SpellHolder_Shift : MonoBehaviour
         {
             OnFinishDraw += spell.CastSpell;
             OnFinishDraw += ShowDrawScore;
+            OnFinishCast += spell.BeginCooldown;
+            OnFinishCast += CountCooldown;
+
         }
     }
     private void OnDisable()
@@ -68,12 +75,20 @@ public class SpellHolder_Shift : MonoBehaviour
         }
         if (spell != null)
         {
-
             OnFinishDraw -= spell.CastSpell;
             OnFinishDraw -= ShowDrawScore;
+            OnFinishCast -= spell.BeginCooldown;
+            OnFinishCast -= CountCooldown;
         }
     }
-    void ShowDrawScore(float score,GameObject player)
+    void CountCooldown(GameObject player)
+    {
+        var sequence = DOTween.Sequence();
+        sequence.AppendCallback(() => _isReadyToCast = false).AppendInterval(spell._cooldown);
+        sequence.AppendCallback(() => _isReadyToCast = true);
+
+    }
+    void ShowDrawScore(float score, GameObject player)
     {
         GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text = "Draw Score: " + (score * 100).ToString("F2");
         GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "Cast Level: " + spell.CalThreshold(score);

@@ -46,13 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  entityToSpawn:
-  - entityData: {fileID: 11400000, guid: 7bbff00b154858542988494be167eb75, type: 2}
-    transform: {fileID: 3348656821667477757, guid: f59e9d8ae7cdb924b9f4a1610a633abf, type: 3}
-  - entityData: {fileID: 11400000, guid: 7bbff00b154858542988494be167eb75, type: 2}
-    transform: {fileID: 3348656821667477757, guid: f59e9d8ae7cdb924b9f4a1610a633abf, type: 3}
-  allEnemyInList: []
   allEnemyInScene: []
+  allEnemyInCamera: []
 --- !u!1 &3660777658886747731
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f68615240aed04798432c5faa60147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textDamagePrefab: {fileID: 7183554661978057872, guid: 8cd49f758d131b242879c8dfe4436267, type: 3}
+  textDamagePrefab: {fileID: 7183554661978057872, guid: 8cd49f758d131b242879c8dfe4436267,
+    type: 3}
   fire_Color: {r: 1, g: 0.25262892, b: 0.1830188, a: 1}
   thunder_Color: {r: 0.6927266, g: 0.23018867, b: 1, a: 1}
   frost_Color: {r: 0, g: 0.871995, b: 1, a: 1}
