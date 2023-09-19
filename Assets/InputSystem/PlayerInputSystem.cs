@@ -9,7 +9,12 @@ public class PlayerInputSystem : MonoBehaviour
     void Awake()
     {
         playerAction = new PlayerAction();
-        Instance = this;
+        if (Instance != null && Instance != this)
+            {
+                DestroyImmediate(gameObject);
+            }else{
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
     }
-
 }

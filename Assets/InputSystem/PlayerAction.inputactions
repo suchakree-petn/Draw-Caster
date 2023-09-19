@@ -78,9 +78,18 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "eade938d-7365-46ee-ab38-4f198d3f9cab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "LeftClick",
                     "type": "Button",
-                    "id": "6505e482-7654-43ac-befb-7f6eaa5c90cf",
+                    "id": "528028ec-fac6-410a-9ddb-54051ee56857",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -222,7 +231,18 @@
                 },
                 {
                     "name": "",
-                    "id": "12ef0273-49ca-4e83-b64c-cd04bb9b836a",
+                    "id": "2ba444ea-d93e-4e7b-bf16-70eabda26a33",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "71220ec3-faf2-4105-be12-c2f657b4ad60",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",

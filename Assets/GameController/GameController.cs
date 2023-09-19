@@ -1,7 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mono.CompilerServices.SymbolWriter;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
+
 
 public enum GameState
 {
@@ -29,6 +33,10 @@ public class GameController : MonoBehaviour
     [Header("Entity in scene")]
     public List<GameObject> allEnemyInScene = new List<GameObject>();
     public List<GameObject> allEnemyInCamera = new List<GameObject>();
+    public List<string> scene = new List<string>();
+    public int currentScene = 0;
+    [SerializeField] private GameObject doorToNextStage;
+    [SerializeField] private GameObject tmpStageFloor;
 
     public delegate void PlayerBehavior(GameObject enemy);
     public static PlayerBehavior OnPlayerDead;
@@ -37,6 +45,7 @@ public class GameController : MonoBehaviour
     public delegate void EnemyBehavior(GameObject enemy);
     public static EnemyBehavior OnEnemyDead;
     public static EnemyBehavior OnEnemyTakeDamage;
+
 
     private void Update()
     {
@@ -55,6 +64,7 @@ public class GameController : MonoBehaviour
                 break;
             case GameState.BeforeEnding:
                 OnBeforeEnding?.Invoke();
+                currentState = GameState.Ending;
                 break;
             case GameState.Ending:
                 OnEnding?.Invoke();
@@ -125,15 +135,36 @@ public class GameController : MonoBehaviour
         }
         return allEnemyInCamera.ToArray();
     }
+    public void StageClear(){
+        if(allEnemyInScene.Count == 0 && currentState == GameState.InGame){
+            currentState = GameState.BeforeEnding;
+        }
+    }
+    private void ShowStageFloor(){
+        Scene sceneName = SceneManager.GetActiveScene();
+        tmpStageFloor.GetComponent<TextMeshProUGUI>().text = sceneName.name;
+    }
+    public void GenerateDoor(){
+        Debug.Log("GenerateDoor");
+        float offset = 3;
+        doorToNextStage.SetActive(true);
+        doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0,offset,0);
+    }
     private void OnEnable()
     {
         OnBeforeStart += AddAllEnemyInSceneToList;
+        OnBeforeStart += ShowStageFloor;
         OnEnemyDead += RemoveEnemyDead;
+        WhileInGame += StageClear;
+        OnBeforeEnding += GenerateDoor;
     }
     private void OnDisable()
     {
         OnBeforeStart -= AddAllEnemyInSceneToList;
+        OnBeforeStart -= ShowStageFloor;
         OnEnemyDead -= RemoveEnemyDead;
+        WhileInGame -= StageClear;
+        OnBeforeEnding -= GenerateDoor;
     }
 }
 

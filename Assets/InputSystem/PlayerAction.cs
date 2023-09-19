@@ -100,9 +100,18 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""eade938d-7365-46ee-ab38-4f198d3f9cab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""LeftClick"",
                     ""type"": ""Button"",
-                    ""id"": ""6505e482-7654-43ac-befb-7f6eaa5c90cf"",
+                    ""id"": ""528028ec-fac6-410a-9ddb-54051ee56857"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -244,7 +253,18 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""12ef0273-49ca-4e83-b64c-cd04bb9b836a"",
+                    ""id"": ""2ba444ea-d93e-4e7b-bf16-70eabda26a33"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71220ec3-faf2-4105-be12-c2f657b4ad60"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -268,6 +288,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         m_Player_Spell_E = m_Player.FindAction("Spell_E", throwIfNotFound: true);
         m_Player_Spell_R = m_Player.FindAction("Spell_R", throwIfNotFound: true);
         m_Player_Spell_Shift = m_Player.FindAction("Spell_Shift", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
     }
 
@@ -336,6 +357,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Spell_E;
     private readonly InputAction m_Player_Spell_R;
     private readonly InputAction m_Player_Spell_Shift;
+    private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_LeftClick;
     public struct PlayerActions
     {
@@ -349,6 +371,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         public InputAction @Spell_E => m_Wrapper.m_Player_Spell_E;
         public InputAction @Spell_R => m_Wrapper.m_Player_Spell_R;
         public InputAction @Spell_Shift => m_Wrapper.m_Player_Spell_Shift;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -383,6 +406,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @Spell_Shift.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Shift;
                 @Spell_Shift.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Shift;
                 @Spell_Shift.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpell_Shift;
+                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @LeftClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
                 @LeftClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
                 @LeftClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
@@ -414,6 +440,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @Spell_Shift.started += instance.OnSpell_Shift;
                 @Spell_Shift.performed += instance.OnSpell_Shift;
                 @Spell_Shift.canceled += instance.OnSpell_Shift;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
                 @LeftClick.started += instance.OnLeftClick;
                 @LeftClick.performed += instance.OnLeftClick;
                 @LeftClick.canceled += instance.OnLeftClick;
@@ -431,6 +460,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         void OnSpell_E(InputAction.CallbackContext context);
         void OnSpell_R(InputAction.CallbackContext context);
         void OnSpell_Shift(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);
     }
 }
