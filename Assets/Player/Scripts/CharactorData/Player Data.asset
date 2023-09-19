@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
-  _maxHp: 0
+  _maxHp: 1000
   _level: 0
   _moveSpeed: 6.5
   _hpBase: 0
