@@ -25,13 +25,11 @@ public class MeteorRain : Spell
     public override void CastSpell(float score, GameObject player)
     {
 
-        // Create a new sequence
         sequenceCast = DOTween.Sequence();
 
         int castLevel = CalThreshold(score);
         selectedPosition = RandomPositon(player.transform.position, 7);
 
-        // Define a flag to track if the player has clicked within the time limit
         bool hasClicked = false;
 
         sequenceCast.AppendCallback(() =>
@@ -41,19 +39,17 @@ public class MeteorRain : Spell
             playerAction.Player.LeftClick.canceled += context =>
             {
                 SelectPosition(castLevel, player);
-                hasClicked = false; // Set the flag to true when the player clicks
+                hasClicked = false;
             };
         }).AppendInterval(selectedPositionDuration)
           .AppendCallback(() =>
           {
-
-              // Check if the player has not clicked within the time limit
               if (!hasClicked)
               {
-                  // Force cast at the previously selected position
                   GameObject targetPos = new GameObject();
                   targetPos.transform.position = selectedPosition;
                   CastByLevel(castLevel, player, targetPos);
+                  Destroy(targetPos);
               }
 
           });
@@ -196,10 +192,10 @@ public class MeteorRain : Spell
         playerAction.Player.LeftClick.Disable();
         GameObject selectedPos = Instantiate(_selectPositionPrefab, (Vector3)selectedPosition, Quaternion.identity);
         selectedPos.GetComponent<SpriteRenderer>().DOFade(1f, selectedPositionDuration - 0.2f);
-        selectedPos.transform.DOScale(4, selectedPositionDuration - 0.2f).OnComplete(() => Destroy(selectedPos));
-        // GameObject targetPos = new GameObject();
-        // targetPos.transform.position = selectedPosition;
-        // CastByLevel(castLevel, player, targetPos);
+        selectedPos.transform.DOScale(4, selectedPositionDuration - 0.2f).OnComplete(() =>
+        {
+            Destroy(selectedPos);
+        });
     }
     private Vector2 RandomPositon(Vector2 targetPosition, float radius)
     {
