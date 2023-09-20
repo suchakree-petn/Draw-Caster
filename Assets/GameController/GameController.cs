@@ -53,6 +53,7 @@ public class GameController : MonoBehaviour
         {
             case GameState.BeforeStart:
                 OnBeforeStart?.Invoke();
+                Debug.Log("BeforeStart");
                 currentState = GameState.Start;
                 break;
             case GameState.Start:
@@ -142,6 +143,7 @@ public class GameController : MonoBehaviour
     }
     private void ShowStageFloor(){
         Scene sceneName = SceneManager.GetActiveScene();
+        if(GameObject.Find("StageFloor") != null)tmpStageFloor = GameObject.Find("StageFloor");
         tmpStageFloor.GetComponent<TextMeshProUGUI>().text = sceneName.name;
     }
     public void GenerateDoor(){
