@@ -95,7 +95,7 @@ public class Enemy2DAI : MonoBehaviour
     {
         float distanceToTarget = Vector2.Distance(target.position, transform.position);
 
-        if (distanceToTarget < 0.75f)
+        if (distanceToTarget < 2f)
         {
             currentState = State.Idle;
             return;  // Return here to prevent the enemy from moving further

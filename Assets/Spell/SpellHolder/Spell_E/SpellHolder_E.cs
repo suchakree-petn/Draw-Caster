@@ -9,7 +9,7 @@ public class SpellHolder_E : MonoBehaviour
     public bool _isReadyToCast;
     public int castLevel;
 
-    [SerializeField] private Spell spell;
+    public Spell spell;
     [Header("Draw Input")]
     public DrawInput_E drawInput;
     public delegate void InputCompare(float score, GameObject player);
