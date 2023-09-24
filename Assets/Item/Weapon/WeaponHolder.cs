@@ -13,7 +13,7 @@ public class WeaponHolder : MonoBehaviour
 
     void Update()
     {
-        Debug.DrawLine(transform.root.position, Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
+        //Debug.DrawLine(transform.root.position, Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
 
         if (isHoldAttack && isReadyToAttack)
         {

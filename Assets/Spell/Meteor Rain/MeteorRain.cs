@@ -1,4 +1,5 @@
 using DG.Tweening;
+using DrawCaster.Util;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,10 +17,13 @@ public class MeteorRain : Spell
     public int meteorAmount1;
     public int meteorAmount2;
     public int meteorAmount3;
+    public float meteorMoveSpeed;
+    public float selfDestructTime => meteorMoveSpeed;
+
+    [Header("Prefab")]
     public GameObject _meteorPrefab;
     public GameObject _selectPositionPrefab;
     [SerializeField] private Vector2 selectedPosition;
-    [SerializeField] private bool isSelected = false;
     Sequence sequenceCast;
 
     public override void CastSpell(float score, GameObject player)
@@ -38,7 +42,7 @@ public class MeteorRain : Spell
             playerAction.Player.LeftClick.Enable();
             playerAction.Player.LeftClick.canceled += context =>
             {
-                SelectPosition(castLevel, player);
+                SelectPosition();
                 hasClicked = false;
             };
         }).AppendInterval(selectedPositionDuration)
@@ -64,13 +68,7 @@ public class MeteorRain : Spell
         Sequence sequence = DOTween.Sequence();
         for (int i = 0; i < meteorAmount1; i++)
         {
-            GameObject meteor = Instantiate(_meteorPrefab);
-            meteor.transform.GetComponentInChildren<AttackHit>().elementalDamage = Elemental.DamageCalculation(
-                _elementalType,
-                player.GetComponent<PlayerManager>().playerData,
-                _baseSkillDamageMultiplier * _damageSpellLevelMultiplier1);
-            meteor.transform.GetComponentInChildren<AttackHit>().selfDestructTime = 0.23f;
-            meteor.SetActive(false);
+            GameObject meteor = SpawnMeteor(player, _damageSpellLevelMultiplier1);
             meteors[i] = meteor;
         }
 
@@ -83,7 +81,7 @@ public class MeteorRain : Spell
                 meteors[index].SetActive(true);
                 meteors[index].transform.position = player.transform.position + new Vector3(randomSide * cameraOrthoSize, cameraOrthoSize + 3, 0);
             });
-            sequence.Append(meteors[index].transform.DOMove(RandomPositon(selectedPosition, 2), 0.2f, false));
+            sequence.Append(meteors[index].transform.DOMove(RandomPositon(selectedPosition, 2), meteorMoveSpeed, false));
         }
     }
     public override void Cast2(GameObject player, GameObject target)
@@ -94,21 +92,7 @@ public class MeteorRain : Spell
         Sequence sequence = DOTween.Sequence();
         for (int i = 0; i < meteorAmount2; i++)
         {
-            GameObject meteor = Instantiate(_meteorPrefab);
-            meteor.transform.GetComponentInChildren<AttackHit>().elementalDamage = Elemental.DamageCalculation(
-                _elementalType,
-                player.GetComponent<PlayerManager>().playerData,
-                _baseSkillDamageMultiplier * _damageSpellLevelMultiplier2);
-            if (i != meteorAmount2 - 1)
-            {
-                meteor.transform.GetComponentInChildren<AttackHit>().selfDestructTime = 0.23f;
-            }
-            else
-            {
-                meteor.transform.GetComponentInChildren<AttackHit>().selfDestructTime = 1f;
-
-            }
-            meteor.SetActive(false);
+            GameObject meteor = SpawnMeteor(player, _damageSpellLevelMultiplier2);
             meteors[i] = meteor;
         }
 
@@ -121,14 +105,15 @@ public class MeteorRain : Spell
                 meteors[index].SetActive(true);
                 meteors[index].transform.position = player.transform.position + new Vector3(randomSide * cameraOrthoSize, cameraOrthoSize + 3, 0);
             });
-            sequence.Append(meteors[index].transform.DOMove(RandomPositon(selectedPosition, 2), 0.2f, false));
+            sequence.Append(meteors[index].transform.DOMove(RandomPositon(selectedPosition, 2), meteorMoveSpeed, false));
         }
         sequence.AppendCallback(() =>
         {
             int index = meteors.Length - 1;
-            meteors[index].transform.DOScale(meteors[index].transform.localScale.x * 3, 0);
+            meteors[index].transform.localScale = new Vector3(3, 3, 0);
             meteors[index].SetActive(true);
             meteors[index].transform.position = player.transform.position + new Vector3(cameraOrthoSize, cameraOrthoSize + 3, 0);
+            meteors[index].GetComponent<AttackHit>().selfDestructTime = 0.8f;
             meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
         });
     }
@@ -140,21 +125,7 @@ public class MeteorRain : Spell
         Sequence sequence = DOTween.Sequence();
         for (int i = 0; i < meteorAmount3; i++)
         {
-            GameObject meteor = Instantiate(_meteorPrefab);
-            meteor.transform.GetComponentInChildren<AttackHit>().elementalDamage = Elemental.DamageCalculation(
-                _elementalType,
-                player.GetComponent<PlayerManager>().playerData,
-                _baseSkillDamageMultiplier * _damageSpellLevelMultiplier3);
-            if (i != meteorAmount3 - 1)
-            {
-                meteor.transform.GetComponentInChildren<AttackHit>().selfDestructTime = 0.23f;
-            }
-            else
-            {
-                meteor.transform.GetComponentInChildren<AttackHit>().selfDestructTime = 1f;
-
-            }
-            meteor.SetActive(false);
+            GameObject meteor = SpawnMeteor(player, _damageSpellLevelMultiplier3);
             meteors[i] = meteor;
         }
 
@@ -167,14 +138,15 @@ public class MeteorRain : Spell
                 meteors[index].SetActive(true);
                 meteors[index].transform.position = player.transform.position + new Vector3(randomSide * cameraOrthoSize, cameraOrthoSize + 3, 0);
             });
-            sequence.Append(meteors[index].transform.DOMove(RandomPositon(selectedPosition, 2), 0.2f, false));
+            sequence.Append(meteors[index].transform.DOMove(RandomPositon(selectedPosition, 2), meteorMoveSpeed, false));
         }
         sequence.AppendCallback(() =>
         {
             int index = meteors.Length - 1;
-            meteors[index].transform.DOScale(meteors[index].transform.localScale.x * 3, 0);
+            meteors[index].transform.localScale = new Vector3(3, 3, 0);
             meteors[index].SetActive(true);
             meteors[index].transform.position = player.transform.position + new Vector3(cameraOrthoSize, cameraOrthoSize + 3, 0);
+            meteors[index].GetComponent<AttackHit>().selfDestructTime = 0.8f;
             meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
         });
 
@@ -184,8 +156,21 @@ public class MeteorRain : Spell
 
     }
 
+    private GameObject SpawnMeteor(GameObject player, float multiplier)
+    {
+        GameObject meteor = DrawCasterUtil.AddAttackHitTo(
+                        Instantiate(_meteorPrefab),
+                        _elementalType,
+                        player.GetComponent<CharactorManager<PlayerData>>().GetCharactorData(),
+                        _baseSkillDamageMultiplier * multiplier,
+                        selfDestructTime,
+                        targetLayer
+                        );
+        meteor.SetActive(false);
+        return meteor;
+    }
 
-    private void SelectPosition(int castLevel, GameObject player)
+    private void SelectPosition()
     {
         selectedPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;

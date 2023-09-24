@@ -17,15 +17,17 @@ public class Elemental
     public ElementalType _elementalType;
     public float _damage;
     public CharactorData _attacker;
-    public Elemental(ElementalType type, float damage, CharactorData attacker)
+    public LayerMask targetLayer;
+    public Elemental(ElementalType type, float damage, CharactorData attacker, LayerMask targetLayer)
     {
         this._elementalType = type;
         this._damage = damage;
         this._attacker = attacker;
+        this.targetLayer = targetLayer;
     }
-    public static Elemental DamageCalculation(ElementalType type, CharactorData attacker, float _baseSkillDamageMultiplier)
+    public static Elemental DamageCalculation(ElementalType type, CharactorData attacker, float _baseSkillDamageMultiplier, LayerMask targetLayer)
     {
-        return new Elemental(type, CalcDamage(attacker, _baseSkillDamageMultiplier, type), attacker);
+        return new Elemental(type, CalcDamage(attacker, _baseSkillDamageMultiplier, type), attacker, targetLayer);
     }
 
     static private float CalcAttack(CharactorData attacker)

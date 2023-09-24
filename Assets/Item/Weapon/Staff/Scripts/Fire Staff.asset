@@ -21,9 +21,13 @@ MonoBehaviour:
   itemPrefab: {fileID: 0}
   elementType: 1
   activeRate: 0.15
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
   _baseSkillDamageMultiplier: 0.05
   spreadAngle: 60
   fireBallMoveSpeed: 1600
   fireBallAmount: 1
+  fireBallDuration: 1
   fireBallPrefab: {fileID: 9143974807770408128, guid: 0c485803db5715046b3cba2726e0122a,
     type: 3}

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Hitbox
   layers:
   - Default
   - TransparentFX
@@ -12,8 +13,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Enemy
   - 
   - 
   - 
@@ -51,6 +52,12 @@ TagManager:
   - name: Player
     uniqueID: 4250941897
     locked: 0
+  - name: Boss
+    uniqueID: 4020642393
+    locked: 0
   - name: Player's Attack
     uniqueID: 4189426099
+    locked: 0
+  - name: Text Damage
+    uniqueID: 2290351315
     locked: 0

@@ -1,0 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
+using MoltenFire;
+using UnityEngine;
+
+public class CheckMeleeAttack : MonoBehaviour
+{
+    [SerializeField] private MoltenFireBehaviour moltenFireBehaviour;
+
+    private void Awake()
+    {
+        moltenFireBehaviour = transform.root.GetComponentInChildren<MoltenFireBehaviour>();
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.transform.root.CompareTag(moltenFireBehaviour.targetTag) && other.CompareTag("Hitbox"))
+        {
+            moltenFireBehaviour.currentState = State.MeleeAttack;
+        }
+    }
+}

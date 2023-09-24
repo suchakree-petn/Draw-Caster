@@ -1,4 +1,5 @@
 using DG.Tweening;
+using DrawCaster.Util;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class LightningStorm : Spell
     public int _amountLevel1;
     public int _amountLevel2;
     public int _amountLevel3;
+    public float selfDestructTime;
+    public float randomPositionRadius;
     [SerializeField] private GameObject lightningStormPrefab;
 
     public override void CastSpell(float score, GameObject player)
@@ -54,16 +57,16 @@ public class LightningStorm : Spell
         Debug.Log("Cast1");
 
         if (player == null) { return; }
-        Vector2 spawnPos = new Vector2();
+        Vector2 spawnPos;
         if (target != null)
         {
             spawnPos = target.transform.position;
         }
         else
         {
-            spawnPos = RandomTransform(player.transform).transform.position;
+            spawnPos = RandomPosition(player.transform.position);
         }
-        GameObject lightningStorm = SpawnLightning(player, spawnPos);
+        GameObject lightningStorm = SpawnLightning(player, spawnPos,_damageSpellLevelMultiplier1);
         CinemachineShake.Instance.Shake(target);
     }
 
@@ -74,16 +77,16 @@ public class LightningStorm : Spell
         Debug.Log("Cast2");
 
         if (player == null) { return; }
-        Vector2 spawnPos = new Vector2();
+        Vector2 spawnPos;
         if (target != null)
         {
             spawnPos = target.transform.position;
         }
         else
         {
-            spawnPos = RandomTransform(player.transform).transform.position;
+            spawnPos = RandomPosition(player.transform.position);
         }
-        GameObject lightningStorm = SpawnLightning(player, spawnPos);
+        GameObject lightningStorm = SpawnLightning(player, spawnPos,_damageSpellLevelMultiplier2);
         CinemachineShake.Instance.Shake(target);
     }
     public override void Cast3(GameObject player, GameObject target)
@@ -91,25 +94,28 @@ public class LightningStorm : Spell
         Debug.Log("Cast3");
 
         if (player == null) { return; }
-        Vector2 spawnPos = new Vector2();
+        Vector2 spawnPos;
         if (target != null)
         {
             spawnPos = target.transform.position;
         }
         else
         {
-            spawnPos = RandomTransform(player.transform).transform.position;
+            spawnPos = RandomPosition(player.transform.position);
         }
-        GameObject lightningStorm = SpawnLightning(player, spawnPos);
+        GameObject lightningStorm = SpawnLightning(player, spawnPos,_damageSpellLevelMultiplier3);
         CinemachineShake.Instance.Shake(target);
     }
-    private GameObject SpawnLightning(GameObject player, Vector2 spawnPos)
+    private GameObject SpawnLightning(GameObject player, Vector2 spawnPos, float multiplier)
     {
-        GameObject lightningStorm = Instantiate(lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y, 0f), Quaternion.identity);
-        AttackHit attackHit = lightningStorm.transform.GetComponentInChildren<AttackHit>();
-        attackHit.elementalDamage = Elemental.DamageCalculation(_elementalType,
-                        player.GetComponent<PlayerManager>().playerData,
-                        _baseSkillDamageMultiplier * _damageSpellLevelMultiplier1);
+        GameObject lightningStorm = DrawCasterUtil.AddAttackHitTo(
+            Instantiate(lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y, 0f), Quaternion.identity),
+            _elementalType,
+            player.GetComponent<CharactorManager<PlayerData>>().GetCharactorData(),
+            _baseSkillDamageMultiplier * multiplier,
+            selfDestructTime,
+            targetLayer
+            );
         return lightningStorm;
     }
     public int GetAmount(int castLevel)
@@ -126,21 +132,16 @@ public class LightningStorm : Spell
     }
     public override void BeginCooldown(GameObject player)
     {
-        
+
     }
-    private GameObject RandomTransform(Transform center)
+    private Vector2 RandomPosition(Vector2 center)
     {
         // Generate a random angle in radians
         float randomAngle = Random.Range(0f, Mathf.PI * 2);
 
         // Calculate a random position within the spawn radius
-        Vector3 spawnPosition = center.position + new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * 5f;
+        Vector3 spawnPosition = center + new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)) * randomPositionRadius;
 
-        GameObject obj = new GameObject();
-        obj.AddComponent<AttackHit>();
-        obj.GetComponent<AttackHit>().selfDestructTime = 0.1f;
-        GameObject randomTransform = Instantiate(obj, spawnPosition, Quaternion.identity);
-
-        return randomTransform;
+        return spawnPosition;
     }
 }

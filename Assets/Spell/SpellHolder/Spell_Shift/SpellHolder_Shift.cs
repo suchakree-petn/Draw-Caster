@@ -36,7 +36,7 @@ public class SpellHolder_Shift : MonoBehaviour
     }
     public bool CheckMana(Spell spell)
     {
-        PlayerData _playerData = transform.root.GetComponent<PlayerManager>().playerData;
+        PlayerData _playerData = transform.root.GetComponent<CharactorManager<PlayerData>>().GetCharactorData();
         if (_playerData.currentMana >= spell._manaCost)
         {
             return true;

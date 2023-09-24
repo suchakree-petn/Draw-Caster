@@ -38,13 +38,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject doorToNextStage;
     [SerializeField] private GameObject tmpStageFloor;
 
-    public delegate void PlayerBehavior(GameObject player);
-    public static PlayerBehavior OnPlayerDead;
-    public static PlayerBehavior OnPlayerTakeDamage;
+    public static Action<GameObject> OnPlayerDead;
+    public static Action<GameObject,float> OnPlayerTakeDamage;
 
-    public delegate void EnemyBehavior(GameObject enemy);
-    public static EnemyBehavior OnEnemyDead;
-    public static EnemyBehavior OnEnemyTakeDamage;
+    public static Action<GameObject> OnEnemyDead;
+    public static Action<GameObject,float> OnEnemyTakeDamage;
 
 
     private void Update()
