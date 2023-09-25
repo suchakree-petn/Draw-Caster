@@ -26,6 +26,7 @@ public class SpellHolder_Shift : MonoBehaviour
             if (CheckMana(spell) && _isReadyToCast)
             {
                 ReceiveDrawInput();
+                PayManaCost();
                 OnFinishCast?.Invoke(transform.root.gameObject);
             }
         }
@@ -36,12 +37,16 @@ public class SpellHolder_Shift : MonoBehaviour
     }
     public bool CheckMana(Spell spell)
     {
-        PlayerData _playerData = transform.root.GetComponent<CharactorManager<PlayerData>>().GetCharactorData();
-        if (_playerData.currentMana >= spell._manaCost)
+        PlayerManager _playerManager = transform.root.GetComponent<PlayerManager>();
+        if (_playerManager.currentMana >= spell._manaCost)
         {
             return true;
         }
         return false;
+    }
+    public void PayManaCost(){
+        PlayerManager _playerManager = transform.root.GetComponent<PlayerManager>();
+        _playerManager.currentMana -= spell._manaCost;
     }
     public void ReceiveDrawInput()
     {
