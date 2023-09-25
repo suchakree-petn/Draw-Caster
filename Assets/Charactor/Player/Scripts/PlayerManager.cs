@@ -20,7 +20,7 @@ public class PlayerManager : CharactorManager<PlayerData>
         {
             damageDeal = CalcDamageRecieve(GetCharactorData(), damage);
             currentHp -= damageDeal;
-            DamagePopup.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
+            TextDamageAsset.Instance.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
         }
         GameController.OnPlayerTakeDamage?.Invoke(gameObject, damageDeal);
     }

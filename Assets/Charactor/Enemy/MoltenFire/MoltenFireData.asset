@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: MoltenFireData
   m_EditorClassIdentifier: 
   _name: Molten Fire
-  _maxHp: 4000
   _level: 0
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
   _moveSpeed: 1
-  _hpBase: 4000
+  _hpBase: 999999
   _hpMultiplier: 0
   _hpBonus: 0
   _attackBase: 300

@@ -64,9 +64,9 @@ public class LightningStorm : Spell
         }
         else
         {
-            spawnPos = RandomPosition(player.transform.position);
+            spawnPos = DrawCasterUtil.RandomPosition(player.transform.position,randomPositionRadius);
         }
-        GameObject lightningStorm = SpawnLightning(player, spawnPos,_damageSpellLevelMultiplier1);
+        SpawnLightning(player, spawnPos,_damageSpellLevelMultiplier1);
         CinemachineShake.Instance.Shake(target);
     }
 
@@ -84,9 +84,9 @@ public class LightningStorm : Spell
         }
         else
         {
-            spawnPos = RandomPosition(player.transform.position);
+            spawnPos = DrawCasterUtil.RandomPosition(player.transform.position,randomPositionRadius);
         }
-        GameObject lightningStorm = SpawnLightning(player, spawnPos,_damageSpellLevelMultiplier2);
+        SpawnLightning(player, spawnPos,_damageSpellLevelMultiplier2);
         CinemachineShake.Instance.Shake(target);
     }
     public override void Cast3(GameObject player, GameObject target)
@@ -101,9 +101,9 @@ public class LightningStorm : Spell
         }
         else
         {
-            spawnPos = RandomPosition(player.transform.position);
+            spawnPos = DrawCasterUtil.RandomPosition(player.transform.position,randomPositionRadius);
         }
-        GameObject lightningStorm = SpawnLightning(player, spawnPos,_damageSpellLevelMultiplier3);
+        SpawnLightning(player, spawnPos,_damageSpellLevelMultiplier3);
         CinemachineShake.Instance.Shake(target);
     }
     private GameObject SpawnLightning(GameObject player, Vector2 spawnPos, float multiplier)
@@ -134,14 +134,5 @@ public class LightningStorm : Spell
     {
 
     }
-    private Vector2 RandomPosition(Vector2 center)
-    {
-        // Generate a random angle in radians
-        float randomAngle = Random.Range(0f, Mathf.PI * 2);
-
-        // Calculate a random position within the spawn radius
-        Vector3 spawnPosition = center + new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)) * randomPositionRadius;
-
-        return spawnPosition;
-    }
+    
 }

@@ -17,7 +17,7 @@ public class EnemyManager : CharactorManager<EnemyData>
         {
             damageDeal = CalcDamageRecieve(GetCharactorData(), damage);
             currentHp -= damageDeal;
-            DamagePopup.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
+            TextDamageAsset.Instance.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
         }
         GameController.OnEnemyTakeDamage?.Invoke(gameObject, damageDeal);
     }

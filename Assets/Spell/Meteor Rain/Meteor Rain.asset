@@ -18,11 +18,11 @@ MonoBehaviour:
   _level: 0
   _spellType: 1
   _elementalType: 1
-  _cooldown: 10
+  _cooldown: 0
   _manaCost: 0
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   _templateImage: {fileID: 2800000, guid: 59340c9eeea530d4292171e8d9e78682, type: 3}
   UI_image: {fileID: 21300000, guid: 026fac2b3b513c1489da6ab5fdea5032, type: 3}
   _lowThreshold: 0.3
@@ -36,8 +36,9 @@ MonoBehaviour:
   meteorAmount2: 14
   meteorAmount3: 19
   meteorMoveSpeed: 0.2
-  _meteorPrefab: {fileID: 9143974807770408128, guid: 0c485803db5715046b3cba2726e0122a,
+  randomPositionRadius: 0
+  _meteorPrefab: {fileID: 2792028505011184367, guid: b975da128b06c134da0ec8371e9f5ac2,
     type: 3}
   _selectPositionPrefab: {fileID: 402501787774780549, guid: 9ee0f28d7dd618448a696917cbe4b42e,
     type: 3}
-  selectedPosition: {x: -10.945218, y: -3.814726}
+  selectedPosition: {x: 0.10564518, y: -3.0453284}

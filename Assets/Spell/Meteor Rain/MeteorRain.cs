@@ -18,21 +18,20 @@ public class MeteorRain : Spell
     public int meteorAmount2;
     public int meteorAmount3;
     public float meteorMoveSpeed;
+    public float randomPositionRadius;
     public float selfDestructTime => meteorMoveSpeed;
 
     [Header("Prefab")]
     public GameObject _meteorPrefab;
     public GameObject _selectPositionPrefab;
     [SerializeField] private Vector2 selectedPosition;
-    Sequence sequenceCast;
 
     public override void CastSpell(float score, GameObject player)
     {
-
-        sequenceCast = DOTween.Sequence();
+        Sequence sequenceCast = DOTween.Sequence();
 
         int castLevel = CalThreshold(score);
-        selectedPosition = RandomPositon(player.transform.position, 7);
+        selectedPosition = DrawCasterUtil.RandomPosition(player.transform.position, randomPositionRadius);
 
         bool hasClicked = false;
 
@@ -45,8 +44,9 @@ public class MeteorRain : Spell
                 SelectPosition();
                 hasClicked = false;
             };
-        }).AppendInterval(selectedPositionDuration)
-          .AppendCallback(() =>
+        });
+        sequenceCast.AppendInterval(selectedPositionDuration);
+        sequenceCast.AppendCallback(() =>
           {
               if (!hasClicked)
               {
@@ -55,9 +55,7 @@ public class MeteorRain : Spell
                   CastByLevel(castLevel, player, targetPos);
                   Destroy(targetPos);
               }
-
           });
-        sequenceCast.Play();
     }
 
     public override void Cast1(GameObject player, GameObject target)
@@ -81,7 +79,7 @@ public class MeteorRain : Spell
                 meteors[index].SetActive(true);
                 meteors[index].transform.position = player.transform.position + new Vector3(randomSide * cameraOrthoSize, cameraOrthoSize + 3, 0);
             });
-            sequence.Append(meteors[index].transform.DOMove(RandomPositon(selectedPosition, 2), meteorMoveSpeed, false));
+            sequence.Append(meteors[index].transform.DOMove(DrawCasterUtil.RandomPosition(selectedPosition, randomPositionRadius), meteorMoveSpeed, false));
         }
     }
     public override void Cast2(GameObject player, GameObject target)
@@ -98,24 +96,25 @@ public class MeteorRain : Spell
 
         for (int i = 0; i < meteors.Length - 1; i++)
         {
-            int index = i;
+            int ind = i;
             int randomSide = (Random.Range(0, 2) == 0) ? -1 : 1;
             sequence.AppendCallback(() =>
             {
-                meteors[index].SetActive(true);
-                meteors[index].transform.position = player.transform.position + new Vector3(randomSide * cameraOrthoSize, cameraOrthoSize + 3, 0);
+                meteors[ind].SetActive(true);
+                meteors[ind].transform.position = player.transform.position + new Vector3(randomSide * cameraOrthoSize, cameraOrthoSize + 3, 0);
             });
-            sequence.Append(meteors[index].transform.DOMove(RandomPositon(selectedPosition, 2), meteorMoveSpeed, false));
+            sequence.Append(meteors[ind].transform.DOMove(DrawCasterUtil.RandomPosition(selectedPosition, randomPositionRadius), meteorMoveSpeed, false));
         }
+        int index = meteors.Length - 1;
         sequence.AppendCallback(() =>
         {
-            int index = meteors.Length - 1;
             meteors[index].transform.localScale = new Vector3(3, 3, 0);
             meteors[index].SetActive(true);
             meteors[index].transform.position = player.transform.position + new Vector3(cameraOrthoSize, cameraOrthoSize + 3, 0);
             meteors[index].GetComponent<AttackHit>().selfDestructTime = 0.8f;
-            meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
         });
+        meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
+
     }
     public override void Cast3(GameObject player, GameObject target)
     {
@@ -131,24 +130,24 @@ public class MeteorRain : Spell
 
         for (int i = 0; i < meteors.Length - 1; i++)
         {
-            int index = i;
+            int ind = i;
             int randomSide = (Random.Range(0, 2) == 0) ? -1 : 1;
             sequence.AppendCallback(() =>
             {
-                meteors[index].SetActive(true);
-                meteors[index].transform.position = player.transform.position + new Vector3(randomSide * cameraOrthoSize, cameraOrthoSize + 3, 0);
+                meteors[ind].SetActive(true);
+                meteors[ind].transform.position = player.transform.position + new Vector3(randomSide * cameraOrthoSize, cameraOrthoSize + 3, 0);
             });
-            sequence.Append(meteors[index].transform.DOMove(RandomPositon(selectedPosition, 2), meteorMoveSpeed, false));
+            sequence.Append(meteors[ind].transform.DOMove(DrawCasterUtil.RandomPosition(selectedPosition, randomPositionRadius), meteorMoveSpeed, false));
         }
+        int index = meteors.Length - 1;
         sequence.AppendCallback(() =>
         {
-            int index = meteors.Length - 1;
             meteors[index].transform.localScale = new Vector3(3, 3, 0);
             meteors[index].SetActive(true);
             meteors[index].transform.position = player.transform.position + new Vector3(cameraOrthoSize, cameraOrthoSize + 3, 0);
             meteors[index].GetComponent<AttackHit>().selfDestructTime = 0.8f;
-            meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
         });
+        meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
 
     }
     public override void BeginCooldown(GameObject player)
@@ -181,14 +180,5 @@ public class MeteorRain : Spell
         {
             Destroy(selectedPos);
         });
-    }
-    private Vector2 RandomPositon(Vector2 targetPosition, float radius)
-    {
-        // Generate a random angle in radians
-        float randomAngle = Random.Range(0f, Mathf.PI * 2);
-
-        // Calculate a random position within the spawn radius
-        Vector2 spawnPosition = targetPosition + new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)) * Random.Range(0, radius);
-        return spawnPosition;
     }
 }
