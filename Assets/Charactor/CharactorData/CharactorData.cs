@@ -18,6 +18,11 @@ public abstract class CharactorData : ScriptableObject
    public float _hpMultiplier;
    public float _hpBonus;
 
+   [Header("Mana Point")]
+   public float _manaBase;
+   public float _manaMultiplier;
+   public float _manaBonus;
+
    [Header("Attack Point")]
    public float _attackBase;
    public float _attackMultiplier;
@@ -42,6 +47,9 @@ public abstract class CharactorData : ScriptableObject
 
    public float GetMaxHp(){
       return (_hpBase * (1 + _hpMultiplier)) + _hpBonus;
+   }
+   public float GetMaxMana(){
+      return (_manaBase * (1 + _manaMultiplier)) + _manaBonus;
    }
    public abstract void Dead(GameObject deadCharactor);
    public abstract void CheckDead(GameObject charactor,float damage);

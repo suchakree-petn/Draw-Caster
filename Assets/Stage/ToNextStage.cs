@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class ToNextStage : MonoBehaviour,IInteractable
 {
-    [SerializeField] private PlayerAction _playerAction;
     [SerializeField] private GameObject IUBoxPrefab;
     public void NextScene()
     {

@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerData : CharactorData
 {
 
-    public float currentMana;
     public Weapon CurrentWeapon;
 
     public override void CheckDead(GameObject charactor, float damage)

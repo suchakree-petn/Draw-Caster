@@ -28,6 +28,10 @@ public class PlayerManager : CharactorManager<PlayerData>
     {
         currentHp = GetCharactorData().GetMaxHp();
     }
+    public override void InitMana()
+    {
+        currentMana = GetCharactorData().GetMaxMana();
+    }
     protected override void OnEnable()
     {
         base.OnEnable();

@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
 {
     public float currentHp;
+    public float currentMana;
     public T charactorData {private get; set; }
 
     public abstract void TakeDamage(Elemental elementalDamage);
@@ -13,11 +14,13 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     protected virtual void OnEnable()
     {
         GameController.OnBeforeStart += InitHp;
+        GameController.OnBeforeStart += InitMana;
 
     }
     protected virtual void OnDisable()
     {
         GameController.OnBeforeStart -= InitHp;
+        GameController.OnBeforeStart -= InitMana;
     }
 
     float CalcDefense(CharactorData target)
@@ -35,5 +38,5 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
         return damage._damage * CalcDMGReduction(target, damage) * (1 - target._bonusDamageReduction);
     }
     public virtual void InitHp(){}
-    
+    public virtual void InitMana(){}
 }
