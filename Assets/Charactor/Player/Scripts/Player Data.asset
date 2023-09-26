@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
-  _maxHp: 200000
   _level: 0
   targetLayer:
     serializedVersion: 2
@@ -22,6 +21,9 @@ MonoBehaviour:
   _hpBase: 200000
   _hpMultiplier: 0
   _hpBonus: 0
+  _manaBase: 300
+  _manaMultiplier: 0
+  _manaBonus: 0
   _attackBase: 200
   _attackMultiplier: 0
   _attackBonus: 0
@@ -36,5 +38,4 @@ MonoBehaviour:
   _windBonusDamage: 0
   CharactorPrefab: {fileID: 3348656821667477746, guid: f59e9d8ae7cdb924b9f4a1610a633abf,
     type: 3}
-  currentMana: 0
   CurrentWeapon: {fileID: 0}
