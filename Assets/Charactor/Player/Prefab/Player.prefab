@@ -209,7 +209,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4168798484499274807}
   - component: {fileID: 3081705601906102824}
-  - component: {fileID: 137440493}
   m_Layer: 6
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -271,19 +270,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 8921857527158219750}
---- !u!114 &137440493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 579092417909824895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad477c26711b1a74098f49e59c9033f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cinemachineVirtualCamera: {fileID: 3081705601906102824}
 --- !u!1 &1828685200550936685
 GameObject:
   m_ObjectHideFlags: 0

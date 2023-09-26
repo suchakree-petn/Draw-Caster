@@ -39,10 +39,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject tmpStageFloor;
 
     public static Action<GameObject> OnPlayerDead;
-    public static Action<GameObject,float> OnPlayerTakeDamage;
+    public static Action<GameObject, float> OnPlayerTakeDamage;
 
     public static Action<GameObject> OnEnemyDead;
-    public static Action<GameObject,float> OnEnemyTakeDamage;
+    public static Action<GameObject, float> OnEnemyTakeDamage;
 
 
     private void Update()
@@ -110,8 +110,8 @@ public class GameController : MonoBehaviour
         Vector2 cameraMax = (Vector2)mainCamera.transform.position + new Vector2(cameraOrthoWidth, cameraOrthoHeight);
 
         // Check if the bounds of the GameObject intersect with the camera's view bounds
-        return bounds.min.x < cameraMax.x && bounds.max.x > cameraMin.x &&
-               bounds.min.y < cameraMax.y && bounds.max.y > cameraMin.y;
+        return bounds.min.x < cameraMax.x - 10 && bounds.max.x > cameraMin.x - 10 &&
+               bounds.min.y < cameraMax.y - 10 && bounds.max.y > cameraMin.y - 10;
     }
 
     void AddAllEnemyInSceneToList()
@@ -134,21 +134,25 @@ public class GameController : MonoBehaviour
         }
         return allEnemyInCamera.ToArray();
     }
-    public void StageClear(){
-        if(allEnemyInScene.Count == 0 && currentState == GameState.InGame){
+    public void StageClear()
+    {
+        if (allEnemyInScene.Count == 0 && currentState == GameState.InGame)
+        {
             currentState = GameState.BeforeEnding;
         }
     }
-    private void ShowStageFloor(){
+    private void ShowStageFloor()
+    {
         Scene sceneName = SceneManager.GetActiveScene();
-        if(GameObject.Find("StageFloor") != null)tmpStageFloor = GameObject.Find("StageFloor");
+        if (GameObject.Find("StageFloor") != null) tmpStageFloor = GameObject.Find("StageFloor");
         tmpStageFloor.GetComponent<TextMeshProUGUI>().text = sceneName.name;
     }
-    public void GenerateDoor(){
+    public void GenerateDoor()
+    {
         Debug.Log("GenerateDoor");
         float offset = 3;
         doorToNextStage.SetActive(true);
-        doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0,offset,0);
+        doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, offset, 0);
     }
     private void OnEnable()
     {
