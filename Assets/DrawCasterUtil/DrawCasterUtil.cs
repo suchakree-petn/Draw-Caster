@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DrawCaster.Util
 {
@@ -56,6 +56,11 @@ namespace DrawCaster.Util
             Vector3 spawnPosition = center + new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)) * Random.Range(0, randomPositionRadius);
 
             return spawnPosition;
+        }
+
+        public static Vector2 GetCurrentMousePosition()
+        {
+            return Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         }
     }
 }

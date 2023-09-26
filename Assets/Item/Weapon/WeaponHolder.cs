@@ -10,7 +10,6 @@ public class WeaponHolder : MonoBehaviour
     public bool isHoldAttack;
     public bool isReadyToAttack;
     [SerializeField] private PlayerAction playerActions;
-
     void Update()
     {
         //Debug.DrawLine(transform.root.position, Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));

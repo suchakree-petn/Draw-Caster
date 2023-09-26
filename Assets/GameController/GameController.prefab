@@ -363,6 +363,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textDamagePrefab: {fileID: 7183554661978057872, guid: 8cd49f758d131b242879c8dfe4436267,
     type: 3}
+  randomPositionRadius: 4
+  popUpBounceScale: 3
+  moveY: 0.3
+  moveYDuration: 1
+  popUpSpeedToDefalault: 0.4
+  popUpDuration: 0.2
+  fadeInDuration: 0.3
+  fadeOutDuration: 0.1
   fire_Color: {r: 1, g: 0.25262892, b: 0.1830188, a: 1}
   thunder_Color: {r: 0.6927266, g: 0.23018867, b: 1, a: 1}
   frost_Color: {r: 0, g: 0.871995, b: 1, a: 1}
