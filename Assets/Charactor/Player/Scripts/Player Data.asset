@@ -32,6 +32,9 @@ MonoBehaviour:
   _defenseMultiplier: 0
   _defenseBonus: 0
   _bonusDamageReduction: 0
+  _knockbackBase: 100
+  _knockbackMultiplier: 0
+  _knockbackBonus: 0
   _fireBonusDamage: 0
   _thunderBonusDamage: 0
   _frostBonusDamage: 0

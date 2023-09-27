@@ -35,6 +35,10 @@ public abstract class CharactorData : ScriptableObject
    public float _defenseMultiplier;
    public float _defenseBonus;
    public float _bonusDamageReduction;
+   [Header("Knockback Point")]
+   public float _knockbackBase;
+   public float _knockbackMultiplier;
+   public float _knockbackBonus;
 
    [Header("Elemental Bonus")]
    public float _fireBonusDamage;
@@ -50,6 +54,9 @@ public abstract class CharactorData : ScriptableObject
    }
    public float GetMaxMana(){
       return (_manaBase * (1 + _manaMultiplier)) + _manaBonus;
+   }
+   public float GetMaxKnockbackGauge(){
+      return (_knockbackBase * (1 + _knockbackMultiplier)) + _knockbackBonus;
    }
    public abstract void Dead(GameObject deadCharactor);
    public abstract void CheckDead(GameObject charactor,float damage);

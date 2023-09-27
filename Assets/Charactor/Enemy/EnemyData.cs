@@ -18,5 +18,12 @@ public class EnemyData : CharactorData
       GameController.OnEnemyDead?.Invoke(charactor);
     }
   }
-
+  
+}
+public enum EnemyType
+{
+    Default,
+    Small,
+    Medium,
+    Large
 }
