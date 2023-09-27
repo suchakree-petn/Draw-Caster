@@ -10,7 +10,7 @@ public class EnemyData : CharactorData
   {
     Destroy(deadCharactor);
   }
-  public override void CheckDead(GameObject charactor, float damage)
+  public override void CheckDead(GameObject charactor, Elemental damage)
   {
     //Debug.Log("CheckDead");
     if (charactor.GetComponent<EnemyManager>().currentHp <= 0)

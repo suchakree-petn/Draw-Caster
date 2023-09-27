@@ -30,6 +30,7 @@ public abstract class Spell : ScriptableObject
 
     public void CastByLevel(int level, GameObject player, GameObject target)
     {
+        Debug.Log("Cast by level");
         switch (level)
         {
             case 1:
