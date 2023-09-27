@@ -21,19 +21,9 @@ namespace MoltenFire
         public string targetTag;
         public Transform target;
         private EnemyData moltenFireData;
-        [SerializeField] private Collider2D meleeHitbox;
-        [Header("Attack Setting")]
-        public float _baseMeleeDamageMultiplier;
-        public float _baseFlamePillarDamageMultiplier;
-        public float _baseFireBallDamageMultiplier;
-        [Header("Attack Prefab")]
-        [SerializeField] private GameObject _flamePillarPrefab;
 
 
         public delegate void MoltenFireDelegate(Transform target);
-        public static MoltenFireDelegate OnChase;
-        public static MoltenFireDelegate OnMeleeAttack;
-        public static MoltenFireDelegate OnFlamePillarAttack;
         public static MoltenFireDelegate OnWaitForNextAttack;
         private void Awake()
         {
@@ -60,7 +50,7 @@ namespace MoltenFire
                         currentState = State.WaitForNextAttack;
                         break;
                     case State.FireBallAttack:
-                        OnMeleeAttack?.Invoke(target);
+                        OnFireBallAttack?.Invoke(target);
                         currentState = State.WaitForNextAttack;
                         break;
                     case State.WaitForNextAttack:
@@ -70,15 +60,24 @@ namespace MoltenFire
                         break;
                 }
             }
-
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                FireBallAttack();
+            }
         }
         ////////////////////////// Animation event /////////////////////////
+        public static MoltenFireDelegate OnChase;
+
         void MoveToChaseTarget()
         {
             Vector2 direction = (Vector2)target.position - moltenFireRb.position;
             moltenFireRb.DOMove(moltenFireRb.position + direction.normalized * moltenFireData._moveSpeed, 0.3f);
 
         }
+        [Header("Melee Attack")]
+        public float _baseMeleeDamageMultiplier;
+        [SerializeField] private Collider2D meleeHitbox;
+        public static MoltenFireDelegate OnMeleeAttack;
         void MeleeAttack()
         {
             List<Collider2D> overlappingColliders = new();
@@ -91,12 +90,18 @@ namespace MoltenFire
                 IDamageable damageable = parent.GetComponent<IDamageable>();
                 if (damageable != null && parent.CompareTag(targetTag))
                 {
-                    Elemental damage = Elemental.DamageCalculation(moltenFireData.elementalType, moltenFireData, _baseMeleeDamageMultiplier,moltenFireData.targetLayer);
+                    Elemental damage = Elemental.DamageCalculation(moltenFireData.elementalType, moltenFireData, _baseMeleeDamageMultiplier, moltenFireData.targetLayer);
                     damageable.TakeDamage(damage);
                 }
             }
         }
+
+        [Header("Fire Pillar Attack")]
+        public float _baseFlamePillarDamageMultiplier;
+        [SerializeField] private GameObject _flamePillarPrefab;
         public AnimationClip FlamePillarClip;
+        public static MoltenFireDelegate OnFlamePillarAttack;
+
         void FlamePillarAttack()
         {
             Transform lowerTransform = DrawCasterUtil.GetLowerTransformOf(transform.root);
@@ -109,6 +114,71 @@ namespace MoltenFire
                 moltenFireData.targetLayer
                 );
         }
+
+        [Header("Fire Ball Attack")]
+        public float _baseFireBallDamageMultiplier;
+        [SerializeField] private float launchDuration;
+        [SerializeField] private float curveDuration;
+        [SerializeField] private float spawnInterval;
+        [SerializeField] private GameObject fireballPrefab;
+        [SerializeField] private Transform spawnPosLeft;
+        [SerializeField] private Transform midCurveLeft;
+        [SerializeField] private Transform spawnPosRight;
+        [SerializeField] private Transform midCurveRight;
+        [SerializeField] private int fireBallAmount;
+        [SerializeField] private AnimationCurve speedCurve;
+
+        public static MoltenFireDelegate OnFireBallAttack;
+        void FireBallAttack()
+        {
+            Sequence sequence = DOTween.Sequence();
+
+            for (int i = 0; i < fireBallAmount; i++)
+            {
+                Vector3 spawnPos = GetNewSpawnPos(i).position;
+                Transform fireBallAttack = DrawCasterUtil.AddAttackHitTo(
+                    Instantiate(fireballPrefab, spawnPos, Quaternion.identity),
+                    moltenFireData.elementalType,
+                    moltenFireData,
+                    _baseFireBallDamageMultiplier,
+                    (launchDuration + curveDuration + spawnInterval) * i + 1,
+                    moltenFireData.targetLayer
+                    ).transform;
+                int index = i;
+                sequence.AppendCallback(() =>
+                {
+                    Move(fireBallAttack, index);
+                });
+                sequence.AppendInterval(spawnInterval);
+            }
+        }
+        void Move(Transform fireBallAttack, int i)
+        {
+            fireBallAttack.DOPath(
+                        new Vector3[] { fireBallAttack.position, GetNewMidCurve(i).position, target.position },
+                        curveDuration + launchDuration,
+                        PathType.CatmullRom).SetEase(speedCurve)
+                        .OnComplete(() =>
+                        {
+                            Destroy(fireBallAttack.gameObject);
+                        });
+        }
+        Transform GetNewSpawnPos(int index)
+        {
+            if (index % 2 == 0)
+            {
+                return spawnPosRight;
+            }
+            return spawnPosLeft;
+        }
+        Transform GetNewMidCurve(int index)
+        {
+            if (index % 2 == 0)
+            {
+                return midCurveRight;
+            }
+            return midCurveLeft;
+        }
         ///////////////////////////////////////////////////////////////////
 
         private MoltenFireDelegate ConsiderAttackType(Transform target)
@@ -117,6 +187,7 @@ namespace MoltenFire
         }
 
         [SerializeField] private Animator animator;
+
         private void OnEnable()
         {
 
@@ -129,6 +200,11 @@ namespace MoltenFire
             OnFlamePillarAttack += target =>
             {
                 animator.SetTrigger("FlamePillarAttack");
+                animator.SetBool("IsWalk", false);
+            };
+            OnFireBallAttack += target =>
+            {
+                animator.SetTrigger("FireBallAttack");
                 animator.SetBool("IsWalk", false);
             };
         }

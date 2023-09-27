@@ -18,7 +18,7 @@ MonoBehaviour:
   _level: 0
   _spellType: 1
   _elementalType: 1
-  _cooldown: 0
+  _cooldown: 10
   _manaCost: 0
   targetLayer:
     serializedVersion: 2
@@ -41,4 +41,4 @@ MonoBehaviour:
     type: 3}
   _selectPositionPrefab: {fileID: 402501787774780549, guid: 9ee0f28d7dd618448a696917cbe4b42e,
     type: 3}
-  selectedPosition: {x: 0.10564518, y: -3.0453284}
+  selectedPosition: {x: -15.194918, y: 0.42444044}

@@ -31,18 +31,19 @@ public class GameController : MonoBehaviour
 
 
     [Header("Entity in scene")]
-    public List<GameObject> allEnemyInScene = new List<GameObject>();
-    public List<GameObject> allEnemyInCamera = new List<GameObject>();
+    [SerializeField] private List<GameObject> allEnemyInScene = new List<GameObject>();
+    public GameObject[] AllEnemy => allEnemyInScene.ToArray();
+    //public List<GameObject> allEnemyInCamera = new List<GameObject>();
     public List<string> scene = new List<string>();
     public int currentScene = 0;
     [SerializeField] private GameObject doorToNextStage;
     [SerializeField] private GameObject tmpStageFloor;
 
     public static Action<GameObject> OnPlayerDead;
-    public static Action<GameObject, float> OnPlayerTakeDamage;
+    public static Action<GameObject, Elemental> OnPlayerTakeDamage;
 
     public static Action<GameObject> OnEnemyDead;
-    public static Action<GameObject, float> OnEnemyTakeDamage;
+    public static Action<GameObject, Elemental> OnEnemyTakeDamage;
 
 
     private void Update()
@@ -51,7 +52,6 @@ public class GameController : MonoBehaviour
         {
             case GameState.BeforeStart:
                 OnBeforeStart?.Invoke();
-                Debug.Log("BeforeStart");
                 currentState = GameState.Start;
                 break;
             case GameState.Start:
@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour
     void RemoveEnemyDead(GameObject enemy)
     {
         allEnemyInScene.Remove(enemy);
-        allEnemyInCamera.Remove(enemy);
+        //allEnemyInCamera.Remove(enemy);
     }
     void Awake()
     {
@@ -122,18 +122,19 @@ public class GameController : MonoBehaviour
             this.allEnemyInScene.Add(enemy);
         }
     }
-    public GameObject[] GetAllEnemyInScene()
-    {
-        allEnemyInCamera.Clear();
-        foreach (GameObject enemy in allEnemyInScene)
-        {
-            if (IsObjectInCameraView(enemy))
-            {
-                allEnemyInCamera.Add(enemy);
-            }
-        }
-        return allEnemyInCamera.ToArray();
-    }
+    // public GameObject[] GetAllEnemyInScene()
+    // {
+    //     allEnemyInCamera.Clear();
+    //     foreach (GameObject enemy in allEnemyInScene)
+    //     {
+    //         if (IsObjectInCameraView(enemy))
+    //         {
+    //             allEnemyInCamera.Add(enemy);
+    //         }
+    //     }
+    //     return allEnemyInCamera.ToArray();
+    // }
+
     public void StageClear()
     {
         if (allEnemyInScene.Count == 0 && currentState == GameState.InGame)

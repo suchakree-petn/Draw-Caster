@@ -19,7 +19,7 @@ public class EnemyManager : CharactorManager<EnemyData>
             currentHp -= damageDeal;
             TextDamageAsset.Instance.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
         }
-        GameController.OnEnemyTakeDamage?.Invoke(gameObject, damageDeal);
+        GameController.OnEnemyTakeDamage?.Invoke(gameObject, damage);
     }
     public override void InitHp()
     {

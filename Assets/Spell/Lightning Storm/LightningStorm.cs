@@ -1,6 +1,5 @@
 using DG.Tweening;
 using DrawCaster.Util;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -19,38 +18,50 @@ public class LightningStorm : Spell
     public int _amountLevel2;
     public int _amountLevel3;
     public float selfDestructTime;
+    public float spellRadius;
     public float randomPositionRadiusSuccess;
     public float randomPositionRadius;
     [SerializeField] private GameObject lightningStormPrefab;
-
     public override void CastSpell(float score, GameObject player)
     {
-
         int castLevel = CalThreshold(score);
-        int amount = GetAmount(castLevel);
-        GameObject[] enemyList = GameController.Instance.GetAllEnemyInScene();
-        while (amount > enemyList.Length && enemyList.Length > 0)
+        GameObject[] enemyList = GameController.Instance.AllEnemy;
+        for (int i = 0; i < enemyList.Length; i++)
         {
-            enemyList = enemyList.Concat(GameController.Instance.GetAllEnemyInScene()).ToArray();
+            if (!IsEnemyInLightningStormRadius(enemyList[i].transform, player.transform))
+            {
+                enemyList[i] = null;
+            }
         }
-        var sequence = DOTween.Sequence();
-        List<GameObject> targetList = new();
+        int amount = GetAmount(castLevel);
+
+        if (enemyList.Length == 0)
+        {
+            enemyList = new GameObject[amount];
+            for (int i = 0; i < enemyList.Length; i++)
+            {
+                enemyList[i] = null;
+            }
+        }
+
+        Sequence sequence = DOTween.Sequence();
+        GameObject[] originalEnemyList = enemyList;
         for (int i = 0; i < amount; i++)
         {
-            GameObject target = null;
-
-            if (enemyList.Length > 0)
+            if (i > enemyList.Length - 1)
             {
-                target = enemyList[i];
+                enemyList = enemyList.ToList().Concat(originalEnemyList).ToArray();
             }
-
-            targetList.Add(target);
         }
-        foreach (var target in targetList)
+        foreach (GameObject enemy in enemyList)
         {
-            sequence.AppendCallback(() => CastByLevel(castLevel, player, target)).AppendInterval(_delayTime);
+            sequence.AppendCallback(() =>
+                {
+                    CastByLevel(castLevel, player, enemy);
+                });
+            sequence.AppendInterval(_delayTime);
         }
-        sequence.OnComplete(() => BeginCooldown(player));
+        sequence.Play();
     }
 
     public override void Cast1(GameObject player, GameObject target)
@@ -62,35 +73,33 @@ public class LightningStorm : Spell
         if (target != null)
         {
             spawnPos = DrawCasterUtil.GetLowerTransformOf(target.transform).position;
-            spawnPos = DrawCasterUtil.RandomPosition(spawnPos,randomPositionRadiusSuccess);
+            spawnPos = DrawCasterUtil.RandomPosition(spawnPos, randomPositionRadiusSuccess);
         }
         else
         {
             spawnPos = DrawCasterUtil.RandomPosition(player.transform.position, randomPositionRadius);
         }
         SpawnLightning(player, spawnPos, _damageSpellLevelMultiplier1);
-        CinemachineShake.Instance.Shake(target);
+        //CinemachineShake.Instance.Shake(target);
     }
 
 
 
     public override void Cast2(GameObject player, GameObject target)
     {
-        Debug.Log("Cast2");
-
         if (player == null) { return; }
         Vector2 spawnPos;
         if (target != null)
         {
             spawnPos = DrawCasterUtil.GetLowerTransformOf(target.transform).position;
-            spawnPos = DrawCasterUtil.RandomPosition(spawnPos,randomPositionRadiusSuccess);
+            spawnPos = DrawCasterUtil.RandomPosition(spawnPos, randomPositionRadiusSuccess);
         }
         else
         {
             spawnPos = DrawCasterUtil.RandomPosition(player.transform.position, randomPositionRadius);
         }
         SpawnLightning(player, spawnPos, _damageSpellLevelMultiplier2);
-        CinemachineShake.Instance.Shake(target);
+        //CinemachineShake.Instance.Shake(target);
     }
     public override void Cast3(GameObject player, GameObject target)
     {
@@ -101,14 +110,14 @@ public class LightningStorm : Spell
         if (target != null)
         {
             spawnPos = DrawCasterUtil.GetLowerTransformOf(target.transform).position;
-            spawnPos = DrawCasterUtil.RandomPosition(spawnPos,randomPositionRadiusSuccess);
+            spawnPos = DrawCasterUtil.RandomPosition(spawnPos, randomPositionRadiusSuccess);
         }
         else
         {
             spawnPos = DrawCasterUtil.RandomPosition(player.transform.position, randomPositionRadius);
         }
         SpawnLightning(player, spawnPos, _damageSpellLevelMultiplier3);
-        CinemachineShake.Instance.Shake(target);
+        //CinemachineShake.Instance.Shake(target);
     }
     private GameObject SpawnLightning(GameObject player, Vector2 spawnPos, float multiplier)
     {
@@ -133,6 +142,10 @@ public class LightningStorm : Spell
             return _amountLevel2;
         }
         return _amountLevel3;
+    }
+    bool IsEnemyInLightningStormRadius(Transform enemyTransform, Transform player)
+    {
+        return Vector2.Distance(player.position, enemyTransform.position) <= spellRadius;
     }
     public override void BeginCooldown(GameObject player)
     {

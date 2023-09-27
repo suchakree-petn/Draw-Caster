@@ -52,5 +52,5 @@ public abstract class CharactorData : ScriptableObject
       return (_manaBase * (1 + _manaMultiplier)) + _manaBonus;
    }
    public abstract void Dead(GameObject deadCharactor);
-   public abstract void CheckDead(GameObject charactor,float damage);
+   public abstract void CheckDead(GameObject charactor,Elemental damage);
 }

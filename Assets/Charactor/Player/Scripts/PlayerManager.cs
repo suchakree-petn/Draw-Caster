@@ -22,7 +22,7 @@ public class PlayerManager : CharactorManager<PlayerData>
             currentHp -= damageDeal;
             TextDamageAsset.Instance.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
         }
-        GameController.OnPlayerTakeDamage?.Invoke(gameObject, damageDeal);
+        GameController.OnPlayerTakeDamage?.Invoke(gameObject, damage);
     }
     public override void InitHp()
     {

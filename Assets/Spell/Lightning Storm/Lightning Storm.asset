@@ -36,6 +36,7 @@ MonoBehaviour:
   _amountLevel2: 10
   _amountLevel3: 15
   selfDestructTime: 0.3
+  spellRadius: 5
   randomPositionRadiusSuccess: 1
   randomPositionRadius: 5
   lightningStormPrefab: {fileID: 7820984234700130396, guid: a87b4725e4c01534cb0bf70a55020cdc,
