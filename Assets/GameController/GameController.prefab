@@ -307,7 +307,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   allEnemyInScene: []
-  allEnemyInCamera: []
   scene:
   - Stage_1_Scene
   - Stage_2_Scene

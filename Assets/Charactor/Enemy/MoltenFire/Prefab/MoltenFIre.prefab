@@ -578,7 +578,7 @@ MonoBehaviour:
   _baseFireBallDamageMultiplier: 0.7
   launchDuration: 0.05
   curveDuration: 0.8
-  spawnInterval: 0.25
+  spawnInterval: 0.1
   fireballPrefab: {fileID: 2792028505011184367, guid: b975da128b06c134da0ec8371e9f5ac2,
     type: 3}
   spawnPosLeft: {fileID: 2255602097178572151}
