@@ -7,6 +7,8 @@ public class PlayerManager : CharactorManager<PlayerData>
 {
     [SerializeField] private PlayerAction _playerAction;
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private Animator animator;
+    [SerializeField] private AnimationClip knockbackClip;
 
     public override PlayerData GetCharactorData()
     {
@@ -23,6 +25,16 @@ public class PlayerManager : CharactorManager<PlayerData>
             TextDamageAsset.Instance.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
         }
         GameController.OnPlayerTakeDamage?.Invoke(gameObject, damage);
+    }
+    public override void StartKnockback(){
+        animator.SetTrigger("Knockback");
+        StartCoroutine(DelayKnockback(knockbackClip.length));
+        _playerAction.Player.Movement.Disable();
+    }
+    public override void EndKnockback()
+    {
+        _playerAction.Player.Movement.Enable();
+
     }
     public override void InitHp()
     {
@@ -44,6 +56,7 @@ public class PlayerManager : CharactorManager<PlayerData>
         base.OnEnable();
         GameController.OnPlayerDead += GetCharactorData().Dead;
         GameController.OnPlayerTakeDamage += GetCharactorData().CheckDead;
+        _playerAction = PlayerInputSystem.Instance.playerAction;
     }
     protected override void OnDisable()
     {

@@ -14,6 +14,7 @@ public class MeteorRain : Spell
     public float _damageSpellLevelMultiplier3;
     [Header("Spell Setting")]
     public float selectedPositionDuration;
+    public float knockbackGaugeDeal;
     public int meteorAmount1;
     public int meteorAmount2;
     public int meteorAmount3;
@@ -163,7 +164,8 @@ public class MeteorRain : Spell
                         player.GetComponent<CharactorManager<PlayerData>>().GetCharactorData(),
                         _baseSkillDamageMultiplier * multiplier,
                         selfDestructTime,
-                        targetLayer
+                        targetLayer,
+                        knockbackGaugeDeal
                         );
         meteor.SetActive(false);
         return meteor;

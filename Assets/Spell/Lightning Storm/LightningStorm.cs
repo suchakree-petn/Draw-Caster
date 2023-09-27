@@ -14,6 +14,7 @@ public class LightningStorm : Spell
 
     [Header("Lighning Storm Setting")]
     public float _delayTime;
+    public float knockbackGaugeDeal;
     public int _amountLevel1;
     public int _amountLevel2;
     public int _amountLevel3;
@@ -127,7 +128,8 @@ public class LightningStorm : Spell
             player.GetComponent<CharactorManager<PlayerData>>().GetCharactorData(),
             _baseSkillDamageMultiplier * multiplier,
             selfDestructTime,
-            targetLayer
+            targetLayer,
+            knockbackGaugeDeal
             );
         return lightningStorm;
     }

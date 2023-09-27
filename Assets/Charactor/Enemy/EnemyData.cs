@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyData : CharactorData
 {
   public ElementalType elementalType;
+  
   public override void Dead(GameObject deadCharactor)
   {
     Destroy(deadCharactor);
@@ -19,11 +20,4 @@ public class EnemyData : CharactorData
     }
   }
   
-}
-public enum EnemyType
-{
-    Default,
-    Small,
-    Medium,
-    Large
 }

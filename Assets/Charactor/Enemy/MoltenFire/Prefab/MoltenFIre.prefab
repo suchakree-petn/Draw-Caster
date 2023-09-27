@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1194076458
 Transform:
   m_ObjectHideFlags: 0
@@ -570,12 +570,15 @@ MonoBehaviour:
   targetTag: Player
   target: {fileID: 0}
   _baseMeleeDamageMultiplier: 1
+  meleeKnockbackGaugeDeal: 0
   meleeHitbox: {fileID: 6110688291057937459}
   _baseFlamePillarDamageMultiplier: 1
+  firePillarKnockbackGaugeDeal: 100
   _flamePillarPrefab: {fileID: 1951053022745430761, guid: 875eb7d1759b47842ae9188198f6220a,
     type: 3}
   FlamePillarClip: {fileID: 7400000, guid: 181eeabffa67c9a48bb88a684d603dd0, type: 2}
   _baseFireBallDamageMultiplier: 0.7
+  fireBallKnockbackGaugeDeal: 10
   launchDuration: 0.05
   curveDuration: 0.8
   spawnInterval: 0.1
@@ -691,6 +694,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 0
   currentMana: 0
+  curentKnockBackGauge: 0
+  maxKnockBackGauge: 0
+  damagaGauge: 0
+  restoreGaugeDelayTime: 0
+  gaugeRegen: 0
+  isKnockback: 0
   enemyData: {fileID: 11400000, guid: 37cd2a8a9fefb724386c9e4e3a909bcd, type: 2}
 --- !u!1 &8383781703808165391
 GameObject:

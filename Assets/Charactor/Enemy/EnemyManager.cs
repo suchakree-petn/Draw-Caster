@@ -45,5 +45,13 @@ public class EnemyManager : CharactorManager<EnemyData>
         GameController.OnEnemyTakeDamage -= GetCharactorData().CheckDead;
     }
 
-    
+    public override void StartKnockback()
+    {
+        
+    }
+
+    public override void EndKnockback()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -14,34 +14,40 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     [SerializeField] private float restoreGaugeDelayTime;
     [SerializeField] private float gaugeRegen;
     private bool hited = false;
+    public bool isKnockback;
     private Coroutine restoreCoroutine;
 
     public abstract void TakeDamage(Elemental elementalDamage);
-    public void KnockBackGauge(GameObject attacker, float damage){
-        damagaGauge = GetDealKnockBackGauge(attacker);
+    public abstract void StartKnockback();
+    public abstract void EndKnockback();
+    public void KnockBackGauge(GameObject charactor, Elemental damage){
+        maxKnockBackGauge = ReturnMaxKnockBackGauge();
+        damagaGauge = damage.knockbackGaugeDeal;
         hited = true;
-        if(curentKnockBackGauge - damagaGauge > 0){
+        if(curentKnockBackGauge > 0 && !isKnockback){
             curentKnockBackGauge -= damagaGauge;
-        }else{
-            
+        }else if(!isKnockback){
+            isKnockback = true;
+            curentKnockBackGauge = 0;
+            curentKnockBackGauge = maxKnockBackGauge;
+            StartKnockback();
         }
 
-        if(restoreCoroutine != null){
-            StopCoroutine(restoreCoroutine);
-        }
+        if(restoreCoroutine != null)StopCoroutine(restoreCoroutine);
         restoreCoroutine = StartCoroutine(DelayRestore(restoreGaugeDelayTime));
     }
-    public float GetDealKnockBackGauge(GameObject attacker){
-        EnemyData attackData = attacker.GetComponent<EnemyData>();
-        return 0;
-    }
-    void RestoreGauge(){
+    public void RestoreKnockbackGauge(){
         maxKnockBackGauge = ReturnMaxKnockBackGauge();
         if(!hited && curentKnockBackGauge < maxKnockBackGauge){
             curentKnockBackGauge += gaugeRegen * Time.deltaTime;
         }else if(!hited && curentKnockBackGauge >= maxKnockBackGauge){
             curentKnockBackGauge = maxKnockBackGauge;
         }
+    }
+    public IEnumerator DelayKnockback(float time){
+        yield return new WaitForSeconds(time);
+        EndKnockback();
+        isKnockback = false;
     }
     IEnumerator DelayRestore(float time){
         yield return new WaitForSeconds(time);
@@ -54,7 +60,7 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
         GameController.OnBeforeStart += InitHp;
         GameController.OnBeforeStart += InitMana;
         GameController.OnBeforeStart += InitKnockbackGauge;
-        GameController.WhileInGame += RestoreGauge;
+        GameController.WhileInGame += RestoreKnockbackGauge;
         GameController.OnPlayerTakeDamage += KnockBackGauge;
 
     }
@@ -63,7 +69,7 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
         GameController.OnBeforeStart -= InitHp;
         GameController.OnBeforeStart -= InitMana;
         GameController.OnBeforeStart -= InitKnockbackGauge;
-        GameController.WhileInGame -= RestoreGauge;
+        GameController.WhileInGame -= RestoreKnockbackGauge;
         GameController.OnPlayerTakeDamage -= KnockBackGauge;
     }
 

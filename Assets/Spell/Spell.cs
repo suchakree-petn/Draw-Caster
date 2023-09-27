@@ -14,6 +14,7 @@ public abstract class Spell : ScriptableObject
     public ElementalType _elementalType;
     public float _cooldown;
     public float _manaCost;
+    
     public LayerMask targetLayer;
 
 

@@ -76,6 +76,7 @@ namespace MoltenFire
         }
         [Header("Melee Attack")]
         public float _baseMeleeDamageMultiplier;
+        [SerializeField] private float meleeKnockbackGaugeDeal;
         [SerializeField] private Collider2D meleeHitbox;
         public static MoltenFireDelegate OnMeleeAttack;
         void MeleeAttack()
@@ -90,7 +91,7 @@ namespace MoltenFire
                 IDamageable damageable = parent.GetComponent<IDamageable>();
                 if (damageable != null && parent.CompareTag(targetTag))
                 {
-                    Elemental damage = Elemental.DamageCalculation(moltenFireData.elementalType, moltenFireData, _baseMeleeDamageMultiplier, moltenFireData.targetLayer);
+                    Elemental damage = Elemental.DamageCalculation(moltenFireData.elementalType, moltenFireData, _baseMeleeDamageMultiplier, moltenFireData.targetLayer, meleeKnockbackGaugeDeal);
                     damageable.TakeDamage(damage);
                 }
             }
@@ -98,6 +99,7 @@ namespace MoltenFire
 
         [Header("Fire Pillar Attack")]
         public float _baseFlamePillarDamageMultiplier;
+        [SerializeField] private float firePillarKnockbackGaugeDeal;
         [SerializeField] private GameObject _flamePillarPrefab;
         public AnimationClip FlamePillarClip;
         public static MoltenFireDelegate OnFlamePillarAttack;
@@ -111,12 +113,14 @@ namespace MoltenFire
                 moltenFireData.elementalType, moltenFireData,
                 _baseFlamePillarDamageMultiplier,
                 FlamePillarClip.length,
-                moltenFireData.targetLayer
+                moltenFireData.targetLayer,
+                firePillarKnockbackGaugeDeal
                 );
         }
 
         [Header("Fire Ball Attack")]
         public float _baseFireBallDamageMultiplier;
+        [SerializeField] private float fireBallKnockbackGaugeDeal;
         [SerializeField] private float launchDuration;
         [SerializeField] private float curveDuration;
         [SerializeField] private float spawnInterval;
@@ -142,7 +146,8 @@ namespace MoltenFire
                     moltenFireData,
                     _baseFireBallDamageMultiplier,
                     (launchDuration + curveDuration + spawnInterval) * i + 1,
-                    moltenFireData.targetLayer
+                    moltenFireData.targetLayer,
+                    fireBallKnockbackGaugeDeal
                     ).transform;
                 int index = i;
                 sequence.AppendCallback(() =>

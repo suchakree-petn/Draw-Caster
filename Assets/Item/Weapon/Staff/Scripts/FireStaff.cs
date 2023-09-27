@@ -16,6 +16,7 @@ public class FireStaff : Weapon
     [SerializeField] private int fireBallAmount;
     [SerializeField] private int fireBallDuration;
     [SerializeField] private GameObject fireBallPrefab;
+    
 
     public override void Attack(GameObject attacker)
     {
@@ -58,7 +59,8 @@ public class FireStaff : Weapon
             transform.GetComponent<CharactorManager<PlayerData>>().GetCharactorData(),
             _baseSkillDamageMultiplier,
             fireBallDuration,
-            targetLayer
+            targetLayer,
+            knockbackGaugeDeal
             );
 
         // Calc spread angle

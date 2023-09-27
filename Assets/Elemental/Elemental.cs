@@ -16,18 +16,20 @@ public class Elemental
 
     public ElementalType _elementalType;
     public float _damage;
+    public float knockbackGaugeDeal;
     public CharactorData _attacker;
     public LayerMask targetLayer;
-    public Elemental(ElementalType type, float damage, CharactorData attacker, LayerMask targetLayer)
+    public Elemental(ElementalType type, float damage, CharactorData attacker, LayerMask targetLayer, float knockbackGaugeDeal)
     {
         this._elementalType = type;
         this._damage = damage;
         this._attacker = attacker;
         this.targetLayer = targetLayer;
+        this.knockbackGaugeDeal = knockbackGaugeDeal;
     }
-    public static Elemental DamageCalculation(ElementalType type, CharactorData attacker, float _baseSkillDamageMultiplier, LayerMask targetLayer)
+    public static Elemental DamageCalculation(ElementalType type, CharactorData attacker, float _baseSkillDamageMultiplier, LayerMask targetLayer, float knockbackGaugeDeal)
     {
-        return new Elemental(type, CalcDamage(attacker, _baseSkillDamageMultiplier, type), attacker, targetLayer);
+        return new Elemental(type, CalcDamage(attacker, _baseSkillDamageMultiplier, type), attacker, targetLayer, knockbackGaugeDeal);
     }
 
     static private float CalcAttack(CharactorData attacker)
