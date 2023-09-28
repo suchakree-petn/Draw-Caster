@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stage/Stage_5_Scene.unity
     guid: d7f516ac733331c4cae0d123adce30de
+  - enabled: 1
+    path: Assets/Scenes/Thanva/thanva_testHUD.unity
+    guid: eab594f1623e2384a9912c5c87df2838
+  - enabled: 1
+    path: Assets/Scenes/Thanva/testHUD.unity
+    guid: 575af46c387f7244f8196576e4bb45ee
   m_configObjects: {}

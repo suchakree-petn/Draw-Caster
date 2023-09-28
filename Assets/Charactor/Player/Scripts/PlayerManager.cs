@@ -47,9 +47,7 @@ public class PlayerManager : CharactorManager<PlayerData>
     public override void InitKnockbackGauge()
     {
         curentKnockBackGauge = GetCharactorData().GetMaxKnockbackGauge();
-    }
-    public override float ReturnMaxKnockBackGauge(){
-        return GetCharactorData().GetMaxKnockbackGauge();
+        maxKnockBackGauge = GetCharactorData().GetMaxKnockbackGauge();
     }
     protected override void OnEnable()
     {

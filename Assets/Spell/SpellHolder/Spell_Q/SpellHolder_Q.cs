@@ -4,6 +4,7 @@ using TMPro;
 
 public class SpellHolder_Q : MonoBehaviour
 {
+    public static SpellHolder_Q Instance;
     public PlayerAction _playerAction;
     public bool _isReadyToCast;
     public int castLevel;
@@ -17,8 +18,9 @@ public class SpellHolder_Q : MonoBehaviour
     public static InputCompare OnFinishDraw;
     public delegate void CastBehaviour(GameObject player);
     public static CastBehaviour OnFinishCast;
-
-
+    private void Awake() {
+        Instance = this;
+    }
 
     public void Cast(InputAction.CallbackContext context)
     {

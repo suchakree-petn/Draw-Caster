@@ -29,9 +29,6 @@ public class EnemyManager : CharactorManager<EnemyData>
     {
         curentKnockBackGauge = GetCharactorData().GetMaxKnockbackGauge();
     }
-    public override float ReturnMaxKnockBackGauge(){
-        return GetCharactorData().GetMaxKnockbackGauge();
-    }
     protected override void OnEnable()
     {
         base.OnEnable();

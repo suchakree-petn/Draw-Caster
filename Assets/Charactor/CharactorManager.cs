@@ -6,11 +6,9 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
 {
     public float currentHp;
     public float currentMana;
-    public T charactorData {private get; set; }
-
+    public float maxKnockBackGauge;    
     public float curentKnockBackGauge;
-    [SerializeField] private float maxKnockBackGauge;
-    [SerializeField] private float damagaGauge;
+    public T charactorData {private get; set; }
     [SerializeField] private float restoreGaugeDelayTime;
     [SerializeField] private float gaugeRegen;
     private bool hited = false;
@@ -21,11 +19,10 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     public abstract void StartKnockback();
     public abstract void EndKnockback();
     public void KnockBackGauge(GameObject charactor, Elemental damage){
-        maxKnockBackGauge = ReturnMaxKnockBackGauge();
-        damagaGauge = damage.knockbackGaugeDeal;
+        float knockbackGaugeDeal = damage.knockbackGaugeDeal;
         hited = true;
-        if(curentKnockBackGauge - damagaGauge > 0 && !isKnockback){
-            curentKnockBackGauge -= damagaGauge;
+        if(curentKnockBackGauge - knockbackGaugeDeal > 0 && !isKnockback){
+            curentKnockBackGauge -= knockbackGaugeDeal;
         }else if(!isKnockback){
             isKnockback = true;
             curentKnockBackGauge = 0;
@@ -37,7 +34,6 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
         restoreCoroutine = StartCoroutine(DelayRestore(restoreGaugeDelayTime));
     }
     public void RestoreKnockbackGauge(){
-        maxKnockBackGauge = ReturnMaxKnockBackGauge();
         if(!hited && curentKnockBackGauge < maxKnockBackGauge){
             curentKnockBackGauge += gaugeRegen * Time.deltaTime;
         }else if(!hited && curentKnockBackGauge >= maxKnockBackGauge){
@@ -90,5 +86,4 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     public virtual void InitHp(){}
     public virtual void InitMana(){}
     public virtual void InitKnockbackGauge(){}
-    public virtual float ReturnMaxKnockBackGauge(){return 0;}
 }

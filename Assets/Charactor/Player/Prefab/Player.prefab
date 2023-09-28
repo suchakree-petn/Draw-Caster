@@ -450,9 +450,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 0
   currentMana: 0
-  curentKnockBackGauge: 0
   maxKnockBackGauge: 100
-  damagaGauge: 40
+  curentKnockBackGauge: 0
   restoreGaugeDelayTime: 3
   gaugeRegen: 10
   isKnockback: 0

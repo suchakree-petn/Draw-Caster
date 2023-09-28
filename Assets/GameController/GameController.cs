@@ -9,6 +9,7 @@ using TMPro;
 
 public enum GameState
 {
+    InstantiateUI,
     BeforeStart,
     Start,
     InGame,
@@ -22,6 +23,7 @@ public class GameController : MonoBehaviour
 
     public GameState currentState;
     public delegate void GameStateBehaviour();
+    public static GameStateBehaviour OnInstantiateUI;
     public static GameStateBehaviour OnBeforeStart;
     public static GameStateBehaviour OnStart;
     public static GameStateBehaviour WhileInGame;
@@ -38,6 +40,7 @@ public class GameController : MonoBehaviour
     public int currentScene = 0;
     [SerializeField] private GameObject doorToNextStage;
     [SerializeField] private GameObject tmpStageFloor;
+    [SerializeField] private GameObject playerUI;
 
     public static Action<GameObject> OnPlayerDead;
     public static Action<GameObject, Elemental> OnPlayerTakeDamage;
@@ -50,6 +53,10 @@ public class GameController : MonoBehaviour
     {
         switch (currentState)
         {
+            case GameState.InstantiateUI:
+                OnInstantiateUI?.Invoke();
+                currentState = GameState.BeforeStart;
+                break;
             case GameState.BeforeStart:
                 OnBeforeStart?.Invoke();
                 currentState = GameState.Start;
@@ -69,6 +76,13 @@ public class GameController : MonoBehaviour
                 OnEnding?.Invoke();
                 break;
         }
+    }
+    void InstantiatePlayerUI(){
+        GameObject playUIInScene = GameObject.Find("PlayUI");
+        if(playUIInScene != null){
+            Destroy(playUIInScene);
+        }
+        Instantiate(playerUI);
     }
     void RemoveEnemyDead(GameObject enemy)
     {
@@ -157,6 +171,7 @@ public class GameController : MonoBehaviour
     }
     private void OnEnable()
     {
+        OnInstantiateUI += InstantiatePlayerUI;
         OnBeforeStart += AddAllEnemyInSceneToList;
         OnBeforeStart += ShowStageFloor;
         OnEnemyDead += RemoveEnemyDead;
@@ -165,6 +180,7 @@ public class GameController : MonoBehaviour
     }
     private void OnDisable()
     {
+        OnInstantiateUI -= InstantiatePlayerUI;
         OnBeforeStart -= AddAllEnemyInSceneToList;
         OnBeforeStart -= ShowStageFloor;
         OnEnemyDead -= RemoveEnemyDead;
