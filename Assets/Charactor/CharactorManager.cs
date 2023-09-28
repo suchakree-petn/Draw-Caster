@@ -24,7 +24,7 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
         maxKnockBackGauge = ReturnMaxKnockBackGauge();
         damagaGauge = damage.knockbackGaugeDeal;
         hited = true;
-        if(curentKnockBackGauge > 0 && !isKnockback){
+        if(curentKnockBackGauge - damagaGauge > 0 && !isKnockback){
             curentKnockBackGauge -= damagaGauge;
         }else if(!isKnockback){
             isKnockback = true;
