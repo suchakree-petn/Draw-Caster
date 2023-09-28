@@ -125,7 +125,7 @@ public class LightningStorm : Spell
         GameObject lightningStorm = DrawCasterUtil.AddAttackHitTo(
             Instantiate(lightningStormPrefab, new Vector3(spawnPos.x, spawnPos.y, 0f), Quaternion.identity),
             _elementalType,
-            player.GetComponent<CharactorManager<PlayerData>>().GetCharactorData(),
+            player,
             _baseSkillDamageMultiplier * multiplier,
             selfDestructTime,
             targetLayer,

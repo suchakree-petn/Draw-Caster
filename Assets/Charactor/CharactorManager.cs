@@ -16,7 +16,7 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     private Coroutine restoreCoroutine;
 
     public abstract void TakeDamage(Elemental elementalDamage);
-    public abstract void StartKnockback();
+    public abstract void StartKnockback(Elemental damage);
     public abstract void EndKnockback();
     public void KnockBackGauge(GameObject charactor, Elemental damage){
         float knockbackGaugeDeal = damage.knockbackGaugeDeal;
@@ -27,7 +27,7 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
             isKnockback = true;
             curentKnockBackGauge = 0;
             curentKnockBackGauge = maxKnockBackGauge;
-            StartKnockback();
+            StartKnockback(damage);
         }
 
         if(restoreCoroutine != null)StopCoroutine(restoreCoroutine);
@@ -77,7 +77,7 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     float CalcDMGReduction(CharactorData target, Elemental damage)
     {
         float _targetDefense = CalcDefense(target);
-        return 1 - (_targetDefense / (_targetDefense + (5 * damage._attacker._level) + 500));
+        return 1 - (_targetDefense / (_targetDefense + (5 * damage._attackerData._level) + 500));
     }
     public float CalcDamageRecieve(CharactorData target, Elemental damage)
     {

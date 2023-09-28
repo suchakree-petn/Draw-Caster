@@ -10,7 +10,7 @@ namespace DrawCaster.Util
 
         public static GameObject AddAttackHitTo(GameObject parent, 
             ElementalType elementalType, 
-            CharactorData attacker, 
+            GameObject attacker, 
             float baseSkillMultiplier, 
             float selfDestructTime, 
             LayerMask targetLayer, 

@@ -56,7 +56,7 @@ public class FireStaff : Weapon
         GameObject fireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity);
         fireBall = DrawCasterUtil.AddAttackHitTo(fireBall,
             elementType,
-            transform.GetComponent<CharactorManager<PlayerData>>().GetCharactorData(),
+            transform.gameObject,
             _baseSkillDamageMultiplier,
             fireBallDuration,
             targetLayer,

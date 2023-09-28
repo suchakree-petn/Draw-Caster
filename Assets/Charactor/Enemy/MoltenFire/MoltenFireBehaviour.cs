@@ -91,7 +91,7 @@ namespace MoltenFire
                 IDamageable damageable = parent.GetComponent<IDamageable>();
                 if (damageable != null && parent.CompareTag(targetTag))
                 {
-                    Elemental damage = Elemental.DamageCalculation(moltenFireData.elementalType, moltenFireData, _baseMeleeDamageMultiplier, moltenFireData.targetLayer, meleeKnockbackGaugeDeal);
+                    Elemental damage = Elemental.DamageCalculation(moltenFireData.elementalType, transform.root.gameObject, _baseMeleeDamageMultiplier, moltenFireData.targetLayer, meleeKnockbackGaugeDeal);
                     damageable.TakeDamage(damage);
                 }
             }
@@ -110,7 +110,7 @@ namespace MoltenFire
             GameObject flamePillar = Instantiate(_flamePillarPrefab);
             flamePillar.transform.position = lowerTransform.position;
             flamePillar = DrawCasterUtil.AddAttackHitTo(flamePillar,
-                moltenFireData.elementalType, moltenFireData,
+                moltenFireData.elementalType, transform.root.gameObject,
                 _baseFlamePillarDamageMultiplier,
                 FlamePillarClip.length,
                 moltenFireData.targetLayer,
@@ -143,7 +143,7 @@ namespace MoltenFire
                 Transform fireBallAttack = DrawCasterUtil.AddAttackHitTo(
                     Instantiate(fireballPrefab, spawnPos, Quaternion.identity),
                     moltenFireData.elementalType,
-                    moltenFireData,
+                    transform.root.gameObject,
                     _baseFireBallDamageMultiplier,
                     (launchDuration + curveDuration + spawnInterval) * i + 1,
                     moltenFireData.targetLayer,
