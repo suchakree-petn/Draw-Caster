@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using DrawCaster.Util;
+using System.Linq;
 
 namespace MoltenFire
 {
@@ -76,20 +77,26 @@ namespace MoltenFire
         }
         [Header("Melee Attack")]
         public float _baseMeleeDamageMultiplier;
+        public float attackRange;
         [SerializeField] private float meleeKnockbackGaugeDeal;
         [SerializeField] private Collider2D meleeHitbox;
         public static MoltenFireDelegate OnMeleeAttack;
         void MeleeAttack()
         {
-            List<Collider2D> overlappingColliders = new();
-            Physics2D.OverlapCollider(meleeHitbox, new ContactFilter2D(), overlappingColliders);
-            foreach (Collider2D overlapCol in overlappingColliders)
-            {
-                Debug.Log(overlappingColliders.Count);
 
+            RaycastHit2D[] overlappingColliders = Physics2D.BoxCastAll(
+                meleeHitbox.bounds.center,
+                meleeHitbox.bounds.size,
+                0f,
+                -moltenFireRb.transform.right,
+                attackRange, moltenFireData.targetLayer
+                );
+            Debug.Log(overlappingColliders.Length);
+            foreach (RaycastHit2D overlapCol in overlappingColliders)
+            {
                 Transform parent = overlapCol.transform.root;
                 IDamageable damageable = parent.GetComponent<IDamageable>();
-                if (damageable != null && parent.CompareTag(targetTag))
+                if (damageable != null && overlapCol.collider.CompareTag(targetTag))
                 {
                     Elemental damage = Elemental.DamageCalculation(moltenFireData.elementalType, moltenFireData, _baseMeleeDamageMultiplier, moltenFireData.targetLayer, meleeKnockbackGaugeDeal);
                     damageable.TakeDamage(damage);
