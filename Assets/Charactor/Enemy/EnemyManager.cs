@@ -29,9 +29,6 @@ public class EnemyManager : CharactorManager<EnemyData>
     {
         curentKnockBackGauge = GetCharactorData().GetMaxKnockbackGauge();
     }
-    public override float ReturnMaxKnockBackGauge(){
-        return GetCharactorData().GetMaxKnockbackGauge();
-    }
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -45,13 +42,14 @@ public class EnemyManager : CharactorManager<EnemyData>
         GameController.OnEnemyTakeDamage -= GetCharactorData().CheckDead;
     }
 
-    public override void StartKnockback()
+    public override void StartKnockback(Elemental damage)
     {
         
     }
 
     public override void EndKnockback()
     {
-        throw new System.NotImplementedException();
+        
     }
+
 }

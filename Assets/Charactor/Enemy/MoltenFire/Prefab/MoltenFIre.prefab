@@ -694,9 +694,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 0
   currentMana: 0
-  curentKnockBackGauge: 0
   maxKnockBackGauge: 0
-  damagaGauge: 0
+  curentKnockBackGauge: 0
   restoreGaugeDelayTime: 0
   gaugeRegen: 0
   isKnockback: 0

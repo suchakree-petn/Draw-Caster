@@ -46,6 +46,10 @@ public class SpellCooldown : MonoBehaviour
         iconE.fillAmount = 1;
         iconR.fillAmount = 1;
         iconShift.fillAmount = 1;
+        spellQ = SpellHolder_Q.Instance;
+        spellE = SpellHolder_E.Instance;
+        spellR = SpellHolder_R.Instance;
+        spellShift = SpellHolder_Shift.Instance;
         if (spellQ.spell._icon != null) iconQ.sprite = spellQ.spell._icon;
         if (spellE.spell._icon != null) iconE.sprite = spellE.spell._icon;
         if (spellR.spell._icon != null) iconR.sprite = spellR.spell._icon;

@@ -29,12 +29,12 @@ public abstract class CharactorData : ScriptableObject
    public float _attackBonus;
    public float _bonusDamage;
 
-
    [Header("Defense Point")]
    public float _defenseBase;
    public float _defenseMultiplier;
    public float _defenseBonus;
    public float _bonusDamageReduction;
+
    [Header("Knockback Point")]
    public float _knockbackBase;
    public float _knockbackMultiplier;

@@ -161,7 +161,7 @@ public class MeteorRain : Spell
         GameObject meteor = DrawCasterUtil.AddAttackHitTo(
                         Instantiate(_meteorPrefab),
                         _elementalType,
-                        player.GetComponent<CharactorManager<PlayerData>>().GetCharactorData(),
+                        player,
                         _baseSkillDamageMultiplier * multiplier,
                         selfDestructTime,
                         targetLayer,
