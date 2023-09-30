@@ -19,7 +19,7 @@ MonoBehaviour:
   _spellType: 2
   _elementalType: 2
   _cooldown: 7
-  _manaCost: 0
+  _manaCost: 10
   targetLayer:
     serializedVersion: 2
     m_Bits: 128

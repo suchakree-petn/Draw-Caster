@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHp: 0
+  currentMana: 0
   playerData: {fileID: 11400000, guid: 7bbff00b154858542988494be167eb75, type: 2}
 --- !u!1 &3653981621525836488
 GameObject:
@@ -1376,7 +1377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isReadyToCast: 1
   castLevel: 0
-  spell: {fileID: 11400000, guid: 2c1897851bbae41439674375ab576a20, type: 2}
+  spell: {fileID: 11400000, guid: 4c9cf4eb2c073f94f82f962a34f869d6, type: 2}
   drawInput: {fileID: 3255373487842983407}
 --- !u!114 &3255373487842983407 stripped
 MonoBehaviour:
@@ -1462,7 +1463,7 @@ PrefabInstance:
         type: 3}
       propertyPath: spell
       value: 
-      objectReference: {fileID: 11400000, guid: 4c9cf4eb2c073f94f82f962a34f869d6,
+      objectReference: {fileID: 11400000, guid: 2c1897851bbae41439674375ab576a20,
         type: 2}
     - target: {fileID: 1569963818294335246, guid: ff6b8d6c0fafde2419b935519271391f,
         type: 3}
