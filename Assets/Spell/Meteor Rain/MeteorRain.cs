@@ -42,6 +42,7 @@ public class MeteorRain : Spell
             playerAction.Player.LeftClick.Enable();
             playerAction.Player.LeftClick.canceled += context =>
             {
+                playerAction.Player.LeftClick.Disable();
                 SelectPosition();
                 hasClicked = false;
             };

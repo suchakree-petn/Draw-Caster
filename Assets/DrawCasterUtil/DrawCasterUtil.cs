@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,12 +7,12 @@ namespace DrawCaster.Util
     public class DrawCasterUtil
     {
 
-        public static GameObject AddAttackHitTo(GameObject parent, 
-            ElementalType elementalType, 
-            GameObject attacker, 
-            float baseSkillMultiplier, 
-            float selfDestructTime, 
-            LayerMask targetLayer, 
+        public static GameObject AddAttackHitTo(GameObject parent,
+            ElementalType elementalType,
+            GameObject attacker,
+            float baseSkillMultiplier,
+            float selfDestructTime,
+            LayerMask targetLayer,
             float knockbackGaugeDeal)
         {
             GameObject addedParent = parent;
@@ -69,5 +68,44 @@ namespace DrawCaster.Util
             return Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         }
     }
+    public class WeightedRandom<T>
+    {
+        private List<WeightedItem<T>> weightedItems = new List<WeightedItem<T>>();
+
+        public void AddItem(T item, float weight)
+        {
+            weightedItems.Add(new WeightedItem<T> { Item = item, Weight = weight });
+        }
+
+        public T GetRandom()
+        {
+            float totalWeight = 0;
+            foreach (var item in weightedItems)
+            {
+                totalWeight += item.Weight;
+            }
+
+            float randomValue = Random.Range(0, totalWeight);
+
+            foreach (var item in weightedItems)
+            {
+                if (randomValue < item.Weight)
+                {
+                    return item.Item;
+                }
+                randomValue -= item.Weight;
+            }
+
+            // Fallback: If something went wrong, return the last item.
+            return weightedItems[weightedItems.Count - 1].Item;
+        }
+    }
+
+    public struct WeightedItem<T>
+    {
+        public T Item { get; set; }
+        public float Weight { get; set; }
+    }
 }
+
 

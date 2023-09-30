@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using DG.Tweening;
 using DrawCaster.Util;
-using System.Linq;
 
 namespace MoltenFire
 {
     public enum State
     {
-        Chase,
+        Wandering,
         WaitForNextAttack,
         MeleeAttack,
         FlamePillarAttack,
@@ -39,8 +37,8 @@ namespace MoltenFire
             {
                 switch (currentState)
                 {
-                    case State.Chase:
-                        OnChase?.Invoke(target);
+                    case State.Wandering:
+                        OnWandering?.Invoke(target);
                         break;
                     case State.MeleeAttack:
                         OnMeleeAttack?.Invoke(target);
@@ -67,11 +65,29 @@ namespace MoltenFire
             }
         }
         ////////////////////////// Animation event /////////////////////////
-        public static MoltenFireDelegate OnChase;
+        [Header("Wander State")]
+        [SerializeField] private float wanderDistance;
+        int isForward;
+        private void Wandering(Transform target)
+        {
+            Vector3 targetPos = DrawCasterUtil.GetMidTransformOf(target).position;
+            Vector3 moltenFirePos = DrawCasterUtil.GetMidTransformOf(transform.root).position;
+            float distant = Vector3.Distance(targetPos, moltenFirePos);
+            if (distant > wanderDistance)
+            {
+                isForward = 1;
+            }
+            else
+            {
+                isForward = -1;
+            }
+        }
+        public static MoltenFireDelegate OnWandering;
 
         void MoveToChaseTarget()
         {
-            Vector2 direction = (Vector2)target.position - moltenFireRb.position;
+            Vector2 direction = DrawCasterUtil.GetMidTransformOf(target).position - DrawCasterUtil.GetMidTransformOf(transform.root).position;
+            direction *= isForward;
             moltenFireRb.DOMove(moltenFireRb.position + direction.normalized * moltenFireData._moveSpeed, 0.3f);
 
         }
@@ -83,7 +99,6 @@ namespace MoltenFire
         public static MoltenFireDelegate OnMeleeAttack;
         void MeleeAttack()
         {
-
             RaycastHit2D[] overlappingColliders = Physics2D.BoxCastAll(
                 meleeHitbox.bounds.center,
                 meleeHitbox.bounds.size,
@@ -91,24 +106,27 @@ namespace MoltenFire
                 -moltenFireRb.transform.right,
                 attackRange, moltenFireData.targetLayer
                 );
-            Debug.Log(overlappingColliders.Length);
             foreach (RaycastHit2D overlapCol in overlappingColliders)
             {
-                Transform parent = overlapCol.transform.root;
-                IDamageable damageable = parent.GetComponent<IDamageable>();
-                if (damageable != null && overlapCol.collider.CompareTag(targetTag))
+                if (overlapCol.collider.tag == "Hitbox")
                 {
-                    Elemental damage = Elemental.DamageCalculation(moltenFireData.elementalType, transform.root.gameObject, _baseMeleeDamageMultiplier, moltenFireData.targetLayer, meleeKnockbackGaugeDeal);
-                    damageable.TakeDamage(damage);
+                    Transform parent = overlapCol.transform.root;
+                    IDamageable damageable = parent.GetComponent<IDamageable>();
+                    if (damageable != null && overlapCol.transform.root.CompareTag(targetTag))
+                    {
+                        Elemental damage = Elemental.DamageCalculation(moltenFireData.elementalType, transform.root.gameObject, _baseMeleeDamageMultiplier, moltenFireData.targetLayer, meleeKnockbackGaugeDeal);
+                        damageable.TakeDamage(damage);
+                    }
                 }
             }
         }
 
-        [Header("Fire Pillar Attack")]
+        [Header("Flame Pillar Attack")]
         public float _baseFlamePillarDamageMultiplier;
         [SerializeField] private float firePillarKnockbackGaugeDeal;
         [SerializeField] private GameObject _flamePillarPrefab;
         public AnimationClip FlamePillarClip;
+        [SerializeField] private Transform flamePillarCol;
         public static MoltenFireDelegate OnFlamePillarAttack;
 
         void FlamePillarAttack()
@@ -138,6 +156,7 @@ namespace MoltenFire
         [SerializeField] private Transform midCurveRight;
         [SerializeField] private int fireBallAmount;
         [SerializeField] private AnimationCurve speedCurve;
+        [SerializeField] private Transform fireBallCol;
 
         public static MoltenFireDelegate OnFireBallAttack;
         void FireBallAttack()
@@ -193,17 +212,27 @@ namespace MoltenFire
         }
         ///////////////////////////////////////////////////////////////////
 
-        private MoltenFireDelegate ConsiderAttackType(Transform target)
+        [Header("Attack Check")]
+        [SerializeField] private float MeleeAttackWeight;
+        [SerializeField] private float FlamePillarAttackWeight;
+        [SerializeField] private float FireBallAttackWeight;
+        private void RandomAttackType(Transform target)
         {
-            return (target) => MeleeAttack();
+            WeightedRandom<Transform> randomCheckCol = new();
+            randomCheckCol.AddItem(meleeHitbox.transform, MeleeAttackWeight);
+            randomCheckCol.AddItem(flamePillarCol, FlamePillarAttackWeight);
+            randomCheckCol.AddItem(fireBallCol, FireBallAttackWeight);
+            randomCheckCol.GetRandom().gameObject.SetActive(true);
         }
+        
+
 
         [SerializeField] private Animator animator;
-
         private void OnEnable()
         {
 
-            OnChase += target => animator.SetBool("IsWalk", true);
+            OnWandering += target => animator.SetBool("IsWalk", true);
+            OnWandering += Wandering;
             OnMeleeAttack += target =>
             {
                 animator.SetTrigger("MeleeAttack");
@@ -219,6 +248,7 @@ namespace MoltenFire
                 animator.SetTrigger("FireBallAttack");
                 animator.SetBool("IsWalk", false);
             };
+            //OnWaitForNextAttack += ;
         }
         private void OnDisable()
         {
