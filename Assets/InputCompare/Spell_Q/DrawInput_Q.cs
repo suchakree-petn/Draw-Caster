@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.InputSystem;
+using DrawCaster.Util;
 
 public class DrawInput_Q : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class DrawInput_Q : MonoBehaviour
     public Vector2[] templatePos;
     public float score;
     public int sideLenght;
+    public Timer timer;
     PlayerAction _playerAction => PlayerInputSystem.Instance.playerAction;
 
     [Header("Matrix Dimension")]
@@ -49,6 +51,7 @@ public class DrawInput_Q : MonoBehaviour
     }
     void ResamplingMouseInputPos(InputAction.CallbackContext context)
     {
+
         mostLeft = float.PositiveInfinity;
         foreach (Vector2 p in inputPos)
         {
@@ -190,13 +193,25 @@ public class DrawInput_Q : MonoBehaviour
         score = CosSim.CosineSimilarity(inputPos.ToArray(),
                                 templatePos,
                                 sideLenght);
-        SpellHolder_Q.OnFinishDraw?.Invoke(score,transform.root.gameObject);
+        if (timer.startTime >= 3)
+        {
+            score += 30;
+        }
+        else
+        {
+            score *= 1 + timer.startTime * 0.1f;
+        }
+        SpellHolder_Q.OnFinishDraw?.Invoke(score, transform.root.gameObject);
     }
 
     private List<Vector2> Resample(Vector2[] originalArray, int newLength)
     {
-        Vector2[] resampledArray = new Vector2[newLength];
 
+        Vector2[] resampledArray = new Vector2[newLength];
+        if (timer.startTime < 0.2f)
+        {
+            return resampledArray.ToList();
+        }
         float scale = (float)(originalArray.Length - 1) / (newLength - 1);
 
         for (int i = 0; i < newLength; i++)
@@ -210,7 +225,7 @@ public class DrawInput_Q : MonoBehaviour
             }
             else if (index1 > originalArray.Length - 1)
             {
-                index1 = originalArray.Length;
+                index1 = originalArray.Length - 1;
             }
             Vector2 interpValue = Vector2.Lerp(originalArray[index0], originalArray[index1], origIndex - index0);
 
@@ -256,6 +271,7 @@ public class DrawInput_Q : MonoBehaviour
         Time.fixedDeltaTime = Time.timeScale * 0.01f;
 
         _playerAction.Player.DrawInput.Enable();
+        _playerAction.Player.DrawInput.started += ctx => timer = new(0, 99);
         _playerAction.Player.DrawInput.canceled += ResamplingMouseInputPos;
     }
     private void OnDisable()

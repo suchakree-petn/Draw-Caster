@@ -64,8 +64,8 @@ public class SpellHolder_Shift : MonoBehaviour
     private void OnEnable()
     {
         _playerAction = PlayerInputSystem.Instance.playerAction;
-        _playerAction.Player.Spell_R.Enable();
-        _playerAction.Player.Spell_R.canceled += Cast;
+        _playerAction.Player.Spell_Shift.Enable();
+        _playerAction.Player.Spell_Shift.canceled += Cast;
         if (spell != null)
         {
             OnFinishDraw += spell.CastSpell;
@@ -79,8 +79,8 @@ public class SpellHolder_Shift : MonoBehaviour
     {
         if (_playerAction != null)
         {
-            _playerAction.Player.Spell_R.Disable();
-            _playerAction.Player.Spell_R.canceled -= Cast;
+            _playerAction.Player.Spell_Shift.Disable();
+            _playerAction.Player.Spell_Shift.canceled -= Cast;
         }
         if (spell != null)
         {

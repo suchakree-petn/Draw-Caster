@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "new Aerial Arcane", menuName = "Spell/Aerial Arcane")]
-public class AerialArcane: Spell
+public class AerialArcane : Spell
 {
     [Header("Damage Multiplier")]
     public float _baseSkillDamageMultiplier;
@@ -14,98 +14,22 @@ public class AerialArcane: Spell
     public float _damageSpellLevelMultiplier2;
     public float _damageSpellLevelMultiplier3;
 
-    [Header("Lighning Storm Setting")]
+    [Header("Aerial Arcane Setting")]
     public float _delayTime;
     public int _amountLevel1;
+    [SerializeField] private float knockback1;
     public int _amountLevel2;
+    [SerializeField] private float knockback2;
     public int _amountLevel3;
+    [SerializeField] private float knockback3;
     public float selfDestructTime;
-    public float randomPositionRadius;
     [SerializeField] private GameObject AerialArcanePrefab;
-
-    /*
-    public float speed = 10000f;
-    public override void CastSpell(float score, GameObject player)
-    {
-        int castLevel = CalThreshold(score);
-        int amount = GetAmount(castLevel);
-
-        // Specify the name of the child GameObject you are looking for
-        string childName = "Transforms";
-        
-        //Get position to use spell
-        Transform childTransform = player.transform.Find(childName);
-        Vector3 childPosition = childTransform.position;
-
-        // Instantiate the object at the childPosition
-        GameObject spawnedObject = Instantiate(AerialArcanePrefab, childPosition, Quaternion.identity);
-
-        // Add a Rigidbody2D component to the spawned object if it doesn't already have one
-        Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
-        if (rb2d == null)
-        {
-            rb2d = spawnedObject.AddComponent<Rigidbody2D>();
-        }
-        rb2d.isKinematic = false; // Make sure it's not kinematic if you want to use physics forces
-
-        // Assuming you have mousePos and randomSpread variables defined somewhere
-        Vector2 direction = childPosition;
-        rb2d.AddForce((direction + new Vector2(100,0)).normalized * speed, ForceMode2D.Impulse);
-        Destroy(spawnedObject, 0.5f);
-
-        Debug.Log("Test spell");
-    }
-    */
-
-
-
-    /*
-    public float speed = 10000f;
-    public override void CastSpell(float score, GameObject player)
-    {
-        int castLevel = CalThreshold(score);
-        int amount = GetAmount(castLevel);
-
-        // Specify the name of the child GameObject you are looking for
-        string childName = "Transforms";
-
-        //Get position to use spell
-        Transform childTransform = player.transform.Find(childName);
-        Vector3 childPosition = childTransform.position;
-
-        // Instantiate the object at the childPosition
-        GameObject spawnedObject = Instantiate(AerialArcanePrefab, childPosition, Quaternion.identity);
-
-        // Add a Rigidbody2D component to the spawned object if it doesn't already have one
-        Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
-        if (rb2d == null)
-        {
-            rb2d = spawnedObject.AddComponent<Rigidbody2D>();
-        }
-        rb2d.isKinematic = false; // Make sure it's not kinematic if you want to use physics forces
-        
-        // Get the mouse position in world coordinates
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;  // Set z to 0 to ignore the z-axis
-
-        // Calculate the direction vector from the player to the mouse
-        Vector2 direction = (mousePosition - childPosition).normalized;
-        
-        // Apply force in the direction of the mouse
-        rb2d.AddForce(direction * speed, ForceMode2D.Impulse);
-        
-        Destroy(spawnedObject, 0.5f);
-
-        Debug.Log("Test spell");
-    }
-    */
-
 
     public override void Cast1(GameObject player, GameObject target)
     {
         Debug.Log("Cast1");
         if (player == null) { return; }
-        player.GetComponent<PlayerInput>().AddMouseListener(HandleMouseClick1); //mouse click to skill
+        HandleMouseClick1(player); //mouse click to skill
 
 
     }
@@ -114,7 +38,7 @@ public class AerialArcane: Spell
         Debug.Log("Cast2");
 
         if (player == null) { return; }
-        player.GetComponent<PlayerInput>().AddMouseListener(HandleMouseClick2); //mouse click to skill
+        HandleMouseClick2(player); //mouse click to skill
 
     }
     public override void Cast3(GameObject player, GameObject target)
@@ -123,100 +47,105 @@ public class AerialArcane: Spell
 
         if (player == null) { return; }
 
-        player.GetComponent<PlayerInput>().AddMouseListener(HandleMouseClick3); //mouse click to skill
+        HandleMouseClick3(player); //mouse click to skill
 
     }
 
 
     private float currentScore;
-    
+
     public override void CastSpell(float score, GameObject player)
     {
         currentScore = score;  // Store the score value
         int castLevel = CalThreshold(currentScore);
-        GameObject targetPos = new GameObject();
-        CastByLevel(castLevel, player, targetPos);
+        CastByLevel(castLevel, player, null);
 
     }
 
-    /*
-    public float speed = 10000f;
-    
-
-    public override void CastSpell(float score, GameObject player)
-    {
-        Sequence sequenceCast = DOTween.Sequence();
-
-        int castLevel = CalThreshold(score);
-            
-    }
-    */
-    
-     //Spell level 1
     private void HandleMouseClick1(GameObject player)
     {
-        player.GetComponent<PlayerInput>().RemoveMouseListener(HandleMouseClick1);
-
         int castLevel = CalThreshold(currentScore);
         int amount = GetAmount(castLevel);
+        Sequence sequence = DOTween.Sequence();
+        bool isClicked = false;
+        PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;
+        playerAction.Player.LeftClick.Enable();
+        playerAction.Player.LeftClick.canceled += ctx => isClicked = true;
+        sequence.AppendInterval(_delayTime).OnUpdate(() =>
+        {
+            if (isClicked)
+            {
+                playerAction.Player.LeftClick.Disable();
+                Spawn1(player);
+                sequence.Kill();
+            }
+        }).OnComplete(() =>
+        {
+            playerAction.Player.LeftClick.Disable();
+            Spawn1(player);
+        });
+    }
 
-        // Specify the name of the child GameObject you are looking for
-        string childName = "Transforms";
-
-        //Get position to use spell
-        Transform childTransform = player.transform.Find(childName);
+    private void Spawn1(GameObject player)
+    {
+        Transform childTransform = DrawCasterUtil.GetMidTransformOf(player.transform);
         Vector3 childPosition = childTransform.position;
-
-        // Instantiate the object at the childPosition
         GameObject spawnedObject = Instantiate(AerialArcanePrefab, childPosition, Quaternion.identity);
-
-        // Add a Rigidbody2D component to the spawned object if it doesn't already have one
+        spawnedObject = DrawCasterUtil.AddAttackHitTo(
+            spawnedObject,
+            _elementalType,
+            player,
+            _baseSkillDamageMultiplier * _damageSpellLevelMultiplier1,
+            selfDestructTime,
+            targetLayer,
+            knockback1
+            );
         Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
         if (rb2d == null)
         {
             rb2d = spawnedObject.AddComponent<Rigidbody2D>();
         }
-        rb2d.isKinematic = false; // Make sure it's not kinematic if you want to use physics forces
-
-        // Get the mouse position in world coordinates
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;  // Set z to 0 to ignore the z-axis
-
-        // Calculate the direction vector from the player to the mouse
+        mousePosition.z = 0;
         Vector2 direction = (mousePosition - childPosition).normalized;
-
-        // Calculate the angle in radians between the player and the mouse
         float angleRad = Mathf.Atan2(direction.y, direction.x);
-
-        // Convert the angle to degrees
         float angleDeg = angleRad * Mathf.Rad2Deg;
-
-        // Set the rotation of the spawned object to match the angle
         spawnedObject.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
-
-        // Apply force in the direction of the mouse
         rb2d.AddForce(direction * speed, ForceMode2D.Impulse);
-
-        Destroy(spawnedObject, 0.5f);
-
-        Debug.Log("Test spell");
-
     }
 
-    
+
     //Spell level 2
     private void HandleMouseClick2(GameObject player)
     {
-        player.GetComponent<PlayerInput>().RemoveMouseListener(HandleMouseClick2);
 
         int castLevel = CalThreshold(currentScore);
         int amount = GetAmount(castLevel);
+        Sequence sequence = DOTween.Sequence();
+        bool isClicked = false;
+        PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;
+        playerAction.Player.LeftClick.Enable();
+        playerAction.Player.LeftClick.canceled += ctx => isClicked = true;
+        sequence.AppendInterval(_delayTime).OnUpdate(() =>
+        {
+            if (isClicked)
+            {
+                playerAction.Player.LeftClick.Disable();
+                Spawn2(player);
+                sequence.Kill();
+            }
+        }).OnComplete(() =>
+        {
+            playerAction.Player.LeftClick.Disable();
+            Spawn2(player);
+        });
 
-        // Specify the name of the child GameObject you are looking for
-        string childName = "Transforms";
+    }
 
+    private void Spawn2(GameObject player)
+    {
         //Get position to use spell
-        Transform childTransform = player.transform.Find(childName);
+        Transform childTransform = DrawCasterUtil.GetMidTransformOf(player.transform);
         Vector3 childPosition = childTransform.position;
 
         // Get the mouse position in world coordinates
@@ -241,14 +170,13 @@ public class AerialArcane: Spell
         Vector2 rightDirection = RotateVector(centerDirection, -angleOffset);
 
         // Instantiate and launch spell in center direction
-        LaunchSpell(childPosition, centerDirection);
+        LaunchSpell(childPosition, centerDirection, player);
 
         // Instantiate and launch spell in left direction
-        LaunchSpell(childPosition, leftDirection);
+        LaunchSpell(childPosition, leftDirection, player);
 
         // Instantiate and launch spell in right direction
-        LaunchSpell(childPosition, rightDirection);
-
+        LaunchSpell(childPosition, rightDirection, player);
     }
 
     private Vector2 RotateVector(Vector2 vector, float angle)
@@ -259,10 +187,18 @@ public class AerialArcane: Spell
         return new Vector2(x, y);
     }
 
-    private void LaunchSpell(Vector3 spawnPosition, Vector2 direction)
+    private void LaunchSpell(Vector3 spawnPosition, Vector2 direction, GameObject player)
     {
         GameObject spawnedObject = Instantiate(AerialArcanePrefab, spawnPosition, Quaternion.identity);
-
+        spawnedObject = DrawCasterUtil.AddAttackHitTo(
+                    spawnedObject,
+                    _elementalType,
+                    player,
+                    _baseSkillDamageMultiplier * _damageSpellLevelMultiplier2,
+                    selfDestructTime,
+                    targetLayer,
+                    knockback2
+                    );
         Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
         if (rb2d == null)
         {
@@ -276,68 +212,72 @@ public class AerialArcane: Spell
 
         rb2d.AddForce(direction * speed, ForceMode2D.Impulse);
 
-        Destroy(spawnedObject, 0.5f);
     }
-    
+
 
     //Spell level 3
     public float speed = 10000f;
     private void HandleMouseClick3(GameObject player)
     {
-        player.GetComponent<PlayerInput>().RemoveMouseListener(HandleMouseClick3);
-
         int castLevel = CalThreshold(currentScore);
         int amount = GetAmount(castLevel);
-        Debug.Log(amount);
 
-        // Specify the name of the child GameObject you are looking for
-        string childName = "Transforms";
+        Sequence sequence = DOTween.Sequence();
+        bool isClicked = false;
+        PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;
+        playerAction.Player.LeftClick.Enable();
+        playerAction.Player.LeftClick.canceled += ctx => isClicked = true;
+        sequence.AppendInterval(_delayTime).OnUpdate(() =>
+        {
+            if (isClicked)
+            {
+                playerAction.Player.LeftClick.Disable();
+                Spawn3(player);
+                sequence.Kill();
+            }
+        }).OnComplete(() =>
+        {
+            playerAction.Player.LeftClick.Disable();
+            Spawn3(player);
+        });
 
-        // Get position to use spell
-        Transform childTransform = player.transform.Find(childName);
+    }
+
+    private void Spawn3(GameObject player)
+    {
+        Transform childTransform = DrawCasterUtil.GetMidTransformOf(player.transform);
         Vector3 childPosition = childTransform.position;
-
-        // Directions relative to the player
         Vector2[] directions = {
         Vector2.up,
         Vector2.down,
         Vector2.left,
         Vector2.right
-    };
+        };
 
         foreach (Vector2 direction in directions)
         {
-            // Instantiate the object at the childPosition
             GameObject spawnedObject = Instantiate(AerialArcanePrefab, childPosition, Quaternion.identity);
-
-            // Add a Rigidbody2D component to the spawned object if it doesn't already have one
+            spawnedObject = DrawCasterUtil.AddAttackHitTo(
+                                spawnedObject,
+                                _elementalType,
+                                player,
+                                _baseSkillDamageMultiplier * _damageSpellLevelMultiplier3,
+                                selfDestructTime,
+                                targetLayer,
+                                knockback3
+                                );
             Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
             if (rb2d == null)
             {
                 rb2d = spawnedObject.AddComponent<Rigidbody2D>();
             }
             rb2d.isKinematic = false; // Make sure it's not kinematic if you want to use physics forces
-
-            // Calculate the angle in radians between the player and the direction
             float angleRad = Mathf.Atan2(direction.y, direction.x);
-
-            // Convert the angle to degrees
             float angleDeg = angleRad * Mathf.Rad2Deg;
-
-            // Set the rotation of the spawned object to match the angle
             spawnedObject.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
-
-            // Apply force in the direction
             rb2d.AddForce(direction * speed, ForceMode2D.Impulse);
-
-            Destroy(spawnedObject, 0.5f);
         }
-
-        Debug.Log("Test spell");
-
     }
-
-
 
     public int GetAmount(int castLevel)
     {
@@ -355,5 +295,5 @@ public class AerialArcane: Spell
     {
 
     }
-    
+
 }
