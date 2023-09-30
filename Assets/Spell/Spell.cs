@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class Spell : ScriptableObject
 {
+
     [Header("Infomation")]
     public string _name;
     public string _description;

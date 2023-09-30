@@ -71,5 +71,5 @@ public class PlayerManager : CharactorManager<PlayerData>
         GameController.OnPlayerTakeDamage -= GetCharactorData().CheckDead;
     }
 
-    
+
 }
