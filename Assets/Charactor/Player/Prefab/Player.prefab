@@ -1069,7 +1069,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isReadyToCast: 1
   castLevel: 0
-  spell: {fileID: 11400000, guid: 4c9cf4eb2c073f94f82f962a34f869d6, type: 2}
+  spell: {fileID: 11400000, guid: 35b258b885c597f41a21266fbb7c4a2f, type: 2}
   cooldown: 0
   drawInput: {fileID: 9139472847491609556}
 --- !u!4 &6421424104873018365 stripped

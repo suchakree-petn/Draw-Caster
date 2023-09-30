@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -66,6 +67,23 @@ namespace DrawCaster.Util
         public static Vector2 GetCurrentMousePosition()
         {
             return Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        }
+
+    }
+    public class Timer
+    {
+        public float startTime;
+        public float endTime;
+        public Timer(float startTime, float endTime)
+        {
+            this.startTime = startTime;
+            this.endTime = endTime;
+            Sequence timer = DOTween.Sequence();
+            timer.AppendInterval(endTime - startTime).OnUpdate(() => this.startTime += Time.deltaTime).OnComplete(() => timer.Kill());
+        }
+        public bool IsFinished()
+        {
+            return startTime >= endTime;
         }
     }
     public class WeightedRandom<T>

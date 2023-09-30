@@ -21,6 +21,9 @@ MonoBehaviour:
   _hpBase: 999999
   _hpMultiplier: 0
   _hpBonus: 0
+  _manaBase: 0
+  _manaMultiplier: 0
+  _manaBonus: 0
   _attackBase: 300
   _attackMultiplier: 0
   _attackBonus: 0
@@ -29,6 +32,9 @@ MonoBehaviour:
   _defenseMultiplier: 0
   _defenseBonus: 0
   _bonusDamageReduction: 0
+  _knockbackBase: 2000
+  _knockbackMultiplier: 0
+  _knockbackBonus: 0
   _fireBonusDamage: 0.5
   _thunderBonusDamage: 0
   _frostBonusDamage: 0

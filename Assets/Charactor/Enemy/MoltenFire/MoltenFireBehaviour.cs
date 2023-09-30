@@ -58,6 +58,10 @@ namespace MoltenFire
                     default:
                         break;
                 }
+            }else
+            {
+                animator.SetBool("IsWalk", false);
+                animator.SetBool("IsWalkBackward", false);
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -67,23 +71,76 @@ namespace MoltenFire
         ////////////////////////// Animation event /////////////////////////
         [Header("Wander State")]
         [SerializeField] private float wanderDistance;
+        [SerializeField] private float minWanderDuration;
+        [SerializeField] private float maxWanderDuration;
+        [SerializeField] private float timerWalkBack = 0;
+        [SerializeField] private float timerWandering = 0;
+        float randomBackDuration;
+        float randomDuration;
+
         int isForward;
+        public static MoltenFireDelegate OnWandering;
+
         private void Wandering(Transform target)
         {
             Vector3 targetPos = DrawCasterUtil.GetMidTransformOf(target).position;
             Vector3 moltenFirePos = DrawCasterUtil.GetMidTransformOf(transform.root).position;
             float distant = Vector3.Distance(targetPos, moltenFirePos);
-            if (distant > wanderDistance)
+
+            timerWalkBack += Time.deltaTime;
+            if (timerWalkBack < randomBackDuration)
             {
-                isForward = 1;
+                animator.SetBool("IsWalk", false);
+                animator.SetBool("IsWalkBackward", true);
+                isForward = -1;
             }
             else
             {
-                isForward = -1;
+                timerWandering += Time.deltaTime;
+                if (timerWandering < randomDuration)
+                {
+                    if (distant > wanderDistance)
+                    {
+                        animator.SetBool("IsWalk", true);
+                        animator.SetBool("IsWalkBackward", false);
+                        isForward = 1;
+                    }
+                    else
+                    {
+                        animator.SetBool("IsWalk", false);
+                        animator.SetBool("IsWalkBackward", true);
+                        isForward = -1;
+                    }
+                }
+                else
+                {
+                    timerWalkBack = 0;
+                    timerWandering = 0;
+                    randomBackDuration = Random.Range(0, minWanderDuration);
+                    randomDuration = Random.Range(minWanderDuration, maxWanderDuration);
+                    currentState = State.WaitForNextAttack;
+                }
             }
         }
-        public static MoltenFireDelegate OnWandering;
-
+        void DisableAllCheckAttackCol()
+        {
+            meleeHitbox.gameObject.SetActive(false);
+            flamePillarCol.gameObject.SetActive(false);
+            fireBallCol.gameObject.SetActive(false);
+        }
+        void FacingToTarget(Transform target)
+        {
+            Vector2 moltenFireLowerTransform = DrawCasterUtil.GetLowerTransformOf(transform.root).position;
+            Vector2 targetLowerTransform = DrawCasterUtil.GetLowerTransformOf(target).position;
+            if (moltenFireLowerTransform.x < targetLowerTransform.x)
+            {
+                transform.root.DORotate(new Vector3(0, 180, 0), 0);
+            }
+            else
+            {
+                transform.root.DORotate(Vector3.zero, 0);
+            }
+        }
         void MoveToChaseTarget()
         {
             Vector2 direction = DrawCasterUtil.GetMidTransformOf(target).position - DrawCasterUtil.GetMidTransformOf(transform.root).position;
@@ -108,6 +165,7 @@ namespace MoltenFire
                 );
             foreach (RaycastHit2D overlapCol in overlappingColliders)
             {
+                Debug.Log(overlapCol.collider.name);
                 if (overlapCol.collider.tag == "Hitbox")
                 {
                     Transform parent = overlapCol.transform.root;
@@ -149,6 +207,7 @@ namespace MoltenFire
         [SerializeField] private float launchDuration;
         [SerializeField] private float curveDuration;
         [SerializeField] private float spawnInterval;
+        [SerializeField] private float randomness;
         [SerializeField] private GameObject fireballPrefab;
         [SerializeField] private Transform spawnPosLeft;
         [SerializeField] private Transform midCurveLeft;
@@ -185,8 +244,11 @@ namespace MoltenFire
         }
         void Move(Transform fireBallAttack, int i)
         {
+            Vector3 targetPos = DrawCasterUtil.GetMidTransformOf(target).position;
+            targetPos = DrawCasterUtil.RandomPosition(targetPos, randomness);
+
             fireBallAttack.DOPath(
-                        new Vector3[] { fireBallAttack.position, GetNewMidCurve(i).position, target.position },
+                        new Vector3[] { fireBallAttack.position, GetNewMidCurve(i).position, targetPos },
                         curveDuration + launchDuration,
                         PathType.CatmullRom).SetEase(speedCurve)
                         .OnComplete(() =>
@@ -216,15 +278,38 @@ namespace MoltenFire
         [SerializeField] private float MeleeAttackWeight;
         [SerializeField] private float FlamePillarAttackWeight;
         [SerializeField] private float FireBallAttackWeight;
+        [SerializeField] private float AttackCheckDuration;
+        Sequence sequence;
         private void RandomAttackType(Transform target)
         {
-            WeightedRandom<Transform> randomCheckCol = new();
-            randomCheckCol.AddItem(meleeHitbox.transform, MeleeAttackWeight);
-            randomCheckCol.AddItem(flamePillarCol, FlamePillarAttackWeight);
-            randomCheckCol.AddItem(fireBallCol, FireBallAttackWeight);
-            randomCheckCol.GetRandom().gameObject.SetActive(true);
+            animator.SetBool("IsWalk", false);
+            animator.SetBool("IsWalkBackward", false);
+
+            if (sequence == null)
+            {
+                WeightedRandom<Transform> randomCheckCol = new();
+                randomCheckCol.AddItem(meleeHitbox.transform, MeleeAttackWeight);
+                randomCheckCol.AddItem(flamePillarCol, FlamePillarAttackWeight);
+                randomCheckCol.AddItem(fireBallCol, FireBallAttackWeight);
+                randomCheckCol.GetRandom().gameObject.SetActive(true);
+                Debug.Log(randomCheckCol.GetRandom().name);
+
+                sequence = DOTween.Sequence();
+                sequence.AppendInterval(AttackCheckDuration).OnUpdate(() =>
+                {
+                    if (currentState != State.WaitForNextAttack)
+                    {
+                        sequence.Kill();
+                    }
+                }).OnComplete(() =>
+                {
+                    currentState = State.Wandering;
+                    sequence = null;
+                });
+            }
+
         }
-        
+
 
 
         [SerializeField] private Animator animator;
@@ -233,6 +318,10 @@ namespace MoltenFire
 
             OnWandering += target => animator.SetBool("IsWalk", true);
             OnWandering += Wandering;
+            OnWandering += target => DisableAllCheckAttackCol();
+            OnWandering += FacingToTarget;
+            OnWaitForNextAttack += RandomAttackType;
+
             OnMeleeAttack += target =>
             {
                 animator.SetTrigger("MeleeAttack");
@@ -248,10 +337,12 @@ namespace MoltenFire
                 animator.SetTrigger("FireBallAttack");
                 animator.SetBool("IsWalk", false);
             };
-            //OnWaitForNextAttack += ;
         }
         private void OnDisable()
         {
+            OnWandering -= Wandering;
+            OnWandering -= FacingToTarget;
+            OnWaitForNextAttack -= RandomAttackType;
         }
     }
 }

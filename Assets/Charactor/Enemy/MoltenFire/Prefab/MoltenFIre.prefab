@@ -46,7 +46,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.09940076, y: 2.4610786}
+  m_Offset: {x: -0.13788033, y: 1.9993167}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -57,7 +57,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.367868, y: 16.00449}
+  m_Size: {x: 9.52421, y: 16.928013}
   m_EdgeRadius: 0
 --- !u!114 &1194076460
 MonoBehaviour:
@@ -81,15 +81,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5947298779568252497}
-  - component: {fileID: 6110688291057937459}
   - component: {fileID: 7157208685587121268}
+  - component: {fileID: 5818713216603414961}
   m_Layer: 7
   m_Name: CheckMeleeAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5947298779568252497
 Transform:
   m_ObjectHideFlags: 0
@@ -105,22 +105,6 @@ Transform:
   m_Father: {fileID: 2443557438347980069}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &6110688291057937459
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171678686006437328}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -3.77, y: -1.07}
-  m_Size: {x: 11.370789, y: 8.012031}
-  m_Direction: 1
 --- !u!114 &7157208685587121268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +118,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moltenFireBehaviour: {fileID: 0}
+--- !u!61 &5818713216603414961
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171678686006437328}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -4.939186, y: -0.62339306}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.878376, y: 8.960242}
+  m_EdgeRadius: 0
 --- !u!1 &1245568555346421626
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,14 +579,21 @@ MonoBehaviour:
   moltenFireRb: {fileID: 0}
   targetTag: Player
   target: {fileID: 0}
+  wanderDistance: 5
+  minWanderDuration: 1
+  maxWanderDuration: 3
+  timerWalkBack: 0
+  timerWandering: 0
   _baseMeleeDamageMultiplier: 1
-  meleeKnockbackGaugeDeal: 0
-  meleeHitbox: {fileID: 6110688291057937459}
+  attackRange: 0
+  meleeKnockbackGaugeDeal: 100
+  meleeHitbox: {fileID: 0}
   _baseFlamePillarDamageMultiplier: 1
   firePillarKnockbackGaugeDeal: 100
   _flamePillarPrefab: {fileID: 1951053022745430761, guid: 875eb7d1759b47842ae9188198f6220a,
     type: 3}
   FlamePillarClip: {fileID: 7400000, guid: 181eeabffa67c9a48bb88a684d603dd0, type: 2}
+  flamePillarCol: {fileID: 1194076458}
   _baseFireBallDamageMultiplier: 0.7
   fireBallKnockbackGaugeDeal: 10
   launchDuration: 0.05
@@ -622,6 +639,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  fireBallCol: {fileID: 6621631426432854800}
+  MeleeAttackWeight: 3
+  FlamePillarAttackWeight: 2
+  FireBallAttackWeight: 5
+  AttackCheckDuration: 2
   animator: {fileID: 8330262462198280079}
 --- !u!1 &8330262462644783004
 GameObject:
@@ -696,8 +718,9 @@ MonoBehaviour:
   currentMana: 0
   maxKnockBackGauge: 0
   curentKnockBackGauge: 0
-  restoreGaugeDelayTime: 0
-  gaugeRegen: 0
+  restoreGaugeDelayTime: 2
+  gaugeRegen: 30
+  hited: 0
   isKnockback: 0
   enemyData: {fileID: 11400000, guid: 37cd2a8a9fefb724386c9e4e3a909bcd, type: 2}
 --- !u!1 &8383781703808165391

@@ -30,7 +30,27 @@ public class PlayerManager : CharactorManager<PlayerData>
         }
         GameController.OnPlayerTakeDamage?.Invoke(gameObject, damage);
     }
-    public override void StartKnockback(Elemental damage){
+    public override void KnockBackGauge(GameObject charactor, Elemental damage)
+    {
+        float knockbackGaugeDeal = damage.knockbackGaugeDeal;
+        hited = true;
+        if (curentKnockBackGauge - knockbackGaugeDeal > 0 && !isKnockback)
+        {
+            curentKnockBackGauge -= knockbackGaugeDeal;
+        }
+        else if (!isKnockback)
+        {
+            isKnockback = true;
+            curentKnockBackGauge = 0;
+            curentKnockBackGauge = maxKnockBackGauge;
+            StartKnockback(damage);
+        }
+
+        if (restoreCoroutine != null) StopCoroutine(restoreCoroutine);
+        restoreCoroutine = StartCoroutine(DelayRestore(restoreGaugeDelayTime));
+    }
+    public override void StartKnockback(Elemental damage)
+    {
         animator.SetTrigger("Knockback");
         StartCoroutine(DelayKnockback(knockbackClip.length));
         _playerAction.Player.Movement.Disable();
@@ -60,6 +80,7 @@ public class PlayerManager : CharactorManager<PlayerData>
     protected override void OnEnable()
     {
         base.OnEnable();
+        GameController.OnPlayerTakeDamage += KnockBackGauge;
         GameController.OnPlayerDead += GetCharactorData().Dead;
         GameController.OnPlayerTakeDamage += GetCharactorData().CheckDead;
         _playerAction = PlayerInputSystem.Instance.playerAction;
@@ -67,6 +88,7 @@ public class PlayerManager : CharactorManager<PlayerData>
     protected override void OnDisable()
     {
         base.OnDisable();
+        GameController.OnPlayerTakeDamage -= KnockBackGauge;
         GameController.OnPlayerDead -= GetCharactorData().Dead;
         GameController.OnPlayerTakeDamage -= GetCharactorData().CheckDead;
     }
