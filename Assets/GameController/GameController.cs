@@ -9,6 +9,7 @@ using TMPro;
 
 public enum GameState
 {
+    InstantiateUI,
     BeforeStart,
     Start,
     InGame,
@@ -22,6 +23,7 @@ public class GameController : MonoBehaviour
 
     public GameState currentState;
     public delegate void GameStateBehaviour();
+    public static GameStateBehaviour OnInstantiateUI;
     public static GameStateBehaviour OnBeforeStart;
     public static GameStateBehaviour OnStart;
     public static GameStateBehaviour WhileInGame;
@@ -31,27 +33,32 @@ public class GameController : MonoBehaviour
 
 
     [Header("Entity in scene")]
-    public List<GameObject> allEnemyInScene = new List<GameObject>();
-    public List<GameObject> allEnemyInCamera = new List<GameObject>();
+    [SerializeField] private List<GameObject> allEnemyInScene = new List<GameObject>();
+    public GameObject[] AllEnemy => allEnemyInScene.ToArray();
+    //public List<GameObject> allEnemyInCamera = new List<GameObject>();
     public List<string> scene = new List<string>();
     public int currentScene = 0;
     [SerializeField] private GameObject doorToNextStage;
     [SerializeField] private GameObject tmpStageFloor;
+    [SerializeField] private GameObject playerUI;
 
     public static Action<GameObject> OnPlayerDead;
-    public static Action<GameObject,float> OnPlayerTakeDamage;
+    public static Action<GameObject, Elemental> OnPlayerTakeDamage;
 
     public static Action<GameObject> OnEnemyDead;
-    public static Action<GameObject,float> OnEnemyTakeDamage;
+    public static Action<GameObject, Elemental> OnEnemyTakeDamage;
 
 
     private void Update()
     {
         switch (currentState)
         {
+            case GameState.InstantiateUI:
+                OnInstantiateUI?.Invoke();
+                currentState = GameState.BeforeStart;
+                break;
             case GameState.BeforeStart:
                 OnBeforeStart?.Invoke();
-                Debug.Log("BeforeStart");
                 currentState = GameState.Start;
                 break;
             case GameState.Start:
@@ -70,10 +77,17 @@ public class GameController : MonoBehaviour
                 break;
         }
     }
+    void InstantiatePlayerUI(){
+        GameObject playUIInScene = GameObject.Find("PlayUI");
+        if(playUIInScene != null){
+            Destroy(playUIInScene);
+        }
+        Instantiate(playerUI);
+    }
     void RemoveEnemyDead(GameObject enemy)
     {
         allEnemyInScene.Remove(enemy);
-        allEnemyInCamera.Remove(enemy);
+        //allEnemyInCamera.Remove(enemy);
     }
     void Awake()
     {
@@ -110,8 +124,8 @@ public class GameController : MonoBehaviour
         Vector2 cameraMax = (Vector2)mainCamera.transform.position + new Vector2(cameraOrthoWidth, cameraOrthoHeight);
 
         // Check if the bounds of the GameObject intersect with the camera's view bounds
-        return bounds.min.x < cameraMax.x && bounds.max.x > cameraMin.x &&
-               bounds.min.y < cameraMax.y && bounds.max.y > cameraMin.y;
+        return bounds.min.x < cameraMax.x - 10 && bounds.max.x > cameraMin.x - 10 &&
+               bounds.min.y < cameraMax.y - 10 && bounds.max.y > cameraMin.y - 10;
     }
 
     void AddAllEnemyInSceneToList()
@@ -122,36 +136,42 @@ public class GameController : MonoBehaviour
             this.allEnemyInScene.Add(enemy);
         }
     }
-    public GameObject[] GetAllEnemyInScene()
+    // public GameObject[] GetAllEnemyInScene()
+    // {
+    //     allEnemyInCamera.Clear();
+    //     foreach (GameObject enemy in allEnemyInScene)
+    //     {
+    //         if (IsObjectInCameraView(enemy))
+    //         {
+    //             allEnemyInCamera.Add(enemy);
+    //         }
+    //     }
+    //     return allEnemyInCamera.ToArray();
+    // }
+
+    public void StageClear()
     {
-        allEnemyInCamera.Clear();
-        foreach (GameObject enemy in allEnemyInScene)
+        if (allEnemyInScene.Count == 0 && currentState == GameState.InGame)
         {
-            if (IsObjectInCameraView(enemy))
-            {
-                allEnemyInCamera.Add(enemy);
-            }
-        }
-        return allEnemyInCamera.ToArray();
-    }
-    public void StageClear(){
-        if(allEnemyInScene.Count == 0 && currentState == GameState.InGame){
             currentState = GameState.BeforeEnding;
         }
     }
-    private void ShowStageFloor(){
+    private void ShowStageFloor()
+    {
         Scene sceneName = SceneManager.GetActiveScene();
-        if(GameObject.Find("StageFloor") != null)tmpStageFloor = GameObject.Find("StageFloor");
+        if (GameObject.Find("StageFloor") != null) tmpStageFloor = GameObject.Find("StageFloor");
         tmpStageFloor.GetComponent<TextMeshProUGUI>().text = sceneName.name;
     }
-    public void GenerateDoor(){
+    public void GenerateDoor()
+    {
         Debug.Log("GenerateDoor");
         float offset = 3;
         doorToNextStage.SetActive(true);
-        doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0,offset,0);
+        doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, offset, 0);
     }
     private void OnEnable()
     {
+        OnInstantiateUI += InstantiatePlayerUI;
         OnBeforeStart += AddAllEnemyInSceneToList;
         OnBeforeStart += ShowStageFloor;
         OnEnemyDead += RemoveEnemyDead;
@@ -160,6 +180,7 @@ public class GameController : MonoBehaviour
     }
     private void OnDisable()
     {
+        OnInstantiateUI -= InstantiatePlayerUI;
         OnBeforeStart -= AddAllEnemyInSceneToList;
         OnBeforeStart -= ShowStageFloor;
         OnEnemyDead -= RemoveEnemyDead;

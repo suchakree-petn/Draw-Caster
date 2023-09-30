@@ -16,18 +16,29 @@ public class Elemental
 
     public ElementalType _elementalType;
     public float _damage;
-    public CharactorData _attacker;
+    public float knockbackGaugeDeal;
+    public CharactorData _attackerData;
+    public GameObject attacker;
     public LayerMask targetLayer;
-    public Elemental(ElementalType type, float damage, CharactorData attacker, LayerMask targetLayer)
+    public Elemental(ElementalType type, float damage, GameObject attacker,CharactorData attackerData, LayerMask targetLayer, float knockbackGaugeDeal)
     {
         this._elementalType = type;
         this._damage = damage;
-        this._attacker = attacker;
+        this.attacker = attacker;
+        this._attackerData = attackerData;
         this.targetLayer = targetLayer;
+        this.knockbackGaugeDeal = knockbackGaugeDeal;
     }
-    public static Elemental DamageCalculation(ElementalType type, CharactorData attacker, float _baseSkillDamageMultiplier, LayerMask targetLayer)
+    public static Elemental DamageCalculation(ElementalType type, GameObject attacker, float _baseSkillDamageMultiplier, LayerMask targetLayer, float knockbackGaugeDeal)
     {
-        return new Elemental(type, CalcDamage(attacker, _baseSkillDamageMultiplier, type), attacker, targetLayer);
+         CharactorData _attackerData;
+        if(attacker.tag == "Player"){
+            _attackerData = attacker.GetComponent<CharactorManager<PlayerData>>().GetCharactorData();
+        }else{
+            _attackerData = attacker.GetComponent<CharactorManager<EnemyData>>().GetCharactorData();
+        }
+
+        return new Elemental(type, CalcDamage(_attackerData, _baseSkillDamageMultiplier, type), attacker, _attackerData, targetLayer, knockbackGaugeDeal);
     }
 
     static private float CalcAttack(CharactorData attacker)

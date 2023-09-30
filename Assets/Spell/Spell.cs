@@ -15,6 +15,7 @@ public abstract class Spell : ScriptableObject
     public ElementalType _elementalType;
     public float _cooldown;
     public float _manaCost;
+    
     public LayerMask targetLayer;
 
 
@@ -31,6 +32,7 @@ public abstract class Spell : ScriptableObject
 
     public void CastByLevel(int level, GameObject player, GameObject target)
     {
+        Debug.Log("Cast by level");
         switch (level)
         {
             case 1:

@@ -5,10 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New player Data", menuName = "Charactor Data/player Data")]
 public class PlayerData : CharactorData
 {
-
     public Weapon CurrentWeapon;
 
-    public override void CheckDead(GameObject charactor, float damage)
+    public override void CheckDead(GameObject charactor, Elemental damage)
     {
         if (charactor.GetComponent<PlayerManager>().currentHp <= 0)
         {

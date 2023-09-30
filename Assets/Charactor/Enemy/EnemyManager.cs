@@ -19,11 +19,15 @@ public class EnemyManager : CharactorManager<EnemyData>
             currentHp -= damageDeal;
             TextDamageAsset.Instance.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
         }
-        GameController.OnEnemyTakeDamage?.Invoke(gameObject, damageDeal);
+        GameController.OnEnemyTakeDamage?.Invoke(gameObject, damage);
     }
     public override void InitHp()
     {
         currentHp = GetCharactorData().GetMaxHp();
+    }
+    public override void InitKnockbackGauge()
+    {
+        curentKnockBackGauge = GetCharactorData().GetMaxKnockbackGauge();
     }
     protected override void OnEnable()
     {
@@ -38,5 +42,14 @@ public class EnemyManager : CharactorManager<EnemyData>
         GameController.OnEnemyTakeDamage -= GetCharactorData().CheckDead;
     }
 
-    
+    public override void StartKnockback(Elemental damage)
+    {
+        
+    }
+
+    public override void EndKnockback()
+    {
+        
+    }
+
 }

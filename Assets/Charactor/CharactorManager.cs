@@ -6,21 +6,67 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
 {
     public float currentHp;
     public float currentMana;
+    public float maxKnockBackGauge;    
+    public float curentKnockBackGauge;
     public T charactorData {private get; set; }
+    [SerializeField] private float restoreGaugeDelayTime;
+    [SerializeField] private float gaugeRegen;
+    private bool hited = false;
+    public bool isKnockback;
+    private Coroutine restoreCoroutine;
 
     public abstract void TakeDamage(Elemental elementalDamage);
+    public abstract void StartKnockback(Elemental damage);
+    public abstract void EndKnockback();
+    public void KnockBackGauge(GameObject charactor, Elemental damage){
+        float knockbackGaugeDeal = damage.knockbackGaugeDeal;
+        hited = true;
+        if(curentKnockBackGauge - knockbackGaugeDeal > 0 && !isKnockback){
+            curentKnockBackGauge -= knockbackGaugeDeal;
+        }else if(!isKnockback){
+            isKnockback = true;
+            curentKnockBackGauge = 0;
+            curentKnockBackGauge = maxKnockBackGauge;
+            StartKnockback(damage);
+        }
+
+        if(restoreCoroutine != null)StopCoroutine(restoreCoroutine);
+        restoreCoroutine = StartCoroutine(DelayRestore(restoreGaugeDelayTime));
+    }
+    public void RestoreKnockbackGauge(){
+        if(!hited && curentKnockBackGauge < maxKnockBackGauge){
+            curentKnockBackGauge += gaugeRegen * Time.deltaTime;
+        }else if(!hited && curentKnockBackGauge >= maxKnockBackGauge){
+            curentKnockBackGauge = maxKnockBackGauge;
+        }
+    }
+    public IEnumerator DelayKnockback(float time){
+        yield return new WaitForSeconds(time);
+        EndKnockback();
+        isKnockback = false;
+    }
+    IEnumerator DelayRestore(float time){
+        yield return new WaitForSeconds(time);
+        hited = false;
+    }
 
     public abstract T GetCharactorData();
     protected virtual void OnEnable()
     {
         GameController.OnBeforeStart += InitHp;
         GameController.OnBeforeStart += InitMana;
+        GameController.OnBeforeStart += InitKnockbackGauge;
+        GameController.WhileInGame += RestoreKnockbackGauge;
+        GameController.OnPlayerTakeDamage += KnockBackGauge;
 
     }
     protected virtual void OnDisable()
     {
         GameController.OnBeforeStart -= InitHp;
         GameController.OnBeforeStart -= InitMana;
+        GameController.OnBeforeStart -= InitKnockbackGauge;
+        GameController.WhileInGame -= RestoreKnockbackGauge;
+        GameController.OnPlayerTakeDamage -= KnockBackGauge;
     }
 
     float CalcDefense(CharactorData target)
@@ -31,7 +77,7 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     float CalcDMGReduction(CharactorData target, Elemental damage)
     {
         float _targetDefense = CalcDefense(target);
-        return 1 - (_targetDefense / (_targetDefense + (5 * damage._attacker._level) + 500));
+        return 1 - (_targetDefense / (_targetDefense + (5 * damage._attackerData._level) + 500));
     }
     public float CalcDamageRecieve(CharactorData target, Elemental damage)
     {
@@ -39,4 +85,5 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     }
     public virtual void InitHp(){}
     public virtual void InitMana(){}
+    public virtual void InitKnockbackGauge(){}
 }

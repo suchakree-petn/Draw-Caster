@@ -6,20 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D playerRb;
-    [SerializeField] private Animator animator;
-    private PlayerData playerData;
-    private PlayerAction playerAction;
+    [SerializeField] private PlayerData playerData;
+    [SerializeField] private PlayerAction playerAction;
     public Vector2 movement;
-    [SerializeField] private float defaultMovementSpeed;
-    [Range(0, 1f)]
-    [SerializeField] private float movementSpeedPenalty;
-    [SerializeField] private float currentMovementSpeed;
-    public float CurrentMovementSpeed => currentMovementSpeed;
 
     private void Start()
     {
         playerData = transform.GetComponentInParent<CharactorManager<PlayerData>>().GetCharactorData();
-        defaultMovementSpeed = playerData._moveSpeed;
     }
 
 
@@ -27,70 +20,18 @@ public class PlayerMovement : MonoBehaviour
     {
         movement = playerAction.Player.Movement.ReadValue<Vector2>();
         Move();
-        CheckFacing();
     }
     void Move()
     {
-        playerRb.MovePosition(playerRb.position + currentMovementSpeed * Time.fixedDeltaTime * movement.normalized);
-    }
+        playerRb.MovePosition(playerRb.position + movement.normalized * playerData._moveSpeed * Time.fixedDeltaTime);
 
-    void CheckFacing()
-    {
-        float mousePosX = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()).x;
-        float playerPosX = animator.rootPosition.x;
-        SpriteRenderer spriteRenderer = animator.GetComponent<SpriteRenderer>();
-        if (mousePosX < playerPosX)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
-        if (movement != Vector2.zero)
-        {
-            if (movement.x >= 0 && mousePosX < playerPosX)
-            {
-                WalkBack();
-            }
-            else if (movement.x <= 0 && mousePosX > playerPosX)
-            {
-                WalkBack();
-            }
-            else
-            {
-                WalkFront();
-            }
-
-        }
-        else
-        {
-            WalkFront();
-        }
 
     }
-
-    void WalkFront()
+    void StopMove()
     {
-        SetToDefaultSpeed();
-        animator.SetBool("IsWalkBack", false);
-    }
-    void WalkBack()
-    {
-        SetSpeed(movementSpeedPenalty);
-        animator.SetBool("IsWalkBack", true);
+        playerRb.velocity = Vector2.zero;
     }
 
-    public float SetSpeed(float percentage)
-    {
-        currentMovementSpeed = (1 - percentage) * defaultMovementSpeed;
-        return currentMovementSpeed;
-    }
-    public float SetToDefaultSpeed()
-    {
-        currentMovementSpeed = defaultMovementSpeed;
-        return currentMovementSpeed;
-    }
     private void OnEnable()
     {
         Debug.Log("Enable");
