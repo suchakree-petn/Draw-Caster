@@ -23,6 +23,24 @@ namespace DrawCaster.Util
             attackHit.selfDestructTime = selfDestructTime;
             return addedParent;
         }
+        public static GameObject AddAttackHitTo(GameObject parent,
+            ElementalType elementalType,
+            GameObject attacker,
+            float baseSkillMultiplier,
+            float selfDestructTime,
+            LayerMask targetLayer,
+            float knockbackGaugeDeal,
+            float iFrameTime
+            )
+        {
+            GameObject addedParent = parent;
+            addedParent.AddComponent(typeof(AttackHit));
+            AttackHit attackHit = addedParent.GetComponent<AttackHit>();
+            attackHit.elementalDamage = Elemental.DamageCalculation(elementalType, attacker, baseSkillMultiplier, targetLayer, knockbackGaugeDeal);
+            attackHit.selfDestructTime = selfDestructTime;
+            attackHit.iFrameTime = iFrameTime;
+            return addedParent;
+        }
 
         public static Transform GetUpperTransformOf(Transform parent)
         {
