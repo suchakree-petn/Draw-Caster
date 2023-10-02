@@ -16,12 +16,17 @@ namespace DrawCaster.Util
             LayerMask targetLayer,
             float knockbackGaugeDeal)
         {
-            GameObject addedParent = parent;
-            addedParent.AddComponent(typeof(AttackHit));
-            AttackHit attackHit = addedParent.GetComponent<AttackHit>();
+            Component ath = parent.GetComponent<AttackHit>();
+            if (ath != null)
+            {
+                Debug.LogWarning("Already Contain AttackHit");
+                return null;
+            }
+            parent.AddComponent(typeof(AttackHit));
+            AttackHit attackHit = parent.GetComponent<AttackHit>();
             attackHit.elementalDamage = Elemental.DamageCalculation(elementalType, attacker, baseSkillMultiplier, targetLayer, knockbackGaugeDeal);
             attackHit.selfDestructTime = selfDestructTime;
-            return addedParent;
+            return parent;
         }
         public static GameObject AddAttackHitTo(GameObject parent,
             ElementalType elementalType,
