@@ -15,6 +15,7 @@ public class FireStaff : Weapon
     [SerializeField] private int fireBallMoveSpeed;
     [SerializeField] private int fireBallAmount;
     [SerializeField] private int fireBallDuration;
+    [SerializeField] private int iFrame;
     [SerializeField] private GameObject fireBallPrefab;
     
 
@@ -60,7 +61,8 @@ public class FireStaff : Weapon
             _baseSkillDamageMultiplier,
             fireBallDuration,
             targetLayer,
-            knockbackGaugeDeal
+            knockbackGaugeDeal,
+            iFrame
             );
 
         // Calc spread angle

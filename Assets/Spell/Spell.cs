@@ -15,7 +15,7 @@ public abstract class Spell : ScriptableObject
     public ElementalType _elementalType;
     public float _cooldown;
     public float _manaCost;
-    
+
     public LayerMask targetLayer;
 
 
@@ -25,7 +25,13 @@ public abstract class Spell : ScriptableObject
     public float _lowThreshold;
     public float _midThreshold;
 
-    public abstract void CastSpell(float score, GameObject player);
+    public virtual void CastSpell(float score, GameObject player)
+    {
+        DisableInput();
+    }
+
+    
+
     public abstract void Cast1(GameObject player, GameObject target);
     public abstract void Cast2(GameObject player, GameObject target);
     public abstract void Cast3(GameObject player, GameObject target);
@@ -48,6 +54,7 @@ public abstract class Spell : ScriptableObject
                 Debug.LogWarning("Level Error");
                 break;
         }
+        EnableInput();
     }
 
     public abstract void BeginCooldown(GameObject player);
@@ -74,6 +81,33 @@ public abstract class Spell : ScriptableObject
             Debug.Log("CastThershold ERROR");
         }
         return castLevel;
+    }
+    private void DisableInput()
+    {
+        PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;
+        playerAction.Player.PressAttack.Disable();
+        playerAction.Player.HoldAttack.Disable();
+        playerAction.Player.Spell_Q.Disable();
+        playerAction.Player.Spell_E.Disable();
+        playerAction.Player.Spell_R.Disable();
+        playerAction.Player.Spell_Shift.Disable();
+        playerAction.Player.Interact.Disable();
+        playerAction.Player.LeftClick.Disable();
+        playerAction.Player.ManaNullify.Disable();
+
+    }
+    private void EnableInput()
+    {
+        PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;
+        playerAction.Player.PressAttack.Enable();
+        playerAction.Player.HoldAttack.Enable();
+        playerAction.Player.Spell_Q.Enable();
+        playerAction.Player.Spell_E.Enable();
+        playerAction.Player.Spell_R.Enable();
+        playerAction.Player.Spell_Shift.Enable();
+        playerAction.Player.Interact.Enable();
+        playerAction.Player.LeftClick.Enable();
+        playerAction.Player.ManaNullify.Enable();
     }
 }
 

@@ -91,7 +91,18 @@ namespace DrawCaster.Util
         {
             return Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         }
-
+        public static Vector2 GetDirectionFromUpper(Transform origin, Transform target)
+        {
+            return GetUpperTransformOf(target).position - GetUpperTransformOf(origin).position;
+        }
+        public static Vector2 GetDirectionFromMid(Transform origin, Transform target)
+        {
+            return GetMidTransformOf(target).position - GetMidTransformOf(origin).position;
+        }
+        public static Vector2 GetDirectionFromLower(Transform origin, Transform target)
+        {
+            return GetLowerTransformOf(target).position - GetLowerTransformOf(origin).position;
+        }
     }
     public class Timer
     {

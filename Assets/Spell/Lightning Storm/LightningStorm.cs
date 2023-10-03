@@ -25,6 +25,7 @@ public class LightningStorm : Spell
     [SerializeField] private GameObject lightningStormPrefab;
     public override void CastSpell(float score, GameObject player)
     {
+        base.CastSpell(score,player);
         int castLevel = CalThreshold(score);
         GameObject[] enemyList = GameController.Instance.AllEnemy;
         for (int i = 0; i < enemyList.Length; i++)

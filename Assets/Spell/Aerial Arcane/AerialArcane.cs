@@ -1,9 +1,6 @@
 using DG.Tweening;
 using DrawCaster.Util;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "new Aerial Arcane", menuName = "Spell/Aerial Arcane")]
 public class AerialArcane : Spell
@@ -56,6 +53,7 @@ public class AerialArcane : Spell
 
     public override void CastSpell(float score, GameObject player)
     {
+        base.CastSpell(score,player);
         currentScore = score;  // Store the score value
         int castLevel = CalThreshold(currentScore);
         CastByLevel(castLevel, player, null);

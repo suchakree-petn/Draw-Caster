@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ManaNullify",
+                    "type": "Value",
+                    "id": "fabd6ada-459e-4ad9-9995-93e75491bb8a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=1)",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -248,6 +257,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LeftClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c39a3ee-af97-42f9-bb74-143f7fdf545d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ManaNullify",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

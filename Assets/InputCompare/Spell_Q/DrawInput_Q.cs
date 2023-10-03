@@ -25,14 +25,6 @@ public class DrawInput_Q : MonoBehaviour
     [Header("New Matrix Dimension")]
     public float newMostRight;
 
-    [Header("Draw List")]
-    [SerializeField] private GameObject prefab;
-    public delegate void MouseEvent(Vector2[] templatePos);
-    public static MouseEvent up;
-    public static MouseEvent down;
-    public delegate void CalcCosSim(Vector2[] input, Vector2[] template, int sideLenght);
-    public static CalcCosSim calcCosSim;
-
     private void Update()
     {
         if (_playerAction.Player.DrawInput.IsPressed())

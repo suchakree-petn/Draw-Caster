@@ -81,17 +81,28 @@ public class PlayerManager : CharactorManager<PlayerData>
     {
         base.OnEnable();
         GameController.OnPlayerTakeDamage += KnockBackGauge;
-        GameController.OnPlayerDead += GetCharactorData().Dead;
-        GameController.OnPlayerTakeDamage += GetCharactorData().CheckDead;
+        GameController.OnPlayerDead += Dead;
+        GameController.OnPlayerTakeDamage += CheckDead;
         _playerAction = PlayerInputSystem.Instance.playerAction;
     }
     protected override void OnDisable()
     {
         base.OnDisable();
         GameController.OnPlayerTakeDamage -= KnockBackGauge;
-        GameController.OnPlayerDead -= GetCharactorData().Dead;
-        GameController.OnPlayerTakeDamage -= GetCharactorData().CheckDead;
+        GameController.OnPlayerDead -= Dead;
+        GameController.OnPlayerTakeDamage -= CheckDead;
+    }
+    public override void CheckDead(GameObject charactor, Elemental damage)
+    {
+        if (charactor.GetComponent<PlayerManager>().currentHp <= 0)
+        {
+            GameController.OnPlayerDead?.Invoke(charactor);
+        }
     }
 
+    public override void Dead(GameObject deadCharactor)
+    {
+        Destroy(deadCharactor);
+    }
 
 }

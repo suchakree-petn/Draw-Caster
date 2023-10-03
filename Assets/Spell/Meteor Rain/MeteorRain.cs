@@ -29,6 +29,7 @@ public class MeteorRain : Spell
 
     public override void CastSpell(float score, GameObject player)
     {
+        base.CastSpell(score,player);
         Sequence sequenceCast = DOTween.Sequence();
 
         int castLevel = CalThreshold(score);

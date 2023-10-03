@@ -116,6 +116,15 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ManaNullify"",
+                    ""type"": ""Value"",
+                    ""id"": ""fabd6ada-459e-4ad9-9995-93e75491bb8a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=1)"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -272,6 +281,17 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""action"": ""LeftClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c39a3ee-af97-42f9-bb74-143f7fdf545d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ManaNullify"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -290,6 +310,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         m_Player_Spell_Shift = m_Player.FindAction("Spell_Shift", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
+        m_Player_ManaNullify = m_Player.FindAction("ManaNullify", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -359,6 +380,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Spell_Shift;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_LeftClick;
+    private readonly InputAction m_Player_ManaNullify;
     public struct PlayerActions
     {
         private @PlayerAction m_Wrapper;
@@ -373,6 +395,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         public InputAction @Spell_Shift => m_Wrapper.m_Player_Spell_Shift;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
+        public InputAction @ManaNullify => m_Wrapper.m_Player_ManaNullify;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -412,6 +435,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @LeftClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
                 @LeftClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
                 @LeftClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                @ManaNullify.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaNullify;
+                @ManaNullify.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaNullify;
+                @ManaNullify.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaNullify;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -446,6 +472,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @LeftClick.started += instance.OnLeftClick;
                 @LeftClick.performed += instance.OnLeftClick;
                 @LeftClick.canceled += instance.OnLeftClick;
+                @ManaNullify.started += instance.OnManaNullify;
+                @ManaNullify.performed += instance.OnManaNullify;
+                @ManaNullify.canceled += instance.OnManaNullify;
             }
         }
     }
@@ -462,5 +491,6 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         void OnSpell_Shift(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);
+        void OnManaNullify(InputAction.CallbackContext context);
     }
 }
