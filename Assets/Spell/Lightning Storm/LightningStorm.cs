@@ -15,6 +15,7 @@ public class LightningStorm : Spell
     [Header("Lighning Storm Setting")]
     public float _delayTime;
     public float knockbackGaugeDeal;
+    public float iFrame;
     public int _amountLevel1;
     public int _amountLevel2;
     public int _amountLevel3;
@@ -130,7 +131,8 @@ public class LightningStorm : Spell
             _baseSkillDamageMultiplier * multiplier,
             selfDestructTime,
             targetLayer,
-            knockbackGaugeDeal
+            knockbackGaugeDeal,
+            iFrame
             );
         return lightningStorm;
     }

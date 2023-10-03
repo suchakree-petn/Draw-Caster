@@ -174,6 +174,9 @@ namespace MoltenFire
         [SerializeField] private Collider2D meleeHitbox;
         [SerializeField] private Transform checkMeleeAttack;
         public MoltenFireDelegate OnMeleeAttack;
+        [SerializeField] private float iFrameMelee;
+        [SerializeField] private float iFramePillar;
+        [SerializeField] private float iFrameFireBall;
         void MeleeAttack()
         {
             meleeHitbox.gameObject.SetActive(true);
@@ -184,7 +187,8 @@ namespace MoltenFire
                 _baseMeleeDamageMultiplier,
                 0,
                 moltenFireData.targetLayer,
-                meleeKnockbackGaugeDeal
+                meleeKnockbackGaugeDeal,
+                iFrameMelee
             );
             meleeHitbox.transform.DOMoveY(meleeHitbox.transform.position.y - 0.1f, 0.1f).OnComplete(() =>
             {
@@ -233,7 +237,8 @@ namespace MoltenFire
                 _baseFlamePillarDamageMultiplier,
                 FlamePillarClip.length,
                 moltenFireData.targetLayer,
-                firePillarKnockbackGaugeDeal
+                firePillarKnockbackGaugeDeal,
+                iFramePillar
                 );
             return flamePillar;
         }
@@ -269,7 +274,8 @@ namespace MoltenFire
                     _baseFireBallDamageMultiplier,
                     (launchDuration + curveDuration + spawnInterval) * i + 1,
                     moltenFireData.targetLayer,
-                    fireBallKnockbackGaugeDeal
+                    fireBallKnockbackGaugeDeal,
+                    iFrameFireBall
                     ).transform;
                 int index = i;
                 sequence.AppendCallback(() =>

@@ -54,6 +54,7 @@ MonoBehaviour:
     type: 3}
   fireBallAmount: 2
   isRepeating: 0
+  iFrame: 0
   moltenFireBehaviour: {fileID: 1516326432}
 --- !u!1 &1194076457
 GameObject:
@@ -566,7 +567,7 @@ GameObject:
   - component: {fileID: 1431555209075108363}
   m_Layer: 7
   m_Name: BossUIManager
-  m_TagString: BossUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -599,6 +600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BossUI: {fileID: 5060573075060576882, guid: 9b0428f3cc152fa40b8722b357e76ecf, type: 3}
+  charactorManager: {fileID: 928939355}
 --- !u!1 &4010664479894279579
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,6 +885,9 @@ MonoBehaviour:
   meleeKnockbackGaugeDeal: 100
   meleeHitbox: {fileID: 828994946}
   checkMeleeAttack: {fileID: 5947298779568252497}
+  iFrameMelee: 1
+  iFramePillar: 1
+  iFrameFireBall: 1
   _baseFlamePillarDamageMultiplier: 1
   firePillarKnockbackGaugeDeal: 100
   _flamePillarPrefab: {fileID: 1951053022745430761, guid: 875eb7d1759b47842ae9188198f6220a,

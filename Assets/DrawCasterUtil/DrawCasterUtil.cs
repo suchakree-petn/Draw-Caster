@@ -7,27 +7,6 @@ namespace DrawCaster.Util
 {
     public class DrawCasterUtil
     {
-
-        public static GameObject AddAttackHitTo(GameObject parent,
-            ElementalType elementalType,
-            GameObject attacker,
-            float baseSkillMultiplier,
-            float selfDestructTime,
-            LayerMask targetLayer,
-            float knockbackGaugeDeal)
-        {
-            Component ath = parent.GetComponent<AttackHit>();
-            if (ath != null)
-            {
-                Debug.LogWarning("Already Contain AttackHit");
-                return null;
-            }
-            parent.AddComponent(typeof(AttackHit));
-            AttackHit attackHit = parent.GetComponent<AttackHit>();
-            attackHit.elementalDamage = Elemental.DamageCalculation(elementalType, attacker, baseSkillMultiplier, targetLayer, knockbackGaugeDeal);
-            attackHit.selfDestructTime = selfDestructTime;
-            return parent;
-        }
         public static GameObject AddAttackHitTo(GameObject parent,
             ElementalType elementalType,
             GameObject attacker,

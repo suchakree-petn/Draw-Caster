@@ -175,13 +175,12 @@ MonoBehaviour:
     type: 3}
   attackClip: {fileID: 7400000, guid: 70056fe3437379d428bf811f08c182ce, type: 2}
   dropClip: {fileID: 7400000, guid: 9e7d2cb9958ff5c4794c42ecf44a1bee, type: 2}
+  hitBox: {fileID: 4274932810780494906}
   kiteRange: 7
   attackRange: 9
   visionRange: 15
   distance: 0
   kiteRatio: 25
-  _baseAttackDamageMultiplier: 1
-  attackKnockbackGaugeDeal: 100
   speed: 16
   flytime: 0.7
   arrowSpeedCurve:
@@ -208,11 +207,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _baseAttackDamageMultiplier: 1
+  attackKnockbackGaugeDeal: 100
   minDelayAttackTime: 5
   maxDelayAttackTime: 7
   arrowOnFallTime: 1
   minSwapStayOrMoveTime: 1
   maxSwapStayOrMoveTime: 1.5
+  stunTime: 1
 --- !u!1 &3736852062051624344
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,9 +356,9 @@ MonoBehaviour:
   hited: 0
   isKnockback: 0
   enemyData: {fileID: 11400000, guid: ccd293b42da43d44daaefc672ef94670, type: 2}
-  enemyKnockbackDistance: 0
-  enemyKnockbackClip: {fileID: 0}
-  enemyDeadClip: {fileID: 0}
+  enemyKnockbackDistance: 1
+  enemyKnockbackClip: {fileID: 7400000, guid: 20c27a432f1b9194591173037a7e5dc0, type: 2}
+  enemyDeadClip: {fileID: 7400000, guid: f9b4ddaa0a401594d8eb2d5da45d3d1b, type: 2}
 --- !u!1 &6621513892804731377
 GameObject:
   m_ObjectHideFlags: 0

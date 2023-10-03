@@ -33,6 +33,7 @@ MonoBehaviour:
   _damageSpellLevelMultiplier3: 1.2
   _delayTime: 0.3
   knockbackGaugeDeal: 50
+  iFrame: 1
   _amountLevel1: 5
   _amountLevel2: 10
   _amountLevel3: 15
