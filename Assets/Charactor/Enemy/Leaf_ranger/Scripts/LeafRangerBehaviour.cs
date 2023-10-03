@@ -29,13 +29,6 @@ namespace LeafRanger
         public AnimationClip attackClip;
         public AnimationClip dropClip;
 
-        // private delegate void LeafRangerDelegate(Transform target);
-        // private static LeafRangerDelegate OnIdle;
-        // private static LeafRangerDelegate OnChase;
-        // private static LeafRangerDelegate OnPreAttack;
-        // private static LeafRangerDelegate OnAttack;
-        // private static LeafRangerDelegate OnWaitForNextAttack;
-
         private void Awake()
         {
             GameObject targetObj = GameObject.Find("Player");
@@ -53,26 +46,21 @@ namespace LeafRanger
                 switch (currentState)
                 {
                     case State.Idle:
-                        // OnIdle?.Invoke(target);
                         Idle();
                         ChangeStateManager();
                         break;
                     case State.Chase:
-                        // OnChase?.Invoke(target);
                         Chase();
                         ChangeStateManager();
                         break;
                     case State.PreAttack:
-                        // OnPreAttack?.Invoke(target);
                         PreAttack();
                         break;
                     case State.Attack:
-                        // OnAttack?.Invoke(target);
                         Attack();
                         currentState = State.WaitForNextAttack;
                         break;
                     case State.WaitForNextAttack:
-                        // OnWaitForNextAttack?.Invoke(target);
                         WaitForNextAttack();
                         break;
                     default:
@@ -212,15 +200,16 @@ namespace LeafRanger
             }
         }
 
-        //-----------------------------Attack-----------------------------
-
-        [Header("Attack")]
-        private bool attack = false;
-        [SerializeField] private float _baseAttackDamageMultiplier;
-        [SerializeField] private float attackKnockbackGaugeDeal;
         [SerializeField] private float speed;
         [SerializeField] private float flytime;
         [SerializeField] private AnimationCurve arrowSpeedCurve;
+
+        //-----------------------------Attack-----------------------------
+        private bool attack = false;
+
+        [Header("Attack")]
+        [SerializeField] private float _baseAttackDamageMultiplier;
+        [SerializeField] private float attackKnockbackGaugeDeal;
         [SerializeField] private float minDelayAttackTime;
         [SerializeField] private float maxDelayAttackTime;
         [SerializeField] private float arrowOnFallTime;
@@ -287,36 +276,6 @@ namespace LeafRanger
             AttackAction();
             AfterAttackAction();
         }
-        // private void OnEnable()
-        // {
-
-        //     OnIdle += target =>
-        //     {
-        //         animator.SetBool("IsWalk", false);
-        //     };
-        //     OnChase += target =>
-        //     {
-        //         animator.SetBool("IsWalk", true);
-        //         MoveToChaseTarget();
-        //     };
-        //     OnPreAttack += target =>
-        //     {
-        //         if (!attack) currentState = State.Attack;
-        //     };
-        //     OnAttack += target =>
-        //     {
-        //         FlipLeafRanger(1);
-        //         attack = true;
-        //         animator.SetBool("IsWalk", false);
-        //         animator.SetTrigger("Attack");
-        //     };
-        //     OnWaitForNextAttack += target =>
-        //     {
-        //         AttackAction();
-        //         AfterAttackAction();
-        //     };
-
-        // }
         private Coroutine coroutineAttackAnimation;
         private void AttackAction()
         {
