@@ -28,8 +28,7 @@ public class CheckMeleeAttack : MonoBehaviour
     private void Update()
     {
         moltenFireBehaviour.FacingToTarget(moltenFireBehaviour.target);
-        animator.SetBool("IsWalk", true);
-        animator.SetBool("IsWalkBackward", false);
+        moltenFireBehaviour.AnimMoveToTarget();
         moltenFireBehaviour.moveSpeed = moveSpeed;
         animator.speed = moveSpeed;
     }

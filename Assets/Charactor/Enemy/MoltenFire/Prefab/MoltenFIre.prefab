@@ -554,6 +554,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moltenFireBehaviour: {fileID: 0}
   activeDuration: 2
+--- !u!1 &3238782000823748632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2740733093205268379}
+  - component: {fileID: 1431555209075108363}
+  m_Layer: 7
+  m_Name: BossUIManager
+  m_TagString: BossUI
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2740733093205268379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238782000823748632}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8330262462644783005}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1431555209075108363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238782000823748632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de660bf71e252244935ecb491c99af9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BossUI: {fileID: 5060573075060576882, guid: 9b0428f3cc152fa40b8722b357e76ecf, type: 3}
 --- !u!1 &4010664479894279579
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,11 +872,11 @@ MonoBehaviour:
   moltenFireRb: {fileID: 0}
   targetTag: Player
   target: {fileID: 0}
+  stunTime: 4
+  hitBox: {fileID: 1485282632517872218}
   wanderDistance: 5
-  maxWanderDistance: 0
   minWanderDuration: 1
   maxWanderDuration: 3
-  walkBackDuration: 0
   eachDuration: 1
   _baseMeleeDamageMultiplier: 1
   attackRange: 0
@@ -939,6 +984,7 @@ Transform:
   - {fileID: 8330262462198280077}
   - {fileID: 2443557438347980069}
   - {fileID: 1051223801}
+  - {fileID: 2740733093205268379}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -962,7 +1008,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &928939355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -979,11 +1025,14 @@ MonoBehaviour:
   currentMana: 0
   maxKnockBackGauge: 0
   curentKnockBackGauge: 0
-  restoreGaugeDelayTime: 2
-  gaugeRegen: 30
+  restoreGaugeDelayTime: 0.1
+  gaugeRegen: 100
   hited: 0
   isKnockback: 0
   enemyData: {fileID: 11400000, guid: 37cd2a8a9fefb724386c9e4e3a909bcd, type: 2}
+  enemyKnockbackDistance: 1
+  enemyKnockbackClip: {fileID: 7400000, guid: 5982f2e7d043ce5439ffd195ba316930, type: 2}
+  enemyDeadClip: {fileID: 7400000, guid: 284521206d95c2a449b87f9e3b56ee3a, type: 2}
 --- !u!1 &8383781703808165391
 GameObject:
   m_ObjectHideFlags: 0

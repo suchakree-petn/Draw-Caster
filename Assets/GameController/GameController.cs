@@ -45,8 +45,7 @@ public class GameController : MonoBehaviour
     public static Action<GameObject> OnPlayerDead;
     public static Action<GameObject, Elemental> OnPlayerTakeDamage;
 
-    public static Action<GameObject> OnEnemyDead;
-    public static Action<GameObject, Elemental> OnEnemyTakeDamage;
+
 
 
     private void Update()
@@ -77,17 +76,17 @@ public class GameController : MonoBehaviour
                 break;
         }
     }
-    void InstantiatePlayerUI(){
-        GameObject playUIInScene = GameObject.Find("PlayUI");
-        if(playUIInScene != null){
-            Destroy(playUIInScene);
+    void InstantiatePlayerUI()
+    {
+        GameObject playUIInScene = GameObject.Find("PlayerUI");
+        if (playUIInScene == null)
+        {
+            Instantiate(playerUI);
         }
-        Instantiate(playerUI);
     }
-    void RemoveEnemyDead(GameObject enemy)
+    public void RemoveEnemyDead(GameObject enemy)
     {
         allEnemyInScene.Remove(enemy);
-        //allEnemyInCamera.Remove(enemy);
     }
     void Awake()
     {
@@ -130,6 +129,7 @@ public class GameController : MonoBehaviour
 
     void AddAllEnemyInSceneToList()
     {
+        Debug.Log("AddAll");
         GameObject[] allEnemyInScene = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in allEnemyInScene)
         {
@@ -172,18 +172,15 @@ public class GameController : MonoBehaviour
     private void OnEnable()
     {
         OnInstantiateUI += InstantiatePlayerUI;
-        OnBeforeStart += AddAllEnemyInSceneToList;
+        AddAllEnemyInSceneToList();
         OnBeforeStart += ShowStageFloor;
-        OnEnemyDead += RemoveEnemyDead;
         WhileInGame += StageClear;
         OnBeforeEnding += GenerateDoor;
     }
     private void OnDisable()
     {
         OnInstantiateUI -= InstantiatePlayerUI;
-        OnBeforeStart -= AddAllEnemyInSceneToList;
         OnBeforeStart -= ShowStageFloor;
-        OnEnemyDead -= RemoveEnemyDead;
         WhileInGame -= StageClear;
         OnBeforeEnding -= GenerateDoor;
     }

@@ -77,4 +77,7 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     public virtual void InitHp() { }
     public virtual void InitMana() { }
     public virtual void InitKnockbackGauge() { }
+    
+   public abstract void Dead(GameObject deadCharactor);
+   public abstract void CheckDead(GameObject charactor,Elemental damage);
 }

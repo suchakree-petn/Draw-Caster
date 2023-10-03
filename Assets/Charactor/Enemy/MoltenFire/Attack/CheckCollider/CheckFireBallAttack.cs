@@ -9,7 +9,6 @@ public class CheckFireBallAttack : MonoBehaviour
     [SerializeField] private float activeDuration;
     private void OnEnable()
     {
-        Debug.Log("fireBal");
         StartCoroutine(ActiveDuration());
     }
     private void Awake()

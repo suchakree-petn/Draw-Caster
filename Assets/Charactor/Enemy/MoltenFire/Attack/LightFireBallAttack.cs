@@ -9,11 +9,6 @@ using UnityEngine;
 
 public class LightFireBallAttack : MonoBehaviour
 {
-    public static LightFireBallAttack Instance;
-    private void Awake()
-    {
-        Instance = this;
-    }
     [Header("Fire Ball Attack")]
     public float _baseFireBallDamageMultiplier;
     [SerializeField] private float fireBallKnockbackGaugeDeal;
@@ -57,12 +52,8 @@ public class LightFireBallAttack : MonoBehaviour
     }
     public void Disable()
     {
-        CancelInvoke(nameof(FireBallAttack));
         isRepeating = false;
-    }
-    private void OnEnable()
-    {
-        GameController.WhileInGame += CheckCondition;
+        CancelInvoke(nameof(FireBallAttack));
     }
 
     private void CheckCondition()
@@ -81,9 +72,14 @@ public class LightFireBallAttack : MonoBehaviour
             }
         }
     }
+    private void OnEnable()
+    {
+        GameController.WhileInGame += CheckCondition;
+    }
 
     private void OnDisable()
     {
+        GameController.WhileInGame -= CheckCondition;
         Disable();
     }
 }

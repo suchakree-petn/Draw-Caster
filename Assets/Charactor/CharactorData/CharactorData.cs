@@ -58,6 +58,4 @@ public abstract class CharactorData : ScriptableObject
    public float GetMaxKnockbackGauge(){
       return (_knockbackBase * (1 + _knockbackMultiplier)) + _knockbackBonus;
    }
-   public abstract void Dead(GameObject deadCharactor);
-   public abstract void CheckDead(GameObject charactor,Elemental damage);
 }

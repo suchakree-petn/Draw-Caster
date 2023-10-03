@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,15 @@ using UnityEngine;
 public class EnemyManager : CharactorManager<EnemyData>
 {
     public EnemyData enemyData;
+    [Header("Knockback Setting")]
+    public float enemyKnockbackDistance;
+    public AnimationClip enemyKnockbackClip;
+    public Action<Elemental> OnStartKnockback;
+    public Action OnEndKnockback;
+    [Header("Dead Setting")]
+    public Action<GameObject> OnEnemyDead;
+    public Action<GameObject, Elemental> OnEnemyTakeDamage;
+    public AnimationClip enemyDeadClip;
     public override EnemyData GetCharactorData()
     {
         return enemyData;
@@ -19,7 +29,7 @@ public class EnemyManager : CharactorManager<EnemyData>
             currentHp -= damageDeal;
             TextDamageAsset.Instance.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
         }
-        GameController.OnEnemyTakeDamage?.Invoke(gameObject, damage);
+        OnEnemyTakeDamage?.Invoke(gameObject, damage);
     }
     public override void InitHp()
     {
@@ -33,16 +43,20 @@ public class EnemyManager : CharactorManager<EnemyData>
     protected override void OnEnable()
     {
         base.OnEnable();
-        GameController.OnEnemyTakeDamage += KnockBackGauge;
-        GameController.OnEnemyDead += GetCharactorData().Dead;
-        GameController.OnEnemyTakeDamage += GetCharactorData().CheckDead;
+        OnEnemyTakeDamage += KnockBackGauge;
+        OnEnemyTakeDamage += CheckDead;
+        OnEnemyDead += Dead;
+
     }
+
+
     protected override void OnDisable()
     {
         base.OnDisable();
-        GameController.OnEnemyTakeDamage -= KnockBackGauge;
-        GameController.OnEnemyDead -= GetCharactorData().Dead;
-        GameController.OnEnemyTakeDamage -= GetCharactorData().CheckDead;
+        OnEnemyTakeDamage -= KnockBackGauge;
+        OnEnemyTakeDamage -= CheckDead;
+        OnEnemyDead -= Dead;
+
     }
     public override void KnockBackGauge(GameObject charactor, Elemental damage)
     {
@@ -65,11 +79,23 @@ public class EnemyManager : CharactorManager<EnemyData>
     }
     public override void StartKnockback(Elemental damage)
     {
-
+        OnStartKnockback?.Invoke(damage);
     }
 
     public override void EndKnockback()
     {
-
+        OnEndKnockback?.Invoke();
+    }
+    public override void Dead(GameObject deadCharactor)
+    {
+        GameController.Instance.RemoveEnemyDead(deadCharactor);
+    }
+    public override void CheckDead(GameObject charactor, Elemental damage)
+    {
+        //Debug.Log("CheckDead");
+        if (charactor.GetComponent<EnemyManager>().currentHp <= 0)
+        {
+            OnEnemyDead?.Invoke(charactor);
+        }
     }
 }

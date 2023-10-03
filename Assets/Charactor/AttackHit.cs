@@ -19,8 +19,10 @@ public class AttackHit : MonoBehaviour
     }
     IEnumerator DelayCancelIgnoreLayer(Collider2D other)
     {
+        if (other == null) { yield break; }
         Physics2D.IgnoreCollision(other, GetComponent<Collider2D>(), true);
         yield return new WaitForSeconds(iFrameTime);
+        if (other == null) { yield break; }
         Physics2D.IgnoreCollision(other, GetComponent<Collider2D>(), false);
 
     }

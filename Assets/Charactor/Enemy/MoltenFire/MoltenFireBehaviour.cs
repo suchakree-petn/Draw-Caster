@@ -3,6 +3,8 @@ using UnityEngine;
 using DG.Tweening;
 using DrawCaster.Util;
 using System.Collections.Generic;
+using LeafRanger;
+using System.Collections;
 
 namespace MoltenFire
 {
@@ -21,19 +23,25 @@ namespace MoltenFire
         public Rigidbody2D moltenFireRb;
         public string targetTag;
         public Transform target;
+        public EnemyManager moltenFireManager { get; set; }
         public EnemyData moltenFireData { get; set; }
+        [SerializeField] private float stunTime;
+        [SerializeField] private Collider2D hitBox;
 
 
         public delegate void MoltenFireDelegate(Transform target);
-        public static MoltenFireDelegate OnWaitForNextAttack;
         private void Awake()
         {
-            moltenFireData = GetComponentInParent<CharactorManager<EnemyData>>().GetCharactorData();
+            moltenFireManager = transform.root.GetComponent<EnemyManager>();
+            moltenFireData = moltenFireManager.GetCharactorData();
             moltenFireRb = GetComponentInParent<Rigidbody2D>();
             animator = transform.parent.GetComponentInChildren<Animator>();
             moveSpeed = moltenFireData._moveSpeed;
         }
-
+        private void Start()
+        {
+            target = GameObject.FindWithTag(targetTag).transform;
+        }
         void Update()
         {
             if (target != null)
@@ -71,10 +79,6 @@ namespace MoltenFire
                 animator.SetBool("IsWalk", false);
                 animator.SetBool("IsWalkBackward", false);
             }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                FireBallAttack();
-            }
         }
         private void OnDrawGizmosSelected()
         {
@@ -88,21 +92,19 @@ namespace MoltenFire
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         [Header("Wander State")]
         [SerializeField] private float wanderDistance;
-        [SerializeField] private float maxWanderDistance;
         [SerializeField] private float minWanderDuration;
         [SerializeField] private float maxWanderDuration;
-        [SerializeField] private float walkBackDuration = 0;
         [SerializeField] private float eachDuration;
         float randomDuration;
         int isForward;
-        public static MoltenFireDelegate OnWandering;
+        public MoltenFireDelegate OnWandering;
 
         private void Wandering(Transform target)
         {
             Vector3 targetPos = DrawCasterUtil.GetMidTransformOf(target).position;
             Vector3 moltenFirePos = DrawCasterUtil.GetMidTransformOf(transform.root).position;
             float distant = Vector3.Distance(targetPos, moltenFirePos);
-            eachDuration = Random.Range(0, eachDuration);
+            eachDuration = Random.Range(0.5f, eachDuration);
             randomDuration = Random.Range(minWanderDuration, maxWanderDuration);
             Sequence sequence = DOTween.Sequence();
             sequence.AppendInterval(randomDuration).OnComplete(() =>
@@ -125,20 +127,20 @@ namespace MoltenFire
 
         }
 
-        private void AnimStopMoving()
+        public void AnimStopMoving()
         {
             animator.SetBool("IsWalk", false);
             animator.SetBool("IsWalkBackward", false);
         }
 
-        private void AnimMoveOutTaget()
+        public void AnimMoveOutTaget()
         {
             animator.SetBool("IsWalk", false);
             animator.SetBool("IsWalkBackward", true);
             isForward = -1;
         }
 
-        private void AnimMoveToTarget()
+        public void AnimMoveToTarget()
         {
             animator.SetBool("IsWalk", true);
             animator.SetBool("IsWalkBackward", false);
@@ -171,7 +173,7 @@ namespace MoltenFire
         [SerializeField] private float meleeKnockbackGaugeDeal;
         [SerializeField] private Collider2D meleeHitbox;
         [SerializeField] private Transform checkMeleeAttack;
-        public static MoltenFireDelegate OnMeleeAttack;
+        public MoltenFireDelegate OnMeleeAttack;
         void MeleeAttack()
         {
             meleeHitbox.gameObject.SetActive(true);
@@ -203,7 +205,7 @@ namespace MoltenFire
         [SerializeField] private float timeInterval;
         public AnimationClip FlamePillarClip;
         [SerializeField] private Transform flamePillarCol;
-        public static MoltenFireDelegate OnFlamePillarAttack;
+        public MoltenFireDelegate OnFlamePillarAttack;
 
         void FlamePillarAttack()
         {
@@ -225,7 +227,6 @@ namespace MoltenFire
         private GameObject SpawnFlamePillar(Vector3 position)
         {
             GameObject flamePillar = Instantiate(_flamePillarPrefab);
-            Debug.Log(position);
             flamePillar.transform.position = position;
             flamePillar = DrawCasterUtil.AddAttackHitTo(flamePillar,
                 moltenFireData.elementalType, transform.root.gameObject,
@@ -253,7 +254,7 @@ namespace MoltenFire
         [SerializeField] private AnimationCurve speedCurve;
         [SerializeField] private Transform fireBallCol;
 
-        public static MoltenFireDelegate OnFireBallAttack;
+        public MoltenFireDelegate OnFireBallAttack;
         public void FireBallAttack()
         {
             Sequence sequence = DOTween.Sequence();
@@ -329,6 +330,8 @@ namespace MoltenFire
         [SerializeField] private float waitDuration;
         [SerializeField] private float AttackCheckDuration;
         Sequence sequence;
+        public MoltenFireDelegate OnWaitForNextAttack;
+
         private void RandomAttackType(Transform target)
         {
             animator.SetBool("IsWalk", false);
@@ -373,6 +376,7 @@ namespace MoltenFire
 
 
         [SerializeField] private Animator animator;
+
         private void OnEnable()
         {
 
@@ -397,6 +401,68 @@ namespace MoltenFire
                 animator.SetTrigger("FireBallAttack");
                 animator.SetBool("IsWalk", false);
             };
+            moltenFireManager.OnStartKnockback += (elementalDamage) =>
+            {
+                StartKB();
+            };
+            moltenFireManager.OnEndKnockback += () =>
+            {
+                EndKB();
+            };
+
+            moltenFireManager.OnEnemyDead += (deadEnemy) =>
+            {
+                Debug.Log(transform.root.name);
+                hitBox.enabled = false;
+                AnimStopMoving();
+                animator.SetTrigger("Death");
+                DelayDestroy(moltenFireManager.enemyDeadClip.length, deadEnemy);
+            };
+        }
+        Coroutine delayStun = null;
+        private void EndKB()
+        {
+
+            if (delayStun == null)
+            {
+                Debug.Log("StunNull");
+
+                delayStun = StartCoroutine(KnockbackStun(stunTime));
+            }
+            else
+            {
+                Debug.Log("Stun not null");
+
+            }
+        }
+
+        private void StartKB()
+        {
+            checkMeleeAttack.gameObject.SetActive(false);
+            fireBallCol.gameObject.SetActive(false);
+            flamePillarCol.gameObject.SetActive(false);
+            AnimStopMoving();
+            animator.SetTrigger("Hit");
+            Vector2 direction = DrawCasterUtil.GetDirectionFromLower(transform.root, target) * -1;
+            transform.root.DOMove(
+                (Vector2)transform.root.position + direction.normalized * moltenFireManager.enemyKnockbackDistance,
+                moltenFireManager.enemyKnockbackClip.length);
+            StartCoroutine(moltenFireManager.DelayKnockback(moltenFireManager.enemyKnockbackClip.length));
+
+        }
+
+        void DelayDestroy(float time, GameObject gameObject)
+        {
+            Destroy(gameObject, time);
+        }
+        IEnumerator KnockbackStun(float time)
+        {
+            currentState = State.Idle;
+            AnimStopMoving();
+
+            yield return new WaitForSeconds(time);
+            currentState = State.Wandering;
+            delayStun = null;
         }
         private void OnDisable()
         {
