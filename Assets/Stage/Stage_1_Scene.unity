@@ -1426,6 +1426,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26295518843621326, guid: 4e0d95627e95cf44aae65498d4d6829b,
+        type: 3}
+      propertyPath: attackKnockbackGaugeDeal
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 5830795763817341305, guid: 4e0d95627e95cf44aae65498d4d6829b,
         type: 3}
       propertyPath: m_Name
@@ -20283,6 +20288,11 @@ PrefabInstance:
       propertyPath: kiteRatio
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 26295518843621326, guid: 4e0d95627e95cf44aae65498d4d6829b,
+        type: 3}
+      propertyPath: attackKnockbackGaugeDeal
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 5830795763817341305, guid: 4e0d95627e95cf44aae65498d4d6829b,
         type: 3}
       propertyPath: m_Name
@@ -21725,6 +21735,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26295518843621326, guid: 4e0d95627e95cf44aae65498d4d6829b,
+        type: 3}
+      propertyPath: attackKnockbackGaugeDeal
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 5830795763817341305, guid: 4e0d95627e95cf44aae65498d4d6829b,
         type: 3}
       propertyPath: m_Name
@@ -24712,6 +24727,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26295518843621326, guid: 4e0d95627e95cf44aae65498d4d6829b,
+        type: 3}
+      propertyPath: attackKnockbackGaugeDeal
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 5830795763817341305, guid: 4e0d95627e95cf44aae65498d4d6829b,
         type: 3}
       propertyPath: m_Name

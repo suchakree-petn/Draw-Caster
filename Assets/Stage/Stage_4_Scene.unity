@@ -1353,6 +1353,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26295518843621326, guid: 4e0d95627e95cf44aae65498d4d6829b,
+        type: 3}
+      propertyPath: attackKnockbackGaugeDeal
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 338865047050798801, guid: 4e0d95627e95cf44aae65498d4d6829b,
         type: 3}
       propertyPath: enemyData
@@ -20199,6 +20204,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26295518843621326, guid: 4e0d95627e95cf44aae65498d4d6829b,
+        type: 3}
+      propertyPath: attackKnockbackGaugeDeal
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 338865047050798801, guid: 4e0d95627e95cf44aae65498d4d6829b,
         type: 3}
       propertyPath: enemyData
@@ -21647,6 +21657,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26295518843621326, guid: 4e0d95627e95cf44aae65498d4d6829b,
+        type: 3}
+      propertyPath: attackKnockbackGaugeDeal
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 338865047050798801, guid: 4e0d95627e95cf44aae65498d4d6829b,
         type: 3}
       propertyPath: enemyData
@@ -24640,6 +24655,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26295518843621326, guid: 4e0d95627e95cf44aae65498d4d6829b,
+        type: 3}
+      propertyPath: attackKnockbackGaugeDeal
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 338865047050798801, guid: 4e0d95627e95cf44aae65498d4d6829b,
         type: 3}
       propertyPath: enemyData
