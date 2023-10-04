@@ -148,8 +148,17 @@ public class ThaFallDown : Spell
         while (true)
         {
             Transform childTransform = DrawCasterUtil.GetMidTransformOf(player.transform);
+            if (childTransform == null) { yield break; }
+
             Vector3 centerPosition = childTransform.position;
-            for (int i = 0; i < numAll; i++) { parentObjectALl[i].transform.position = centerPosition; }
+            for (int i = 0; i < numAll; i++)
+            {
+                if (parentObjectALl[i] == null)
+                {
+                    yield break;
+                }
+                parentObjectALl[i].transform.position = centerPosition;
+            }
             float playerSpeed = 10f;
             if (Mathf.Abs(playerSpeed - previousSpeed) > 0.1f)  // Change the rotation speed only if the speed has changed significantly
             {

@@ -76,14 +76,6 @@ public class ManaNullify : MonoBehaviour
         isActive = true;
         SlowIn();
         playerAction.Player.ManaNullify.Disable();
-
-
-        // Draw to nullify all
-
-
-        // Destroy every nullify object in order
-
-        //Back to normal
     }
     private void DisableInput()
     {
@@ -162,6 +154,7 @@ public class ManaNullify : MonoBehaviour
             List<Transform> allObjectInRange = new();
             foreach (AttackHit attackHit in allAttackHit)
             {
+                if (attackHit == null) { return; }
                 if (attackHit.elementalDamage.attacker.tag != "Enemy" || attackHit.transform.root.tag == "Enemy") { continue; }
                 float distance = Vector2.Distance(attackHit.transform.position, DrawCasterUtil.GetUpperTransformOf(transform.root).position);
                 if (distance <= detectionRange)
@@ -197,18 +190,20 @@ public class ManaNullify : MonoBehaviour
             }
             List<Transform> toRemoveGO = new();
             float max = Mathf.Max(scores);
-            if (max == 0) { return; }
-            int count1 = allMarkObject.Count;
-            List<float> allDistance = new();
-            for (int i = 0; i < count1; i++)
+            max = (float)Math.Round(max, 2);
+            Debug.Log("Max: " + max);
+            if (max == 0)
             {
-                allDistance.Add(Vector2.Distance(finishMousePos, (Vector2)allMarkObject[i].position));
+                Debug.Log("Max is 0");
+                return;
             }
+            int count1 = allMarkObject.Count;
             for (int i = 0; i < count1; i++)
             {
-                if (scores[i] == max)
+                if ((float)Math.Round(scores[i], 2) >= max)
                 {
                     toRemoveGO.Add(allMarkObject[i]);
+                    Debug.Log("Add " + allMarkObject[i]);
                     // Gain mana
                     float manaGain = manaGainBase * (1 + scores[i]);
                     playerManager.GainMana(manaGain);
@@ -218,6 +213,7 @@ public class ManaNullify : MonoBehaviour
             Debug.Log(count2 + "This is count2");
             for (int i = 0; i < count2; i++)
             {
+                if (toRemoveGO[i] == null) { continue; }
                 allMarkObject.Remove(toRemoveGO[i].transform);
                 Destroy(toRemoveGO[i].parent.gameObject);
 
@@ -249,6 +245,7 @@ public class ManaNullify : MonoBehaviour
         allMark.Clear();
         foreach (Transform markObj in allMarkObject)
         {
+            if (markObj == null) { continue; }
             Destroy(markObj.gameObject);
         }
         allMarkObject.Clear();

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.InputSystem;
 using DrawCaster.Util;
+using DG.Tweening;
 
 public class DrawInput_Shift : MonoBehaviour
 {
@@ -263,6 +264,8 @@ public class DrawInput_Shift : MonoBehaviour
         _playerAction.Player.DrawInput.Enable();
         _playerAction.Player.DrawInput.started += ctx => timer = new(0, 99);
         _playerAction.Player.DrawInput.canceled += ResamplingMouseInputPos;
+        _playerAction.Player.DrawInput.canceled += (ctx) => DOTween.Kill(timer);
+
     }
     private void OnDisable()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
-public class ToNextStage : MonoBehaviour,IInteractable
+public class ToNextStage : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject IUBoxPrefab;
     public void NextScene()
@@ -15,22 +15,29 @@ public class ToNextStage : MonoBehaviour,IInteractable
         if (nextScene < sceneList.Count)
         {
             SceneManager.LoadScene(sceneList[nextScene]);
-        }else{
+        }
+        else
+        {
             nextScene = 0;
             SceneManager.LoadScene(sceneList[nextScene]);
         }
 
     }
-    public void ShowInteractUI(){
+    public void ShowInteractUI()
+    {
         IUBoxPrefab.SetActive(true);
         Debug.Log("ShowInteractUI");
     }
-    public void HideInteractUI(){
+    public void HideInteractUI()
+    {
         IUBoxPrefab.SetActive(false);
         Debug.Log("HideInteractUI");
     }
-    public void Interact(InputAction.CallbackContext context){
+    public void Interact(InputAction.CallbackContext context)
+    {
         NextScene();
+        PlayerInputSystem.Instance.playerAction.Player.Interact.Disable();
+        PlayerInputSystem.Instance.playerAction.Player.Interact.performed -= Interact;
     }
 }
 

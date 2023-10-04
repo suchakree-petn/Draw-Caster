@@ -30,7 +30,7 @@ public class MeteorRain : Spell
 
     public override void CastSpell(float score, GameObject player)
     {
-        base.CastSpell(score,player);
+        base.CastSpell(score, player);
         Sequence sequenceCast = DOTween.Sequence();
 
         int castLevel = CalThreshold(score);
@@ -109,16 +109,22 @@ public class MeteorRain : Spell
             });
             sequence.Append(meteors[ind].transform.DOMove(DrawCasterUtil.RandomPosition(selectedPosition, randomPositionRadius), meteorMoveSpeed, false));
         }
-        int index = meteors.Length - 1;
-        sequence.AppendCallback(() =>
+        sequence.OnComplete(() =>
         {
+            int index = meteors.Length - 1;
             meteors[index].transform.localScale = new Vector3(3, 3, 0);
             meteors[index].SetActive(true);
             meteors[index].transform.position = player.transform.position + new Vector3(cameraOrthoSize, cameraOrthoSize + 3, 0);
             meteors[index].GetComponent<AttackHit>().selfDestructTime = 0.8f;
+            meteors[index].GetComponent<AttackHit>().elementalDamage = Elemental.DamageCalculation(
+                            _elementalType,
+                            player,
+                            _baseSkillDamageMultiplier * _damageSpellLevelMultiplier2 * 2,
+                            targetLayer,
+                            knockbackGaugeDeal * 2
+                            );
+            meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
         });
-        meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
-
     }
     public override void Cast3(GameObject player, GameObject target)
     {
@@ -143,16 +149,22 @@ public class MeteorRain : Spell
             });
             sequence.Append(meteors[ind].transform.DOMove(DrawCasterUtil.RandomPosition(selectedPosition, randomPositionRadius), meteorMoveSpeed, false));
         }
-        int index = meteors.Length - 1;
-        sequence.AppendCallback(() =>
+        sequence.OnComplete(() =>
         {
+            int index = meteors.Length - 1;
             meteors[index].transform.localScale = new Vector3(3, 3, 0);
             meteors[index].SetActive(true);
             meteors[index].transform.position = player.transform.position + new Vector3(cameraOrthoSize, cameraOrthoSize + 3, 0);
             meteors[index].GetComponent<AttackHit>().selfDestructTime = 0.8f;
+            meteors[index].GetComponent<AttackHit>().elementalDamage = Elemental.DamageCalculation(
+                            _elementalType,
+                            player,
+                            _baseSkillDamageMultiplier * _damageSpellLevelMultiplier3 * 2.5f,
+                            targetLayer,
+                            knockbackGaugeDeal * 2.5f
+                            );
+            meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
         });
-        meteors[index].transform.DOMove(selectedPosition, 0.8f, false);
-
     }
     public override void BeginCooldown(GameObject player)
     {
