@@ -4,6 +4,7 @@ using UnityEngine;
 using DrawCaster.Util;
 using DG.Tweening;
 using Cinemachine;
+using UnityEditor.SceneManagement;
 
 namespace LeafRanger
 {
@@ -21,16 +22,20 @@ namespace LeafRanger
         public Rigidbody2D leafRangerRb;
         public string targetTag;
         public Transform target;
-        private EnemyData leafRangerData;
-        
+        public EnemyManager leafRangerManager { get; set; }
+        private EnemyData leafRangerData { get; set; }
+
         [SerializeField] private Animator animator;
         [SerializeField] private GameObject _arrowPrefab;
 
         public AnimationClip attackClip;
         public AnimationClip dropClip;
+        [SerializeField] private Collider2D hitBox;
 
         private void Awake()
         {
+            leafRangerManager = transform.root.GetComponent<EnemyManager>();
+            leafRangerData = leafRangerManager.GetCharactorData();
             GameObject targetObj = GameObject.Find("Player");
             target = targetObj.transform;
             leafRangerData = GetComponentInParent<CharactorManager<EnemyData>>().GetCharactorData();
@@ -47,7 +52,6 @@ namespace LeafRanger
                 {
                     case State.Idle:
                         Idle();
-                        ChangeStateManager();
                         break;
                     case State.Chase:
                         Chase();
@@ -205,7 +209,7 @@ namespace LeafRanger
         [SerializeField] private AnimationCurve arrowSpeedCurve;
 
         //-----------------------------Attack-----------------------------
-        private bool attack = false;
+        public bool attack = false;
 
         [Header("Attack")]
         [SerializeField] private float _baseAttackDamageMultiplier;
@@ -256,23 +260,29 @@ namespace LeafRanger
                 arrowCol.enabled = false;
             });
         }
-        private void Idle(){
+        private void Idle()
+        {
             animator.SetBool("IsWalk", false);
+            if (!knockback) ChangeStateManager();
         }
-        private void Chase(){
+        private void Chase()
+        {
             animator.SetBool("IsWalk", true);
             MoveToChaseTarget();
         }
-        private void PreAttack(){
+        private void PreAttack()
+        {
             if (!attack) currentState = State.Attack;
         }
-        private void Attack(){
+        private void Attack()
+        {
             FlipLeafRanger(1);
             attack = true;
             animator.SetBool("IsWalk", false);
             animator.SetTrigger("Attack");
         }
-        private void WaitForNextAttack(){
+        private void WaitForNextAttack()
+        {
             AttackAction();
             AfterAttackAction();
         }
@@ -310,7 +320,7 @@ namespace LeafRanger
                     animator.SetBool("IsWalk", true);
                 }
             }
-            
+
         }
         private string clockDirection;
         void RandomDirection()
@@ -340,7 +350,7 @@ namespace LeafRanger
         }
         Coroutine coroutineStayOrMove;
         private bool stayInWaitForNextAttack;
-        
+
         IEnumerator StayOrMove(float delayTime)
         {
             float randomDirection = Random.Range(0, 2);
@@ -356,6 +366,99 @@ namespace LeafRanger
             }
             yield return new WaitForSeconds(delayTime);
             coroutineStayOrMove = null;
+        }
+        IEnumerator DelayKnockback(float delayTime)
+        {
+            currentState = State.Idle;
+            yield return new WaitForSeconds(delayTime);
+            coroutineKnockback = null;
+            knockback = false;
+            attack = false;
+        }
+        void ClearCoroutine()
+        {
+            if (coroutineKnockback != null)
+            {
+                StopCoroutine(coroutineKnockback);
+                coroutineKnockback = null;
+            }
+            if (coroutineStayOrMove != null)
+            {
+                StopCoroutine(coroutineStayOrMove);
+                coroutineStayOrMove = null;
+            }
+            if (coroutineAttackAnimation != null)
+            {
+                StopCoroutine(coroutineAttackAnimation);
+                coroutineAttackAnimation = null;
+            }
+        }
+
+        void StartKB()
+        {
+            Idle();
+            knockback = true;
+            ClearCoroutine();
+            animator.SetTrigger("KnockBack");
+            Vector2 direction = DrawCasterUtil.GetDirectionFromLower(transform.root, target) * -1;
+            transform.root.DOMove(
+                (Vector2)transform.root.position + direction.normalized * leafRangerManager.enemyKnockbackDistance,
+                leafRangerManager.enemyKnockbackClip.length);
+            StartCoroutine(leafRangerManager.DelayKnockback(leafRangerManager.enemyKnockbackClip.length));
+        }
+        Coroutine coroutineKnockback;
+        [SerializeField] private float stunTime;
+        bool knockback;
+        void EndKB()
+        {
+            if (coroutineKnockback == null)
+            {
+                Debug.Log("StunNull");
+
+                coroutineKnockback = StartCoroutine(DelayKnockback(stunTime));
+            }
+        }
+        void DelayDestroy(float time, GameObject gameObject)
+        {
+            Destroy(gameObject, time);
+        }
+
+        private void OnEnable()
+        {
+            leafRangerManager.OnStartKnockback += (elementalDamage) =>
+            {
+                StartKB();
+            };
+            leafRangerManager.OnEndKnockback += () =>
+            {
+                EndKB();
+            };
+            leafRangerManager.OnEnemyDead += (deadEnemy) =>
+            {
+                hitBox.enabled = false;
+                ClearCoroutine();
+                animator.SetBool("IsWalk", false);
+                animator.SetTrigger("Death");
+                DelayDestroy(leafRangerManager.enemyDeadClip.length, deadEnemy);
+            };
+        }
+        private void OnDisable()
+        {
+            leafRangerManager.OnStartKnockback -= (elementalDamage) =>
+            {
+                StartKB();
+            };
+            leafRangerManager.OnEndKnockback -= () =>
+            {
+                EndKB();
+            };
+            leafRangerManager.OnEnemyDead -= (deadEnemy) =>
+            {
+                hitBox.enabled = false;
+                animator.SetBool("IsWalk", false);
+                animator.SetTrigger("Death");
+                DelayDestroy(leafRangerManager.enemyDeadClip.length, deadEnemy);
+            };
         }
     }
 }

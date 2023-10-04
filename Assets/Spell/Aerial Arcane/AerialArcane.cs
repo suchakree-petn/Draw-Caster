@@ -21,6 +21,7 @@ public class AerialArcane : Spell
     [SerializeField] private float knockback3;
     public float selfDestructTime;
     [SerializeField] private GameObject AerialArcanePrefab;
+    [SerializeField] private float iFrame;
 
     public override void Cast1(GameObject player, GameObject target)
     {
@@ -96,7 +97,8 @@ public class AerialArcane : Spell
             _baseSkillDamageMultiplier * _damageSpellLevelMultiplier1,
             selfDestructTime,
             targetLayer,
-            knockback1
+            knockback1,
+            iFrame
             );
         Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
         if (rb2d == null)
@@ -195,7 +197,8 @@ public class AerialArcane : Spell
                     _baseSkillDamageMultiplier * _damageSpellLevelMultiplier2,
                     selfDestructTime,
                     targetLayer,
-                    knockback2
+                    knockback2,
+                    iFrame
                     );
         Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
         if (rb2d == null)
@@ -262,7 +265,8 @@ public class AerialArcane : Spell
                                 _baseSkillDamageMultiplier * _damageSpellLevelMultiplier3,
                                 selfDestructTime,
                                 targetLayer,
-                                knockback3
+                                knockback3,
+                                iFrame
                                 );
             Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
             if (rb2d == null)

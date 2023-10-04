@@ -10,12 +10,17 @@ public class BossUIManager : MonoBehaviour
     {
         if (BossUI != null && GameObject.FindWithTag("BossUI") == null)
         {
-            GameController.OnInstantiateUI += () =>
-            {
-                Transform ui = Instantiate(BossUI, transform);
-                ui.GetComponentInChildren<UIHPBar_Boss>().charactorManager = charactorManager;
-                ui.GetComponentInChildren<StunBar_Boss>().charactorManager = charactorManager;
-            };
+            GameController.OnInstantiateUI += Init;
         }
+    }
+    private void OnDisable()
+    {
+        GameController.OnInstantiateUI -= Init;
+    }
+    private void Init()
+    {
+        Transform ui = Instantiate(BossUI, transform);
+        ui.GetComponentInChildren<UIHPBar_Boss>().charactorManager = charactorManager;
+        ui.GetComponentInChildren<StunBar_Boss>().charactorManager = charactorManager;
     }
 }

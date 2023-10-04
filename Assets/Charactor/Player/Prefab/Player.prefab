@@ -92,8 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manaNullify: {fileID: 1584339524}
-  inputPos: []
-  templatePos: []
+  _inputPos: []
   score: 0
   sideLenght: 0
   mostLeft: 0
@@ -919,9 +918,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe151f9e3e14394aa4713616c1acd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerManager: {fileID: 1366102689556583805}
   manaNullifyData: {fileID: 11400000, guid: c37e15154c0a1a24ca89f74177f6185f, type: 2}
   vCam: {fileID: 3081705601906102824}
-  zoomIn: -2
+  zoomIn: -4
   zoomInDuration: 0.2
   zoomInCurve:
     serializedVersion: 2
@@ -947,7 +947,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  zoomOut: 3
+  zoomOut: 7
   zoomOutDuration: 0.1
   zoomOutCurve:
     serializedVersion: 2
@@ -999,7 +999,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeScale: 0
-  durationToTimeScale: 0.3
+  durationToTimeScale: 0
   slowCurve:
     serializedVersion: 2
     m_Curve:
@@ -1024,12 +1024,15 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  detectionRange: 30
+  detectionRange: 16.88
   markPrefab: {fileID: 1643962605782519155, guid: afd1aae4576116243827b1872090280e,
     type: 3}
   isActive: 0
   spawnOffset: {x: 0, y: -1.5}
-  activeDuration: 0
+  activeDuration: 4
+  allMarkObject: []
+  allMark: []
+  manaGainBase: 30
   drawInput_Nullify: {fileID: 1050196540}
 --- !u!1001 &1337545712
 PrefabInstance:

@@ -19,6 +19,7 @@ public class LightFireBallAttack : MonoBehaviour
     [SerializeField] private GameObject fireballPrefab;
     [SerializeField] private int fireBallAmount;
     [SerializeField] private bool isRepeating;
+    [SerializeField] private float iFrame;
 
     [SerializeField] private MoltenFireBehaviour moltenFireBehaviour;
 
@@ -40,7 +41,8 @@ public class LightFireBallAttack : MonoBehaviour
                 _baseFireBallDamageMultiplier,
                 (launchDuration + curveDuration + spawnInterval) * i + 1,
                 moltenFireBehaviour.moltenFireData.targetLayer,
-                fireBallKnockbackGaugeDeal
+                fireBallKnockbackGaugeDeal,
+                iFrame
                 ).transform;
             int index = i;
             sequence.AppendCallback(() =>

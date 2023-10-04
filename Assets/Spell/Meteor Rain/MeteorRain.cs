@@ -15,6 +15,7 @@ public class MeteorRain : Spell
     [Header("Spell Setting")]
     public float selectedPositionDuration;
     public float knockbackGaugeDeal;
+    public float iFrame;
     public int meteorAmount1;
     public int meteorAmount2;
     public int meteorAmount3;
@@ -167,7 +168,8 @@ public class MeteorRain : Spell
                         _baseSkillDamageMultiplier * multiplier,
                         selfDestructTime,
                         targetLayer,
-                        knockbackGaugeDeal
+                        knockbackGaugeDeal,
+                        iFrame
                         );
         meteor.SetActive(false);
         return meteor;

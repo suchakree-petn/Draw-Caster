@@ -18,8 +18,8 @@ MonoBehaviour:
   _level: 0
   _spellType: 2
   _elementalType: 3
-  _cooldown: 3
-  _manaCost: 2
+  _cooldown: 15
+  _manaCost: 130
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -38,6 +38,9 @@ MonoBehaviour:
   knockback2: 1
   _amountLevel3: 1
   knockback3: 1
-  selfDestructTime: 1
+  iFrameTime: 0
   ThaFallDownPrefab: {fileID: 8510822735841900675, guid: dc6a8b3ac7cb12a4fab06e1759aad9be,
     type: 3}
+  radius: 2
+  duration: 5
+  followInterval: 0.02

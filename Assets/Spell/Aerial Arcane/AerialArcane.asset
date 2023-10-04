@@ -18,8 +18,8 @@ MonoBehaviour:
   _level: 0
   _spellType: 2
   _elementalType: 4
-  _cooldown: 3
-  _manaCost: 2
+  _cooldown: 9
+  _manaCost: 100
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -41,4 +41,5 @@ MonoBehaviour:
   selfDestructTime: 3
   AerialArcanePrefab: {fileID: 7564261515608954200, guid: 3920dd4debd54534a83c8b5766b99b9a,
     type: 3}
+  iFrame: 1
   speed: 10

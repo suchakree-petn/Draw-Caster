@@ -49,7 +49,7 @@ public class SpellHolder_Q : MonoBehaviour
         _playerAction.Player.Spell_Shift.Disable();
         _playerAction.Player.Interact.Disable();
         _playerAction.Player.LeftClick.Disable();
-        _playerAction.Player.ManaNullify.Disable();
+        ManaNullify.Instance.gameObject.SetActive(false);
 
     }
     public bool CheckMana(Spell spell)

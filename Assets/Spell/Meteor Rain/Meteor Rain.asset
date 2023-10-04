@@ -33,6 +33,7 @@ MonoBehaviour:
   _damageSpellLevelMultiplier3: 1.1
   selectedPositionDuration: 1.5
   knockbackGaugeDeal: 60
+  iFrame: 1
   meteorAmount1: 7
   meteorAmount2: 14
   meteorAmount3: 19

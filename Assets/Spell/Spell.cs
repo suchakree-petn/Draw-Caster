@@ -93,7 +93,7 @@ public abstract class Spell : ScriptableObject
         playerAction.Player.Spell_Shift.Enable();
         playerAction.Player.Interact.Enable();
         playerAction.Player.LeftClick.Enable();
-        playerAction.Player.ManaNullify.Enable();
+        ManaNullify.Instance.gameObject.SetActive(true);
     }
 }
 

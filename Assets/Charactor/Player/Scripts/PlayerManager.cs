@@ -106,5 +106,16 @@ public class PlayerManager : CharactorManager<PlayerData>
     {
         Destroy(deadCharactor);
     }
-
+    public void GainMana(float amount)
+    {
+        float maxMana = GetCharactorData().GetMaxMana();
+        if (currentMana + amount > maxMana)
+        {
+            currentMana = maxMana;
+        }
+        else
+        {
+            currentMana += amount;
+        }
+    }
 }

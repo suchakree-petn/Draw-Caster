@@ -174,6 +174,7 @@ public class GameController : MonoBehaviour
         OnInstantiateUI += InstantiatePlayerUI;
         AddAllEnemyInSceneToList();
         OnBeforeStart += ShowStageFloor;
+        OnBeforeStart += () => DontDestroyOnLoad(ManaNullify.Instance.transform.root);
         WhileInGame += StageClear;
         OnBeforeEnding += GenerateDoor;
     }

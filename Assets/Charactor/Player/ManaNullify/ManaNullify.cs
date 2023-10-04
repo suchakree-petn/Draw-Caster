@@ -8,7 +8,13 @@ using UnityEngine;
 
 public class ManaNullify : MonoBehaviour
 {
+    public static ManaNullify Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
     [SerializeField] private PlayerAction playerAction;
+    [SerializeField] private PlayerManager playerManager;
     public ManaNullifyData manaNullifyData;
     [Header("Zoom Animation Setting")]
     [SerializeField] private CinemachineVirtualCamera vCam;
@@ -34,6 +40,7 @@ public class ManaNullify : MonoBehaviour
     [SerializeField] private List<Transform> allMarkObject = new();
     [SerializeField] private List<NullifyMark> allMark = new();
     public Action<float[], Vector2> OnFinishDraw;
+    public float manaGainBase;
     public DrawInput_Nullify drawInput_Nullify;
     Sequence zoomSequence;
     Sequence nullifySequence;
@@ -73,7 +80,6 @@ public class ManaNullify : MonoBehaviour
 
         // Draw to nullify all
 
-        // Gain mana
 
         // Destroy every nullify object in order
 
@@ -203,6 +209,9 @@ public class ManaNullify : MonoBehaviour
                 if (scores[i] == max)
                 {
                     toRemoveGO.Add(allMarkObject[i]);
+                    // Gain mana
+                    float manaGain = manaGainBase * (1 + scores[i]);
+                    playerManager.GainMana(manaGain);
                 }
             }
             int count2 = toRemoveGO.Count;
@@ -211,6 +220,7 @@ public class ManaNullify : MonoBehaviour
             {
                 allMarkObject.Remove(toRemoveGO[i].transform);
                 Destroy(toRemoveGO[i].parent.gameObject);
+
             }
         };
         transform.root.GetComponent<PlayerManager>().OnPlayerKnockback += BackToNormal;
@@ -248,6 +258,6 @@ public class ManaNullify : MonoBehaviour
     {
         vCam.m_Lens.OrthographicSize = originalSize;
         playerAction.Player.ManaNullify.Disable();
-
+        DOTween.Kill(this);
     }
 }
