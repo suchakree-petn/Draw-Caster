@@ -7,23 +7,17 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Stage/Stage_1_Scene.unity
-    guid: 67fb8779e432d9b45b0870db59110275
+    guid: 3df00eaec1e8c4449b2539a72596e1af
   - enabled: 1
     path: Assets/Stage/Stage_2_Scene.unity
-    guid: 928d3953709853c449f351f75a45671b
+    guid: 8495f36074abcf44791851c77e8bdc49
   - enabled: 1
     path: Assets/Stage/Stage_3_Scene.unity
-    guid: 6d030e6c7c1ca5d48973e0d2a908fe9c
+    guid: 98ed27acae1fe7343809673c8258194b
   - enabled: 1
     path: Assets/Stage/Stage_4_Scene.unity
-    guid: e83dbad805779914a8c9edae1c59210c
+    guid: f36e8760c9da4b04983cfce242084cf2
   - enabled: 1
     path: Assets/Stage/Stage_5_Scene.unity
-    guid: d7f516ac733331c4cae0d123adce30de
-  - enabled: 1
-    path: Assets/Scenes/Thanva/thanva_testHUD.unity
-    guid: eab594f1623e2384a9912c5c87df2838
-  - enabled: 1
-    path: Assets/Scenes/Thanva/testHUD.unity
-    guid: 575af46c387f7244f8196576e4bb45ee
+    guid: bf030723e5e8ab242ba8b20484e53738
   m_configObjects: {}

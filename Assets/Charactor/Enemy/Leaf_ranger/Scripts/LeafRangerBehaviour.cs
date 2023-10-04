@@ -14,7 +14,8 @@ namespace LeafRanger
         Chase,
         PreAttack,
         Attack,
-        WaitForNextAttack
+        WaitForNextAttack,
+        Death
     }
     public class LeafRangerBehaviour : MonoBehaviour
     {
@@ -66,6 +67,8 @@ namespace LeafRanger
                         break;
                     case State.WaitForNextAttack:
                         WaitForNextAttack();
+                        break;
+                    case State.Death:
                         break;
                     default:
                         break;
@@ -272,7 +275,7 @@ namespace LeafRanger
         }
         private void PreAttack()
         {
-            if (!attack) currentState = State.Attack;
+            if (!attack && !death) currentState = State.Attack;
         }
         private void Attack()
         {
@@ -387,11 +390,11 @@ namespace LeafRanger
                 StopCoroutine(coroutineStayOrMove);
                 coroutineStayOrMove = null;
             }
-            if (coroutineAttackAnimation != null)
-            {
-                StopCoroutine(coroutineAttackAnimation);
-                coroutineAttackAnimation = null;
-            }
+            // if (coroutineAttackAnimation != null)
+            // {
+            //     StopCoroutine(coroutineAttackAnimation);
+            //     coroutineAttackAnimation = null;
+            // }
         }
 
         void StartKB()
@@ -409,6 +412,7 @@ namespace LeafRanger
         Coroutine coroutineKnockback;
         [SerializeField] private float stunTime;
         bool knockback;
+        bool death;
         void EndKB()
         {
             if (coroutineKnockback == null)
@@ -417,6 +421,16 @@ namespace LeafRanger
 
                 coroutineKnockback = StartCoroutine(DelayKnockback(stunTime));
             }
+        }
+        void Death(GameObject deadEnemy)
+        {
+            currentState = State.Death;
+            death = true;
+            hitBox.enabled = false;
+            ClearCoroutine();
+            animator.SetBool("IsWalk", false);
+            animator.SetTrigger("Death");
+            DelayDestroy(leafRangerManager.enemyDeadClip.length, deadEnemy);
         }
         void DelayDestroy(float time, GameObject gameObject)
         {
@@ -435,13 +449,10 @@ namespace LeafRanger
             };
             leafRangerManager.OnEnemyDead += (deadEnemy) =>
             {
-                hitBox.enabled = false;
-                ClearCoroutine();
-                animator.SetBool("IsWalk", false);
-                animator.SetTrigger("Death");
-                DelayDestroy(leafRangerManager.enemyDeadClip.length, deadEnemy);
+                Death(deadEnemy);
             };
         }
+
         private void OnDisable()
         {
             leafRangerManager.OnStartKnockback -= (elementalDamage) =>
@@ -454,10 +465,7 @@ namespace LeafRanger
             };
             leafRangerManager.OnEnemyDead -= (deadEnemy) =>
             {
-                hitBox.enabled = false;
-                animator.SetBool("IsWalk", false);
-                animator.SetTrigger("Death");
-                DelayDestroy(leafRangerManager.enemyDeadClip.length, deadEnemy);
+                Death(deadEnemy);
             };
         }
     }
