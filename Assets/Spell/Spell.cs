@@ -27,7 +27,6 @@ public abstract class Spell : ScriptableObject
 
     public virtual void CastSpell(float score, GameObject player)
     {
-        DisableInput();
     }
 
     
@@ -82,20 +81,7 @@ public abstract class Spell : ScriptableObject
         }
         return castLevel;
     }
-    private void DisableInput()
-    {
-        PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;
-        playerAction.Player.PressAttack.Disable();
-        playerAction.Player.HoldAttack.Disable();
-        playerAction.Player.Spell_Q.Disable();
-        playerAction.Player.Spell_E.Disable();
-        playerAction.Player.Spell_R.Disable();
-        playerAction.Player.Spell_Shift.Disable();
-        playerAction.Player.Interact.Disable();
-        playerAction.Player.LeftClick.Disable();
-        playerAction.Player.ManaNullify.Disable();
-
-    }
+    
     private void EnableInput()
     {
         PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;

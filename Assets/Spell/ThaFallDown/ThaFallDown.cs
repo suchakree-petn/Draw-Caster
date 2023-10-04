@@ -23,7 +23,7 @@ public class ThaFallDown : Spell
     [SerializeField] private float knockback2;
     public int _amountLevel3;
     [SerializeField] private float knockback3;
-    public float selfDestructTime;
+    public float iFrameTime;
     [SerializeField] private GameObject ThaFallDownPrefab;
 
     public override void Cast1(GameObject player, GameObject target)
@@ -32,8 +32,8 @@ public class ThaFallDown : Spell
         if (player == null) { return; }
         Revolve(player);
         MonoBehaviour monoBehaviour = player.GetComponent<MonoBehaviour>();
-        if (monoBehaviour != null){monoBehaviour.StartCoroutine(FollowPlayer(player));}
-        else{Debug.LogError("Player GameObject does not have a MonoBehaviour component!");}
+        if (monoBehaviour != null) { monoBehaviour.StartCoroutine(FollowPlayer(player)); }
+        else { Debug.LogError("Player GameObject does not have a MonoBehaviour component!"); }
 
 
 
@@ -92,7 +92,16 @@ public class ThaFallDown : Spell
             parentObjectALl[i] = new GameObject("RevolveParent" + (i + 1));
             parentObjectALl[i].transform.position = player.transform.position;
             // Instantiate ThaFallDownPrefab as a child of the parent object
-            revolvingObjectAll[i] = Instantiate(ThaFallDownPrefab, parentObjectALl[i].transform.position + new Vector3(radius, 0, 0), Quaternion.identity, parentObjectALl[i].transform);
+            revolvingObjectAll[i] = DrawCasterUtil.AddAttackHitTo(
+                Instantiate(ThaFallDownPrefab, parentObjectALl[i].transform.position + new Vector3(radius, 0, 0), Quaternion.identity, parentObjectALl[i].transform),
+                _elementalType,
+                player,
+                _baseSkillDamageMultiplier,
+                duration,
+                targetLayer,
+                knockback1,
+                iFrameTime
+                );
 
             rotateTweenAll[i] = parentObjectALl[i].transform.DORotate(new Vector3(0, 0, 360), duration, RotateMode.FastBeyond360)
                 .SetEase(Ease.Linear)
@@ -100,8 +109,9 @@ public class ThaFallDown : Spell
 
             currentDurationAll[i] = duration;  // Initialize currentDuration1 with the initial duration value
             RotateParentObject();  // Start the initial rotation
-            Destroy(revolvingObjectAll[i], timeToDestroyAll[i]);
-            rotateTweenAll[i].OnComplete(() => {
+                                   // Destroy(revolvingObjectAll[i], timeToDestroyAll[i]);
+            rotateTweenAll[i].OnComplete(() =>
+            {
                 // Code to execute when the rotation is complete (won't be called due to infinite loops)
             });
         }
@@ -130,21 +140,23 @@ public class ThaFallDown : Spell
             Debug.LogError("Player GameObject does not have a Rigidbody component!");
             yield break;
         }
-        for (int i = 0; i < numAll; i++){if(parentObjectALl[i] == null){yield break;}
+        for (int i = 0; i < numAll; i++)
+        {
+            if (parentObjectALl[i] == null) { yield break; }
         }
         float previousSpeed = 0f;  // Store the previous speed to detect significant changes
         while (true)
         {
-                Transform childTransform = DrawCasterUtil.GetMidTransformOf(player.transform);
-                Vector3 centerPosition = childTransform.position;
-                for(int i = 0; i < numAll; i++){parentObjectALl[i].transform.position = centerPosition;}
-                float playerSpeed = 10f;
-                if (Mathf.Abs(playerSpeed - previousSpeed) > 0.1f)  // Change the rotation speed only if the speed has changed significantly
-                {
-                    previousSpeed = playerSpeed;
-                    for(int i =0;i < numAll; i++){ currentDurationAll[i] = Mathf.Max(0.1f, duration / Mathf.Max(1f, playerSpeedAll[i]));}
-                    RotateParentObject();  // Restart the rotation with the new duration
-                }
+            Transform childTransform = DrawCasterUtil.GetMidTransformOf(player.transform);
+            Vector3 centerPosition = childTransform.position;
+            for (int i = 0; i < numAll; i++) { parentObjectALl[i].transform.position = centerPosition; }
+            float playerSpeed = 10f;
+            if (Mathf.Abs(playerSpeed - previousSpeed) > 0.1f)  // Change the rotation speed only if the speed has changed significantly
+            {
+                previousSpeed = playerSpeed;
+                for (int i = 0; i < numAll; i++) { currentDurationAll[i] = Mathf.Max(0.1f, duration / Mathf.Max(1f, playerSpeedAll[i])); }
+                RotateParentObject();  // Restart the rotation with the new duration
+            }
             yield return new WaitForSeconds(followInterval);
         }
     }

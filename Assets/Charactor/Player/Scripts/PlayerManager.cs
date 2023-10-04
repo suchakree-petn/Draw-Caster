@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -12,7 +13,7 @@ public class PlayerManager : CharactorManager<PlayerData>
     [SerializeField] private Animator animator;
     [SerializeField] private AnimationClip knockbackClip;
     [SerializeField] private float playerKnockbackDistance;
-
+    public Action OnPlayerKnockback;
 
     public override PlayerData GetCharactorData()
     {
@@ -51,6 +52,7 @@ public class PlayerManager : CharactorManager<PlayerData>
     }
     public override void StartKnockback(Elemental damage)
     {
+        OnPlayerKnockback?.Invoke();
         animator.SetTrigger("Knockback");
         StartCoroutine(DelayKnockback(knockbackClip.length));
         _playerAction.Player.Movement.Disable();

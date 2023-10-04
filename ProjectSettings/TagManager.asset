@@ -62,3 +62,6 @@ TagManager:
   - name: Text Damage
     uniqueID: 2290351315
     locked: 0
+  - name: UI
+    uniqueID: 2397543737
+    locked: 0

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using DG.Tweening;
 using DrawCaster.Util;
@@ -8,7 +9,7 @@ using UnityEngine;
 public class ManaNullify : MonoBehaviour
 {
     [SerializeField] private PlayerAction playerAction;
-    [SerializeField] private ManaNullifyData manaNullifyData;
+    public ManaNullifyData manaNullifyData;
     [Header("Zoom Animation Setting")]
     [SerializeField] private CinemachineVirtualCamera vCam;
     [SerializeField] private float zoomIn;
@@ -26,11 +27,16 @@ public class ManaNullify : MonoBehaviour
     [SerializeField] private float durationToTimeScale;
     [SerializeField] private AnimationCurve slowCurve;
     [SerializeField] private float detectionRange;
-    [SerializeField] private Transform symbolPrefab;
+    [SerializeField] private Transform markPrefab;
     [SerializeField] private bool isActive;
-    public Action<float> OnFinishDraw;
-
+    [SerializeField] private Vector2 spawnOffset;
+    [SerializeField] private float activeDuration;
+    [SerializeField] private List<Transform> allMarkObject = new();
+    [SerializeField] private List<NullifyMark> allMark = new();
+    public Action<float[], Vector2> OnFinishDraw;
+    public DrawInput_Nullify drawInput_Nullify;
     Sequence zoomSequence;
+    Sequence nullifySequence;
     float originalSize;
     void ZoomAnim()
     {
@@ -52,32 +58,20 @@ public class ManaNullify : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawSphere(DrawCasterUtil.GetMidTransformOf(transform.root).position, detectionRange);
+        Gizmos.DrawWireSphere(DrawCasterUtil.GetMidTransformOf(transform.root).position, detectionRange);
     }
     void Active()
     {
-        isActive = true;
+        // Play animation
         Debug.Log("ActiveNullify");
-        SlowIN();
-        // Show all nullifyable
-        AttackHit[] allAttackHit = FindObjectsOfType<AttackHit>();
-        List<Transform> allObjectInRange = new();
-        foreach (AttackHit attackHit in allAttackHit)
-        {
-            float distance = Vector2.Distance(attackHit.transform.position, DrawCasterUtil.GetUpperTransformOf(transform.root).position);
-            if (distance <= detectionRange)
-            {
-                allObjectInRange.Add(attackHit.transform);
-            }
-        }
-        List<Transform> allSymbol = new();
-        foreach (Transform objectInRange in allObjectInRange)
-        {
-            allSymbol.Add(ShowDrawSymbol(objectInRange.transform));
-        }
+        nullifySequence.Kill();
+        DisableInput();
+        isActive = true;
+        SlowIn();
+        playerAction.Player.ManaNullify.Disable();
+
 
         // Draw to nullify all
-
 
         // Gain mana
 
@@ -109,15 +103,36 @@ public class ManaNullify : MonoBehaviour
         playerAction.Player.Interact.Enable();
         playerAction.Player.LeftClick.Enable();
     }
-    private Transform ShowDrawSymbol(Transform transform)
+    private Transform ShowDrawSymbol(Transform transform, Sprite markSprite)
     {
-        return Instantiate(symbolPrefab, transform);
+        Transform _markPrefab = Instantiate(markPrefab, transform.position + (Vector3)spawnOffset, Quaternion.identity, transform);
+        _markPrefab.GetComponent<SpriteRenderer>().sprite = markSprite;
+        return _markPrefab;
     }
 
-    private void SlowIN()
+    private void SlowIn()
     {
+
         DOTween.To(() => Time.timeScale, x => Time.timeScale = x, timeScale, durationToTimeScale)
-        .SetUpdate(true).SetEase(slowCurve);
+        .SetUpdate(true).SetEase(slowCurve).OnComplete(() =>
+        {
+            nullifySequence = DOTween.Sequence();
+            nullifySequence.AppendInterval(activeDuration).SetUpdate(true)
+            .OnUpdate(() =>
+            {
+                if (Input.GetMouseButtonUp(1) && !drawInput_Nullify.gameObject.activeInHierarchy && isActive)
+                {
+                    drawInput_Nullify.gameObject.SetActive(true);
+                    playerAction.Player.ManaNullify.Disable();
+                }
+            })
+            .OnComplete(() =>
+            {
+                BackToNormal();
+                drawInput_Nullify.gameObject.SetActive(false);
+                playerAction.Player.ManaNullify.Enable();
+            });
+        });
     }
     private void SlowOut()
     {
@@ -134,18 +149,105 @@ public class ManaNullify : MonoBehaviour
         playerAction = PlayerInputSystem.Instance.playerAction;
         playerAction.Player.ManaNullify.Enable();
         playerAction.Player.ManaNullify.started += (ctx) => ZoomAnim();
-        playerAction.Player.ManaNullify.performed += (ctx) => Active();
-        playerAction.Player.ManaNullify.canceled += (ctx) => SlowOut();
-        playerAction.Player.ManaNullify.canceled += (ctx) => ResetZoom();
+        playerAction.Player.ManaNullify.performed += (ctx) =>
+        {
+            // Show all nullifyable
+            AttackHit[] allAttackHit = FindObjectsOfType<AttackHit>();
+            List<Transform> allObjectInRange = new();
+            foreach (AttackHit attackHit in allAttackHit)
+            {
+                if (attackHit.elementalDamage.attacker.tag != "Enemy" || attackHit.transform.root.tag == "Enemy") { continue; }
+                float distance = Vector2.Distance(attackHit.transform.position, DrawCasterUtil.GetUpperTransformOf(transform.root).position);
+                if (distance <= detectionRange)
+                {
+                    allObjectInRange.Add(attackHit.transform);
+                }
+            }
+            if (allObjectInRange.Count == 0)
+            {
+                Debug.Log("))))))");
+                return;
+            }
 
+            for (int i = 0; i < allObjectInRange.Count; i++)
+            {
+                allMark.Add(manaNullifyData.GetRandomMark());
+                allMarkObject.Add(ShowDrawSymbol(allObjectInRange[i].transform, allMark[i].sprite));
+            }
 
+            Active();
+        };
+        playerAction.Player.ManaNullify.canceled += (ctx) =>
+        {
+            SlowOut();
+            ResetZoom();
+            drawInput_Nullify.gameObject.SetActive(false);
+        };
+        OnFinishDraw += (scores, finishMousePos) =>
+        {
+            foreach (float item in scores)
+            {
+                Debug.Log(item + " ===> score");
+            }
+            List<Transform> toRemoveGO = new();
+            float max = Mathf.Max(scores);
+            if (max == 0) { return; }
+            int count1 = allMarkObject.Count;
+            List<float> allDistance = new();
+            for (int i = 0; i < count1; i++)
+            {
+                allDistance.Add(Vector2.Distance(finishMousePos, (Vector2)allMarkObject[i].position));
+            }
+            for (int i = 0; i < count1; i++)
+            {
+                if (scores[i] == max)
+                {
+                    toRemoveGO.Add(allMarkObject[i]);
+                }
+            }
+            int count2 = toRemoveGO.Count;
+            Debug.Log(count2 + "This is count2");
+            for (int i = 0; i < count2; i++)
+            {
+                allMarkObject.Remove(toRemoveGO[i].transform);
+                Destroy(toRemoveGO[i].parent.gameObject);
+            }
+        };
+        transform.root.GetComponent<PlayerManager>().OnPlayerKnockback += BackToNormal;
+        playerAction.Player.DrawInput.canceled += (ctx) =>
+        {
+            List<Texture2D> texture2Ds = new();
+            foreach (NullifyMark mark in allMark)
+            {
+                texture2Ds.Add(mark.texture);
+            }
+            OnFinishDraw?.Invoke(
+                drawInput_Nullify.ResamplingMouseInputPos(texture2Ds.ToArray()),
+                DrawCasterUtil.GetCurrentMousePosition()
+                );
+        };
 
     }
 
 
+    private void BackToNormal()
+    {
+        isActive = false;
+        SlowOut();
+        ResetZoom();
+        EnableInput();
+        allMark.Clear();
+        foreach (Transform markObj in allMarkObject)
+        {
+            Destroy(markObj.gameObject);
+        }
+        allMarkObject.Clear();
+    }
 
     private void OnDisable()
     {
         vCam.m_Lens.OrthographicSize = originalSize;
+        playerAction.Player.ManaNullify.Disable();
+
     }
 }

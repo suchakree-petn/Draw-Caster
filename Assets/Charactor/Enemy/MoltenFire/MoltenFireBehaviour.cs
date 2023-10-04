@@ -425,13 +425,13 @@ namespace MoltenFire
 
             if (delayStun == null)
             {
-                Debug.Log("StunNull");
+                // Debug.Log("StunNull");
 
                 delayStun = StartCoroutine(KnockbackStun(stunTime));
             }
             else
             {
-                Debug.Log("Stun not null");
+                // Debug.Log("Stun not null");
 
             }
         }

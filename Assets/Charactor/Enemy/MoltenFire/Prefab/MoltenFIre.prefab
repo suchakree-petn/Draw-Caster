@@ -599,6 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BossUI: {fileID: 5060573075060576882, guid: 9b0428f3cc152fa40b8722b357e76ecf, type: 3}
+  charactorManager: {fileID: 0}
 --- !u!1 &4010664479894279579
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,7 +1022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147aae09afe1cb3478dd84576acff329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHp: 0
+  currentHp: 20000
   currentMana: 0
   maxKnockBackGauge: 0
   curentKnockBackGauge: 0

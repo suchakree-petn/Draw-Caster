@@ -29,6 +29,7 @@ public class SpellHolder_R : MonoBehaviour
         {
             if (CheckMana(spell) && _isReadyToCast)
             {
+                DisableInput();
                 ReceiveDrawInput();
                 PayManaCost();
                 OnFinishCast?.Invoke(transform.root.gameObject);
@@ -38,6 +39,19 @@ public class SpellHolder_R : MonoBehaviour
         {
             Debug.Log("No spell equip on this slot " + name[name.Length - 1]);
         }
+    }
+    private void DisableInput()
+    {
+        _playerAction.Player.PressAttack.Disable();
+        _playerAction.Player.HoldAttack.Disable();
+        _playerAction.Player.Spell_Q.Disable();
+        _playerAction.Player.Spell_E.Disable();
+        _playerAction.Player.Spell_R.Disable();
+        _playerAction.Player.Spell_Shift.Disable();
+        _playerAction.Player.Interact.Disable();
+        _playerAction.Player.LeftClick.Disable();
+        _playerAction.Player.ManaNullify.Disable();
+
     }
     public bool CheckMana(Spell spell)
     {

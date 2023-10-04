@@ -62,7 +62,7 @@ public class CosSim : MonoBehaviour
         }
 
         float score = dotProduct / (Mathf.Sqrt(normA) * Mathf.Sqrt(normB));
-        Debug.Log("Cosine Similarity: " + score);
+        // Debug.Log("Cosine Similarity: " + score);
         return score;
     }
 

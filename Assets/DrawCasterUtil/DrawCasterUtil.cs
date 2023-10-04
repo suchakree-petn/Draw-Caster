@@ -113,7 +113,12 @@ namespace DrawCaster.Util
             this.startTime = startTime;
             this.endTime = endTime;
             Sequence timer = DOTween.Sequence();
-            timer.AppendInterval(endTime - startTime).OnUpdate(() => this.startTime += Time.deltaTime).OnComplete(() => timer.Kill());
+            timer.AppendInterval(endTime - startTime).SetUpdate(true)
+            .OnUpdate(() =>
+            {
+                this.startTime += Time.deltaTime;
+            })
+            .OnComplete(() => timer.Kill());
         }
         public bool IsFinished()
         {

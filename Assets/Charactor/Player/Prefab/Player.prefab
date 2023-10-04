@@ -47,6 +47,60 @@ MonoBehaviour:
   weapon: {fileID: 11400000, guid: 4fdd51ff517b148478942305922f3fe7, type: 2}
   isHoldAttack: 0
   isReadyToAttack: 1
+--- !u!1 &1050196538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1050196539}
+  - component: {fileID: 1050196540}
+  m_Layer: 6
+  m_Name: DrawInput_Nullify
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1050196539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050196538}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4136459448447158360}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1050196540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050196538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62140ce626a675143b5418c44406fd3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manaNullify: {fileID: 1584339524}
+  inputPos: []
+  templatePos: []
+  score: 0
+  sideLenght: 0
+  mostLeft: 0
+  mostRight: 0
+  mostAbove: 0
+  mostButtom: 0
+  newMostRight: 0
 --- !u!1 &1157048768
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,6 +883,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4136459448447158360}
+  - component: {fileID: 1584339524}
   m_Layer: 6
   m_Name: ManaNullify
   m_TagString: Untagged
@@ -847,10 +902,135 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1050196539}
   m_Father: {fileID: 3348656821667477757}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1584339524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8563820398439870758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe151f9e3e14394aa4713616c1acd97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manaNullifyData: {fileID: 11400000, guid: c37e15154c0a1a24ca89f74177f6185f, type: 2}
+  vCam: {fileID: 3081705601906102824}
+  zoomIn: -2
+  zoomInDuration: 0.2
+  zoomInCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  zoomOut: 3
+  zoomOutDuration: 0.1
+  zoomOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resetZoomDuration: 0.5
+  resetZoomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  timeScale: 0
+  durationToTimeScale: 0.3
+  slowCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  detectionRange: 30
+  markPrefab: {fileID: 1643962605782519155, guid: afd1aae4576116243827b1872090280e,
+    type: 3}
+  isActive: 0
+  spawnOffset: {x: 0, y: -1.5}
+  activeDuration: 0
+  drawInput_Nullify: {fileID: 1050196540}
 --- !u!1001 &1337545712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -984,7 +1164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isReadyToCast: 1
   castLevel: 0
-  spell: {fileID: 11400000, guid: 4c9cf4eb2c073f94f82f962a34f869d6, type: 2}
+  spell: {fileID: 11400000, guid: 22a7280cfc4f6b640bb4437eab4467bf, type: 2}
   cooldown: 0
   drawInput: {fileID: 4206557517871419735}
 --- !u!1001 &883863726198827089
