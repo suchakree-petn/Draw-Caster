@@ -273,9 +273,23 @@ namespace LeafRanger
             animator.SetBool("IsWalk", true);
             MoveToChaseTarget();
         }
+        Coroutine coroutineResetAttackPre;
         private void PreAttack()
         {
-            if (!attack && !death) currentState = State.Attack;
+            animator.SetBool("IsWalk", false);
+            // if (coroutineResetAttackPre == null)
+            // {
+            //     float delayResetAttackTime = 2f;
+            //     coroutineResetAttackPre = StartCoroutine(DelayResetAttackInPre(delayResetAttackTime));
+            // }
+            if (!attack && !death) {
+                // StopCoroutine(coroutineResetAttackPre);
+                // coroutineResetAttackPre = null;
+
+                currentState = State.Attack;
+            }else if(!death){
+                currentState = State.WaitForNextAttack;
+            }
         }
         private void Attack()
         {
@@ -339,6 +353,11 @@ namespace LeafRanger
                 clockDirection = "clockWise";
             }
         }
+        IEnumerator DelayResetAttackInPre(float delayTime){
+            yield return new WaitForSeconds(delayTime);
+            attack = false;
+            coroutineResetAttackPre = null;
+        }
         IEnumerator DelayNextAttack(float delayTime, float attackTime)
         {
             yield return new WaitForSeconds(attackTime);
@@ -349,7 +368,6 @@ namespace LeafRanger
             {
                 ChangeStateManager();
             }
-
         }
         Coroutine coroutineStayOrMove;
         private bool stayInWaitForNextAttack;
@@ -376,20 +394,21 @@ namespace LeafRanger
             yield return new WaitForSeconds(delayTime);
             coroutineKnockback = null;
             knockback = false;
-            attack = false;
+            currentState = State.Idle;
+            // attack = false;
         }
         void ClearCoroutine()
         {
-            if (coroutineKnockback != null)
-            {
-                StopCoroutine(coroutineKnockback);
-                coroutineKnockback = null;
-            }
             if (coroutineStayOrMove != null)
             {
                 StopCoroutine(coroutineStayOrMove);
                 coroutineStayOrMove = null;
             }
+            // if (coroutineKnockback != null)
+            // {
+            //     StopCoroutine(coroutineKnockback);
+            //     coroutineKnockback = null;
+            // }
             // if (coroutineAttackAnimation != null)
             // {
             //     StopCoroutine(coroutineAttackAnimation);
