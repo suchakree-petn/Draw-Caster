@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using DG.Tweening;
 using DrawCaster.Util;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ManaNullify : MonoBehaviour
 {
@@ -45,6 +48,8 @@ public class ManaNullify : MonoBehaviour
     Sequence zoomSequence;
     Sequence nullifySequence;
     float originalSize;
+    [SerializeField] private Image icon;
+
     void ZoomAnim()
     {
         Debug.Log("Start Nullify");
@@ -76,6 +81,23 @@ public class ManaNullify : MonoBehaviour
         isActive = true;
         SlowIn();
         playerAction.Player.ManaNullify.Disable();
+        Sequence sequence = DOTween.Sequence();
+        sequence.AppendCallback(() =>
+        {
+            if (icon == null)
+            {
+                icon = GameObject.Find("PlayerUI").transform.GetChild(3).GetChild(4).GetChild(1).GetComponent<Image>();
+            }
+            icon.fillAmount = 0;
+        });
+        sequence.AppendInterval(manaNullifyData.cooldown).OnUpdate(() =>
+        {
+            icon.fillAmount += Time.deltaTime / manaNullifyData.cooldown;
+        }).OnComplete(() =>
+        {
+            icon.fillAmount = 1;
+            gameObject.SetActive(true);
+        });
     }
     private void DisableInput()
     {
@@ -126,9 +148,13 @@ public class ManaNullify : MonoBehaviour
             })
             .OnComplete(() =>
             {
+                Debug.Log("Finish slow in");
                 BackToNormal();
                 drawInput_Nullify.gameObject.SetActive(false);
                 playerAction.Player.ManaNullify.Enable();
+
+                gameObject.SetActive(false);
+
             });
         });
     }
@@ -143,82 +169,26 @@ public class ManaNullify : MonoBehaviour
 
     private void OnEnable()
     {
+        DOTween.Kill(this);
+
         originalSize = vCam.m_Lens.OrthographicSize;
         playerAction = PlayerInputSystem.Instance.playerAction;
         playerAction.Player.ManaNullify.Enable();
         playerAction.Player.ManaNullify.started += (ctx) => ZoomAnim();
-        playerAction.Player.ManaNullify.performed += (ctx) =>
-        {
-            // Show all nullifyable
-            AttackHit[] allAttackHit = FindObjectsOfType<AttackHit>();
-            List<Transform> allObjectInRange = new();
-            foreach (AttackHit attackHit in allAttackHit)
-            {
-                if (attackHit == null) { return; }
-                if (attackHit.elementalDamage.attacker.tag != "Enemy" || attackHit.transform.root.tag == "Enemy") { continue; }
-                float distance = Vector2.Distance(attackHit.transform.position, DrawCasterUtil.GetUpperTransformOf(transform.root).position);
-                if (distance <= detectionRange)
-                {
-                    allObjectInRange.Add(attackHit.transform);
-                }
-            }
-            if (allObjectInRange.Count == 0)
-            {
-                Debug.Log("))))))");
-                return;
-            }
+        playerAction.Player.ManaNullify.performed += Show;
 
-            for (int i = 0; i < allObjectInRange.Count; i++)
-            {
-                allMark.Add(manaNullifyData.GetRandomMark());
-                allMarkObject.Add(ShowDrawSymbol(allObjectInRange[i].transform, allMark[i].sprite));
-            }
-
-            Active();
-        };
         playerAction.Player.ManaNullify.canceled += (ctx) =>
         {
             SlowOut();
             ResetZoom();
-            drawInput_Nullify.gameObject.SetActive(false);
+            Debug.Log("nullify canceled");
+            if (!isActive)
+            {
+                drawInput_Nullify.gameObject.SetActive(false);
+            }
         };
-        OnFinishDraw += (scores, finishMousePos) =>
-        {
-            foreach (float item in scores)
-            {
-                Debug.Log(item + " ===> score");
-            }
-            List<Transform> toRemoveGO = new();
-            float max = Mathf.Max(scores);
-            max = (float)Math.Round(max, 2);
-            Debug.Log("Max: " + max);
-            if (max == 0)
-            {
-                Debug.Log("Max is 0");
-                return;
-            }
-            int count1 = allMarkObject.Count;
-            for (int i = 0; i < count1; i++)
-            {
-                if ((float)Math.Round(scores[i], 2) >= max)
-                {
-                    toRemoveGO.Add(allMarkObject[i]);
-                    Debug.Log("Add " + allMarkObject[i]);
-                    // Gain mana
-                    float manaGain = manaGainBase * (1 + scores[i]);
-                    playerManager.GainMana(manaGain);
-                }
-            }
-            int count2 = toRemoveGO.Count;
-            Debug.Log(count2 + "This is count2");
-            for (int i = 0; i < count2; i++)
-            {
-                if (toRemoveGO[i] == null) { continue; }
-                allMarkObject.Remove(toRemoveGO[i].transform);
-                Destroy(toRemoveGO[i].parent.gameObject);
+        OnFinishDraw += DestroyMarkObject;
 
-            }
-        };
         transform.root.GetComponent<PlayerManager>().OnPlayerKnockback += BackToNormal;
         playerAction.Player.DrawInput.canceled += (ctx) =>
         {
@@ -234,7 +204,61 @@ public class ManaNullify : MonoBehaviour
         };
 
     }
+    private void Show(InputAction.CallbackContext context)
+    {
+        // Show all nullifyable
+        AttackHit[] allAttackHit = FindObjectsOfType<AttackHit>();
+        List<Transform> allObjectInRange = new();
+        foreach (AttackHit attackHit in allAttackHit)
+        {
+            if (attackHit == null) { return; }
+            if (attackHit.elementalDamage.attacker.tag != "Enemy" || attackHit.transform.root.tag == "Enemy") { continue; }
+            float distance = Vector2.Distance(attackHit.transform.position, DrawCasterUtil.GetUpperTransformOf(transform.root).position);
+            if (distance <= detectionRange)
+            {
+                allObjectInRange.Add(attackHit.transform);
+            }
+        }
+        if (allObjectInRange.Count == 0)
+        {
+            return;
+        }
 
+        for (int i = 0; i < allObjectInRange.Count; i++)
+        {
+            allMark.Add(manaNullifyData.GetRandomMark());
+            allMarkObject.Add(ShowDrawSymbol(allObjectInRange[i].transform, allMark[i].sprite));
+        }
+
+        Active();
+
+    }
+    private void DestroyMarkObject(float[] scores, Vector2 finishMousePos)
+    {
+        float max = Mathf.Max(scores);
+        if (max == 0)
+        {
+            return;
+        }
+        Debug.Log("OnFinishFraw");
+        int count1 = allMarkObject.Count;
+        for (int i = 0; i < count1; i++)
+        {
+            float score = scores[i];
+            Debug.Log("score: " + score + " Max: " + max);
+            if (score >= max || i == count1 - 1)
+            {
+                Destroy(allMarkObject[i].parent.gameObject);
+                Debug.Log("destroy " + allMarkObject[i].name);
+                allMarkObject.RemoveAt(i);
+
+                // Gain mana
+                float manaGain = manaGainBase * 1 + Mathf.Pow(1 + scores[i], 6);
+                playerManager.GainMana(manaGain);
+                break;
+            }
+        }
+    }
 
     private void BackToNormal()
     {
@@ -255,6 +279,8 @@ public class ManaNullify : MonoBehaviour
     {
         vCam.m_Lens.OrthographicSize = originalSize;
         playerAction.Player.ManaNullify.Disable();
-        DOTween.Kill(this);
+        OnFinishDraw -= DestroyMarkObject;
+        playerAction.Player.ManaNullify.performed -= Show;
+
     }
 }

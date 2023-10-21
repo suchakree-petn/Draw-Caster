@@ -19,7 +19,7 @@ MonoBehaviour:
   _spellType: 1
   _elementalType: 1
   _cooldown: 10
-  _manaCost: 120
+  _manaCost: 130
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -32,15 +32,15 @@ MonoBehaviour:
   _damageSpellLevelMultiplier2: 1
   _damageSpellLevelMultiplier3: 1.1
   selectedPositionDuration: 1.5
-  knockbackGaugeDeal: 60
+  knockbackGaugeDeal: 80
   iFrame: 1
   meteorAmount1: 7
   meteorAmount2: 14
   meteorAmount3: 19
   meteorMoveSpeed: 0.2
-  randomPositionRadius: 0
+  randomPositionRadius: 3
   _meteorPrefab: {fileID: 2792028505011184367, guid: b975da128b06c134da0ec8371e9f5ac2,
     type: 3}
   _selectPositionPrefab: {fileID: 402501787774780549, guid: 9ee0f28d7dd618448a696917cbe4b42e,
     type: 3}
-  selectedPosition: {x: -44.239983, y: -1.2470634}
+  selectedPosition: {x: -9.879083, y: 14.823341}

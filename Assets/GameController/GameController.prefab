@@ -309,11 +309,8 @@ MonoBehaviour:
   allEnemyInScene: []
   scene:
   - Stage_1_Scene
-  - Stage_2_Scene
-  - Stage_3_Scene
-  - Stage_4_Scene
   - Stage_5_Scene
-  currentScene: 0
+  currentScene: 1
   doorToNextStage: {fileID: 6644944589086839815}
   tmpStageFloor: {fileID: 6644944589086839815}
   playerUI: {fileID: 5060573075060576846, guid: bea2fa5cf230c3a45b3c91cf567abc7c,
@@ -461,7 +458,7 @@ MonoBehaviour:
   fire_Color: {r: 1, g: 0.09286976, b: 0, a: 1}
   thunder_Color: {r: 0.6927266, g: 0.23018867, b: 1, a: 1}
   frost_Color: {r: 0, g: 0.871995, b: 1, a: 1}
-  wind_Color: {r: 0.32452828, g: 1, b: 0.34014738, a: 1}
+  wind_Color: {r: 0.32549024, g: 1, b: 0.5401172, a: 1}
 --- !u!1 &3661281825594964568
 GameObject:
   m_ObjectHideFlags: 0

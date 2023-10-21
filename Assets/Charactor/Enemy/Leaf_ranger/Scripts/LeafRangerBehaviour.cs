@@ -4,7 +4,6 @@ using UnityEngine;
 using DrawCaster.Util;
 using DG.Tweening;
 using Cinemachine;
-using UnityEditor.SceneManagement;
 
 namespace LeafRanger
 {
@@ -46,9 +45,9 @@ namespace LeafRanger
 
         private void Update()
         {
-            distance = GetDistance();
             if (target != null)
             {
+                distance = GetDistance();
                 switch (currentState)
                 {
                     case State.Idle:
@@ -282,12 +281,15 @@ namespace LeafRanger
             //     float delayResetAttackTime = 2f;
             //     coroutineResetAttackPre = StartCoroutine(DelayResetAttackInPre(delayResetAttackTime));
             // }
-            if (!attack && !death) {
+            if (!attack && !death)
+            {
                 // StopCoroutine(coroutineResetAttackPre);
                 // coroutineResetAttackPre = null;
 
                 currentState = State.Attack;
-            }else if(!death){
+            }
+            else if (!death)
+            {
                 currentState = State.WaitForNextAttack;
             }
         }
@@ -343,7 +345,6 @@ namespace LeafRanger
         void RandomDirection()
         {
             float randomDirection = Random.Range(0, 2);
-            Debug.Log(randomDirection);
             if (randomDirection < 0.5)
             {
                 clockDirection = "counterClockWise";
@@ -353,7 +354,8 @@ namespace LeafRanger
                 clockDirection = "clockWise";
             }
         }
-        IEnumerator DelayResetAttackInPre(float delayTime){
+        IEnumerator DelayResetAttackInPre(float delayTime)
+        {
             yield return new WaitForSeconds(delayTime);
             attack = false;
             coroutineResetAttackPre = null;
@@ -375,7 +377,6 @@ namespace LeafRanger
         IEnumerator StayOrMove(float delayTime)
         {
             float randomDirection = Random.Range(0, 2);
-            Debug.Log(randomDirection);
             if (randomDirection < 0.7)
             {
                 RandomDirection();

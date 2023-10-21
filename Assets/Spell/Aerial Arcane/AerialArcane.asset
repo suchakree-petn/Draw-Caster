@@ -28,16 +28,16 @@ MonoBehaviour:
   _lowThreshold: 0.2
   _midThreshold: 0.5
   _baseSkillDamageMultiplier: 1
-  _damageSpellLevelMultiplier1: 1
-  _damageSpellLevelMultiplier2: 1.2
-  _damageSpellLevelMultiplier3: 2
+  _damageSpellLevelMultiplier1: 1.4
+  _damageSpellLevelMultiplier2: 1.7
+  _damageSpellLevelMultiplier3: 3
   _delayTime: 3
   _amountLevel1: 1
-  knockback1: 50
+  knockback1: 150
   _amountLevel2: 1
-  knockback2: 60
+  knockback2: 170
   _amountLevel3: 1
-  knockback3: 70
+  knockback3: 200
   selfDestructTime: 3
   AerialArcanePrefab: {fileID: 7564261515608954200, guid: 3920dd4debd54534a83c8b5766b99b9a,
     type: 3}

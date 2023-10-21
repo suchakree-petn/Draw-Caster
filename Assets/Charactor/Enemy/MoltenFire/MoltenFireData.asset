@@ -18,7 +18,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _moveSpeed: 1
-  _hpBase: 20000
+  _hpBase: 10000
   _hpMultiplier: 0
   _hpBonus: 0
   _manaBase: 0

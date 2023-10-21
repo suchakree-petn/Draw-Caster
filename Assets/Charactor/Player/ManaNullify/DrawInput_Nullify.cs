@@ -20,9 +20,6 @@ public class DrawInput_Nullify : MonoBehaviour
     public float mostAbove;
     public float mostButtom;
 
-    [Header("New Matrix Dimension")]
-    public float newMostRight;
-
     private void Update()
     {
         if (_playerAction.Player.DrawInput.IsPressed())
@@ -87,7 +84,7 @@ public class DrawInput_Nullify : MonoBehaviour
                 }
             }
 
-            inputPos = Resample(inputPos.ToArray(), templatePos.Length);
+            inputPos = Resample(inputPos.ToArray(), 64);
 
             for (int i = 0; i < inputPos.Count; i++)
             {
@@ -182,23 +179,12 @@ public class DrawInput_Nullify : MonoBehaviour
             inputPos = RemoveDuplicates(inputPos);
             inputPos = sortList(inputPos);
 
-
-            newMostRight = float.NegativeInfinity;
-            foreach (Vector2 p in templatePos)
-            {
-                if (p.x > newMostRight)
-                {
-                    newMostRight = p.x;
-                }
-            }
-            sideLenght = 16;
-
+            _inputPos = Resample(_inputPos.ToArray(),sideLenght);
             score = CosSim.CosineSimilarity(inputPos.ToArray(),
                                     templatePos,
                                     sideLenght);
             allScore.Add(score);
         }
-        _inputPos.Clear();
         return allScore.ToArray();
     }
 

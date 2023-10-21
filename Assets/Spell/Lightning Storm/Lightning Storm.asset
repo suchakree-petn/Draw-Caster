@@ -19,7 +19,7 @@ MonoBehaviour:
   _spellType: 2
   _elementalType: 2
   _cooldown: 7
-  _manaCost: 200
+  _manaCost: 150
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -32,7 +32,7 @@ MonoBehaviour:
   _damageSpellLevelMultiplier2: 1
   _damageSpellLevelMultiplier3: 1.2
   _delayTime: 0.3
-  knockbackGaugeDeal: 50
+  knockbackGaugeDeal: 75
   iFrame: 1
   _amountLevel1: 5
   _amountLevel2: 10

@@ -94,12 +94,11 @@ MonoBehaviour:
   manaNullify: {fileID: 1584339524}
   _inputPos: []
   score: 0
-  sideLenght: 0
+  sideLenght: 64
   mostLeft: 0
   mostRight: 0
   mostAbove: 0
   mostButtom: 0
-  newMostRight: 0
 --- !u!1 &1157048768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,8 +1031,9 @@ MonoBehaviour:
   activeDuration: 4
   allMarkObject: []
   allMark: []
-  manaGainBase: 30
+  manaGainBase: 3
   drawInput_Nullify: {fileID: 1050196540}
+  icon: {fileID: 0}
 --- !u!1001 &1337545712
 PrefabInstance:
   m_ObjectHideFlags: 0

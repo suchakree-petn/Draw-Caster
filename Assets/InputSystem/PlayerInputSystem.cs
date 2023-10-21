@@ -9,6 +9,7 @@ public class PlayerInputSystem : MonoBehaviour
     void Awake()
     {
         playerAction = new PlayerAction();
+        playerAction.Enable();
         if (Instance != null && Instance != this)
             {
                 DestroyImmediate(gameObject);
@@ -16,5 +17,6 @@ public class PlayerInputSystem : MonoBehaviour
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
+        
     }
 }
