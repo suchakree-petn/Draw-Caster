@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CheckVelocityWalk_Player : StateMachineBehaviour
 {
@@ -15,16 +16,16 @@ public class CheckVelocityWalk_Player : StateMachineBehaviour
     {
         PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;
         Vector2 movement = playerAction.Player.Movement.ReadValue<Vector2>();
+        Transform rootScale = animator.transform.root;
         if (movement != Vector2.zero)
         {
             if (movement.x < 0)
             {
-                animator.GetComponent<SpriteRenderer>().flipX = true;
+                rootScale.DORotate(new Vector3(0, 180, 0), 0);
             }
             else
             {
-                animator.GetComponent<SpriteRenderer>().flipX = false;
-
+                rootScale.DORotate(new Vector3(0, 0, 0), 0);
             }
             animator.SetFloat("Velocity", 0.2f);
         }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Cinemachine;
 
 
 public enum GameState
@@ -90,6 +91,8 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(transform.root);
+
     }
 
 
@@ -148,6 +151,7 @@ public class GameController : MonoBehaviour
     //     return allEnemyInCamera.ToArray();
     // }
 
+
     public void StageClear()
     {
         if (allEnemyInScene.Count == 0 && currentState == GameState.InGame)
@@ -172,15 +176,20 @@ public class GameController : MonoBehaviour
     {
         OnInstantiateUI += InstantiatePlayerUI;
         AddAllEnemyInSceneToList();
-        OnBeforeStart += ShowStageFloor;
-        OnBeforeStart += () => DontDestroyOnLoad(ManaNullify.Instance.transform.root);
+        OnBeforeStart += () =>
+        {
+            ShowStageFloor();
+            DontDestroyOnLoad(ManaNullify.Instance.transform.root);
+            Instance.transform.GetChild(2).GetComponent<CinemachineVirtualCamera>().Follow = GameObject.FindWithTag("Player").transform;
+            Instance.transform.GetChild(2).GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = GameObject.FindWithTag("BorderMap").               GetComponent<Collider2D>();
+        };
         WhileInGame += StageClear;
         OnBeforeEnding += GenerateDoor;
     }
     private void OnDisable()
     {
         OnInstantiateUI -= InstantiatePlayerUI;
-        OnBeforeStart -= ShowStageFloor;
+        // OnBeforeStart -= ShowStageFloor;
         WhileInGame -= StageClear;
         OnBeforeEnding -= GenerateDoor;
     }

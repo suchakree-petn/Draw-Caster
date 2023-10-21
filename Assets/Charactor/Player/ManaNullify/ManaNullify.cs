@@ -170,7 +170,7 @@ public class ManaNullify : MonoBehaviour
     private void OnEnable()
     {
         DOTween.Kill(this);
-
+        vCam = GameController.Instance.transform.GetChild(2).GetComponent<CinemachineVirtualCamera>();
         originalSize = vCam.m_Lens.OrthographicSize;
         playerAction = PlayerInputSystem.Instance.playerAction;
         playerAction.Player.ManaNullify.Enable();
