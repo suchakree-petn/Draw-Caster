@@ -38,15 +38,13 @@ public class GameController : MonoBehaviour
     //public List<GameObject> allEnemyInCamera = new List<GameObject>();
     public List<string> scene = new List<string>();
     public int currentScene = 0;
-    [SerializeField] private GameObject doorToNextStage;
+    public GameObject doorToNextStage;
     [SerializeField] private GameObject tmpStageFloor;
     [SerializeField] private GameObject playerUI;
 
     public static Action<GameObject> OnPlayerDead;
     public static Action<GameObject, Elemental> OnPlayerTakeDamage;
-
-
-
+    private object beark;
 
     private void Update()
     {
@@ -151,7 +149,14 @@ public class GameController : MonoBehaviour
     //     return allEnemyInCamera.ToArray();
     // }
 
-
+    public string GetSceneName()
+    {
+        Scene sceneName = SceneManager.GetActiveScene();
+        return sceneName.name;
+    }
+    // private void SetPortalFalse(){
+    //     doorToNextStage.SetActive(false);
+    // }
     public void StageClear()
     {
         if (allEnemyInScene.Count == 0 && currentState == GameState.InGame)
@@ -161,9 +166,8 @@ public class GameController : MonoBehaviour
     }
     private void ShowStageFloor()
     {
-        Scene sceneName = SceneManager.GetActiveScene();
         if (GameObject.Find("StageFloor") != null) tmpStageFloor = GameObject.Find("StageFloor");
-        tmpStageFloor.GetComponent<TextMeshProUGUI>().text = sceneName.name;
+        tmpStageFloor.GetComponent<TextMeshProUGUI>().text = GetSceneName();
     }
     public void GenerateDoor()
     {
@@ -172,16 +176,54 @@ public class GameController : MonoBehaviour
         // float offset = 3;
         // doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, offset, 0);
     }
+    void LearningStage()
+    {
+        if(GameObject.Find("Canvas_UI_Learning") != null){
+            String currentSceneName = GetSceneName();
+            GameObject spellSlots = GameObject.FindWithTag("Player").transform.GetChild(4).gameObject;
+            GameObject manaNullify = GameObject.FindWithTag("Player").transform.GetChild(6).gameObject;
+            GameObject canvasUILearning = GameObject.Find("Canvas_UI_Learning");
+            GameObject tips_1 = canvasUILearning.transform.GetChild(0).gameObject;
+            GameObject tips_2 = canvasUILearning.transform.GetChild(1).gameObject;
+            GameObject tips_3 = canvasUILearning.transform.GetChild(2).gameObject;
+            GameObject buttonTips = canvasUILearning.transform.GetChild(3).gameObject;
+            tips_1.SetActive(false);
+            tips_2.SetActive(false);
+            tips_3.SetActive(false);
+            buttonTips.SetActive(false);
+            spellSlots.SetActive(true);
+            manaNullify.SetActive(true);
+            if (currentSceneName == "Stage_1_Learning")
+            {
+                tips_1.SetActive(true);
+                buttonTips.SetActive(true);
+                spellSlots.SetActive(false);
+                manaNullify.SetActive(false);
+            }
+            else if (currentSceneName == "Stage_2_Learning")
+            {
+                tips_2.SetActive(true);
+                buttonTips.SetActive(true);
+                manaNullify.SetActive(false);
+            }else if (currentSceneName == "Stage_3_Learning")
+            {
+                tips_3.SetActive(true);
+                buttonTips.SetActive(true);
+            }
+        }
+    }
     private void OnEnable()
     {
         OnInstantiateUI += InstantiatePlayerUI;
-        AddAllEnemyInSceneToList();
         OnBeforeStart += () =>
         {
+            AddAllEnemyInSceneToList();
             ShowStageFloor();
+            LearningStage();
+            // SetPortalFalse();
             DontDestroyOnLoad(ManaNullify.Instance.transform.root);
             Instance.transform.GetChild(2).GetComponent<CinemachineVirtualCamera>().Follow = GameObject.FindWithTag("Player").transform;
-            Instance.transform.GetChild(2).GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = GameObject.FindWithTag("BorderMap").               GetComponent<Collider2D>();
+            Instance.transform.GetChild(2).GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = GameObject.FindWithTag("BorderMap").GetComponent<Collider2D>();
         };
         WhileInGame += StageClear;
         OnBeforeEnding += GenerateDoor;

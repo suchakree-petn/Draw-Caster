@@ -366,7 +366,7 @@ namespace LeafRanger
             attack = false;
             yield return new WaitForSeconds(delayTime);
             coroutineAttackAnimation = null;
-            if (currentState == State.WaitForNextAttack)
+            if (!death && currentState == State.WaitForNextAttack)
             {
                 ChangeStateManager();
             }

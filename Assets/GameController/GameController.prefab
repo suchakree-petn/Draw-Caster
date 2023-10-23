@@ -225,8 +225,11 @@ MonoBehaviour:
   currentState: 0
   allEnemyInScene: []
   scene:
-  - Stage_1_Scene
-  - Stage_2_Scene
+  - Stage_1_Learning
+  - Stage_2_Learning
+  - Stage_3_Learning
+  - Stage_4_Scene
+  - Stage_5_Scene
   currentScene: 1
   doorToNextStage: {fileID: 3089283304333451467}
   tmpStageFloor: {fileID: 3089283304333451467}
