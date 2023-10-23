@@ -10,13 +10,13 @@ public class ClickLearning : MonoBehaviour
     private void OnEnable() {
         playerActions = PlayerInputSystem.Instance.playerAction;
         playerActions.Player.PressAttack.Enable();
-        playerActions.Player.PressAttack.started += OnLeftClick;
+        playerActions.Player.PressAttack.canceled += OnLeftClick;
         Time.timeScale = 0;
     }
     public void OnLeftClick(InputAction.CallbackContext context){
         Time.timeScale = 1;
         playerActions.Player.PressAttack.Disable();
-        playerActions.Player.PressAttack.started -= OnLeftClick;
+        playerActions.Player.PressAttack.canceled -= OnLeftClick;
         gameObject.SetActive(false);
     }
 }
