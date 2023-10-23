@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using DG.Tweening;
 using DrawCaster.Util;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerManager : CharactorManager<PlayerData>
 {
@@ -13,13 +11,13 @@ public class PlayerManager : CharactorManager<PlayerData>
     [SerializeField] private Animator animator;
     [SerializeField] private AnimationClip knockbackClip;
     [SerializeField] private float playerKnockbackDistance;
+    [SerializeField] private Rigidbody2D playerRB;
     public Action OnPlayerKnockback;
 
     public override PlayerData GetCharactorData()
     {
         return playerData;
     }
-
     public override void TakeDamage(Elemental damage)
     {
         float damageDeal = 0;
@@ -59,7 +57,7 @@ public class PlayerManager : CharactorManager<PlayerData>
         Transform playerLowerTransform = DrawCasterUtil.GetLowerTransformOf(transform);
         Transform enemyLowerTransform = DrawCasterUtil.GetLowerTransformOf(damage.attacker.transform);
         Vector2 direction = playerLowerTransform.position - enemyLowerTransform.position;
-        transform.DOMove(transform.position + (Vector3)(direction.normalized * playerKnockbackDistance), knockbackClip.length);
+        transform.DOMove(playerRB.position + (direction.normalized * playerKnockbackDistance), knockbackClip.length);
     }
     public override void EndKnockback()
     {
@@ -86,6 +84,7 @@ public class PlayerManager : CharactorManager<PlayerData>
         GameController.OnPlayerDead += Dead;
         GameController.OnPlayerTakeDamage += CheckDead;
         _playerAction = PlayerInputSystem.Instance.playerAction;
+
     }
     protected override void OnDisable()
     {
