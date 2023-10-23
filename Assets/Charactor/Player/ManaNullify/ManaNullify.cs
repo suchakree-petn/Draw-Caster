@@ -39,7 +39,7 @@ public class ManaNullify : MonoBehaviour
     [SerializeField] private Transform markPrefab;
     [SerializeField] private bool isActive;
     [SerializeField] private Vector2 spawnOffset;
-    [SerializeField] private float activeDuration;
+    public float activeDuration;
     [SerializeField] private List<Transform> allMarkObject = new();
     [SerializeField] private List<NullifyMark> allMark = new();
     public Action<float[], Vector2> OnFinishDraw;
@@ -49,6 +49,8 @@ public class ManaNullify : MonoBehaviour
     Sequence nullifySequence;
     float originalSize;
     [SerializeField] private Image icon;
+    [SerializeField] private GameObject UI;
+    public float bgFadeDuration;
 
     void ZoomAnim()
     {
@@ -132,7 +134,7 @@ public class ManaNullify : MonoBehaviour
 
     private void SlowIn()
     {
-
+        FadeInUI();
         DOTween.To(() => Time.timeScale, x => Time.timeScale = x, timeScale, durationToTimeScale)
         .SetUpdate(true).SetEase(slowCurve).OnComplete(() =>
         {
@@ -167,43 +169,6 @@ public class ManaNullify : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        DOTween.Kill(this);
-        vCam = GameController.Instance.transform.GetChild(2).GetComponent<CinemachineVirtualCamera>();
-        originalSize = vCam.m_Lens.OrthographicSize;
-        playerAction = PlayerInputSystem.Instance.playerAction;
-        playerAction.Player.ManaNullify.Enable();
-        playerAction.Player.ManaNullify.started += (ctx) => ZoomAnim();
-        playerAction.Player.ManaNullify.performed += Show;
-
-        playerAction.Player.ManaNullify.canceled += (ctx) =>
-        {
-            SlowOut();
-            ResetZoom();
-            Debug.Log("nullify canceled");
-            if (!isActive)
-            {
-                drawInput_Nullify.gameObject.SetActive(false);
-            }
-        };
-        OnFinishDraw += DestroyMarkObject;
-
-        transform.root.GetComponent<PlayerManager>().OnPlayerKnockback += BackToNormal;
-        playerAction.Player.DrawInput.canceled += (ctx) =>
-        {
-            List<Texture2D> texture2Ds = new();
-            foreach (NullifyMark mark in allMark)
-            {
-                texture2Ds.Add(mark.texture);
-            }
-            OnFinishDraw?.Invoke(
-                drawInput_Nullify.ResamplingMouseInputPos(texture2Ds.ToArray()),
-                DrawCasterUtil.GetCurrentMousePosition()
-                );
-        };
-
-    }
     private void Show(InputAction.CallbackContext context)
     {
         // Show all nullifyable
@@ -240,7 +205,6 @@ public class ManaNullify : MonoBehaviour
         {
             return;
         }
-        Debug.Log("OnFinishFraw");
         int count1 = allMarkObject.Count;
         for (int i = 0; i < count1; i++)
         {
@@ -262,6 +226,7 @@ public class ManaNullify : MonoBehaviour
 
     private void BackToNormal()
     {
+        FadeOutUI();
         isActive = false;
         SlowOut();
         ResetZoom();
@@ -275,12 +240,82 @@ public class ManaNullify : MonoBehaviour
         allMarkObject.Clear();
     }
 
+    private void FadeInUI()
+    {
+        if (!UI.activeInHierarchy)
+        {
+            UI.SetActive(true);
+            UI.transform.GetChild(0).gameObject.SetActive(true);
+            SpriteRenderer spriteRenderer = UI.transform.GetChild(1).GetComponent<SpriteRenderer>();
+            spriteRenderer.DOFade(0.5f, bgFadeDuration).SetUpdate(true);
+        }
+        else
+        {
+            Debug.Log("bg is active");
+        }
+    }
+    private void FadeOutUI()
+    {
+        if (UI.activeInHierarchy)
+        {
+            UI.transform.GetChild(0).gameObject.SetActive(false);
+            SpriteRenderer spriteRenderer = UI.transform.GetChild(1).GetComponent<SpriteRenderer>();
+            spriteRenderer.DOFade(0, bgFadeDuration).OnComplete(() =>
+            {
+                UI.SetActive(false);
+            });
+        }
+        else
+        {
+            Debug.Log("bg is not active");
+        }
+    }
+
+    private void OnEnable()
+    {
+        // DOTween.Kill(this);
+        vCam = GameController.Instance.transform.GetChild(2).GetComponent<CinemachineVirtualCamera>();
+        originalSize = vCam.m_Lens.OrthographicSize;
+        playerAction = PlayerInputSystem.Instance.playerAction;
+        playerAction.Player.ManaNullify.Enable();
+        playerAction.Player.ManaNullify.started += (ctx) => ZoomAnim();
+        playerAction.Player.ManaNullify.performed += (ctx) =>
+        {
+            Show(ctx);
+        };
+
+        playerAction.Player.ManaNullify.canceled += (ctx) =>
+        {
+            SlowOut();
+            ResetZoom();
+            Debug.Log("nullify canceled");
+            if (!isActive)
+            {
+                drawInput_Nullify.gameObject.SetActive(false);
+            }
+        };
+        OnFinishDraw += DestroyMarkObject;
+
+        transform.root.GetComponent<PlayerManager>().OnPlayerKnockback += BackToNormal;
+        playerAction.Player.DrawInput.canceled += (ctx) =>
+        {
+            List<Texture2D> texture2Ds = new();
+            foreach (NullifyMark mark in allMark)
+            {
+                texture2Ds.Add(mark.texture);
+            }
+            OnFinishDraw?.Invoke(
+                drawInput_Nullify.ResamplingMouseInputPos(texture2Ds.ToArray()),
+                DrawCasterUtil.GetCurrentMousePosition()
+                );
+        };
+
+    }
     private void OnDisable()
     {
         vCam.m_Lens.OrthographicSize = originalSize;
         playerAction.Player.ManaNullify.Disable();
         OnFinishDraw -= DestroyMarkObject;
-        playerAction.Player.ManaNullify.performed -= Show;
 
     }
 }
