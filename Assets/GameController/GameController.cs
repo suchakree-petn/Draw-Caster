@@ -168,9 +168,9 @@ public class GameController : MonoBehaviour
     public void GenerateDoor()
     {
         Debug.Log("GenerateDoor");
-        float offset = 3;
         doorToNextStage.SetActive(true);
-        doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, offset, 0);
+        // float offset = 3;
+        // doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, offset, 0);
     }
     private void OnEnable()
     {
