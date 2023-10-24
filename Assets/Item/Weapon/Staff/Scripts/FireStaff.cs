@@ -54,7 +54,7 @@ public class FireStaff : Weapon
     private void ShootSpreadingFireBall(Transform transform)
     {
         // Spawn and init dmg
-        GameObject fireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity);
+        GameObject fireBall = Instantiate(fireBallPrefab, DrawCasterUtil.GetMidTransformOf(transform).position, Quaternion.identity);
         fireBall = DrawCasterUtil.AddAttackHitTo(fireBall,
             elementType,
             transform.gameObject,
