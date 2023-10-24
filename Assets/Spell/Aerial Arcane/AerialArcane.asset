@@ -18,8 +18,8 @@ MonoBehaviour:
   _level: 0
   _spellType: 2
   _elementalType: 4
-  _cooldown: 9
-  _manaCost: 100
+  _cooldown: 23
+  _manaCost: 120
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -27,10 +27,10 @@ MonoBehaviour:
   UI_image: {fileID: 21300000, guid: 1bf82ae9b4717dc4eb09d3f3647c06a3, type: 3}
   _lowThreshold: 0.2
   _midThreshold: 0.5
-  _baseSkillDamageMultiplier: 1
+  _baseSkillDamageMultiplier: 0.3
   _damageSpellLevelMultiplier1: 1.4
   _damageSpellLevelMultiplier2: 1.7
-  _damageSpellLevelMultiplier3: 3
+  _damageSpellLevelMultiplier3: 2.2
   _delayTime: 3
   _amountLevel1: 1
   knockback1: 150
@@ -41,5 +41,6 @@ MonoBehaviour:
   selfDestructTime: 3
   AerialArcanePrefab: {fileID: 7564261515608954200, guid: 3920dd4debd54534a83c8b5766b99b9a,
     type: 3}
-  iFrame: 1
+  iFrame: 0.5
+  DurationBarPrefab: {fileID: 0}
   speed: 10

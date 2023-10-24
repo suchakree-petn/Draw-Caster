@@ -11,8 +11,9 @@ public class ToNextStage : MonoBehaviour, IInteractable
     {
         List<string> sceneList = GameController.Instance.scene;
         Scene scene = SceneManager.GetActiveScene();
-        int nextScene = scene.buildIndex + 1;
-        SceneManager.LoadScene(nextScene);
+        List<string> scenes = GameController.Instance.scene;
+        int nextScene = scenes.IndexOf(scene.name) + 1;
+        SceneManager.LoadScene(scenes[nextScene]);
         GameController.Instance.currentState = GameState.InstantiateUI;
         GameController.Instance.doorToNextStage.SetActive(false);
     }

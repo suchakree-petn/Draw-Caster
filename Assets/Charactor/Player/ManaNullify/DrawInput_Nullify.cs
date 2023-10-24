@@ -24,7 +24,7 @@ public class DrawInput_Nullify : MonoBehaviour
     {
         if (_playerAction.Player.DrawInput.IsPressed())
         {
-
+            MouseTrail.Instance.EnableMouseTrail();
             Draw();
         }
     }

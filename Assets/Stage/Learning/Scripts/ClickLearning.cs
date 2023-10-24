@@ -8,10 +8,14 @@ using UnityEngine.SceneManagement;
 public class ClickLearning : MonoBehaviour
 {
     private PlayerAction playerActions;
+    private void Awake()
+    {
+        playerActions = PlayerInputSystem.Instance.playerAction;
+
+    }
     private void OnEnable()
     {
         DisableAbililyWhenOpenUI();
-        playerActions = PlayerInputSystem.Instance.playerAction;
         playerActions.Player.PressAttack.Enable();
         playerActions.Player.PressAttack.canceled += OnLeftClick;
         Time.timeScale = 0;
@@ -32,10 +36,12 @@ public class ClickLearning : MonoBehaviour
         weaponHolder.enabled = false;
         spellSlots.SetActive(false);
         manaNullify.SetActive(false);
+        playerActions.Player.Movement.Disable();
     }
     void EnableAbililyWhenCloseUI()
     {
-        String currentSceneName = SceneManager.GetActiveScene().name;
+        playerActions.Player.Movement.Enable();
+        string currentSceneName = SceneManager.GetActiveScene().name;
         WeaponHolder weaponHolder = GameObject.FindWithTag("Player").transform.GetChild(1).gameObject.GetComponent<WeaponHolder>();
         GameObject spellSlots = GameObject.FindWithTag("Player").transform.GetChild(4).gameObject;
         GameObject manaNullify = GameObject.FindWithTag("Player").transform.GetChild(6).gameObject;

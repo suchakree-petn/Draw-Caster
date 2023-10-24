@@ -45,7 +45,6 @@ public class GameController : MonoBehaviour
 
     public static Action<GameObject> OnPlayerDead;
     public static Action<GameObject, Elemental> OnPlayerTakeDamage;
-    private object beark;
 
     private void Update()
     {
@@ -53,6 +52,7 @@ public class GameController : MonoBehaviour
         {
             case GameState.InstantiateUI:
                 OnInstantiateUI?.Invoke();
+                Debug.LogWarning("Instance UI");
                 currentState = GameState.BeforeStart;
                 break;
             case GameState.BeforeStart:
@@ -194,7 +194,7 @@ public class GameController : MonoBehaviour
     {
         if (GameObject.Find("Canvas_UI_Learning") != null)
         {
-            String currentSceneName = GetSceneName();
+            string currentSceneName = GetSceneName();
             GameObject spellSlots = GameObject.FindWithTag("Player").transform.GetChild(4).gameObject;
             GameObject manaNullify = GameObject.FindWithTag("Player").transform.GetChild(6).gameObject;
             GameObject canvasUILearning = GameObject.Find("Canvas_UI_Learning");

@@ -22,6 +22,7 @@ public class AerialArcane : Spell
     public float selfDestructTime;
     [SerializeField] private GameObject AerialArcanePrefab;
     [SerializeField] private float iFrame;
+    public GameObject DurationBarPrefab;
 
     public override void Cast1(GameObject player, GameObject target)
     {
@@ -54,7 +55,7 @@ public class AerialArcane : Spell
 
     public override void CastSpell(float score, GameObject player)
     {
-        base.CastSpell(score,player);
+        base.CastSpell(score, player);
         currentScore = score;  // Store the score value
         int castLevel = CalThreshold(currentScore);
         CastByLevel(castLevel, player, null);
@@ -277,7 +278,7 @@ public class AerialArcane : Spell
             float angleRad = Mathf.Atan2(direction.y, direction.x);
             float angleDeg = angleRad * Mathf.Rad2Deg;
             spawnedObject.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
-            rb2d.AddForce(direction * speed, ForceMode2D.Impulse);
+            rb2d.AddForce(direction * (speed * 0.4f), ForceMode2D.Impulse);
         }
     }
 

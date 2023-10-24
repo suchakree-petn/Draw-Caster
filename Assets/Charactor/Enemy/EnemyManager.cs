@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DrawCaster.Util;
 using UnityEngine;
 
 public class EnemyManager : CharactorManager<EnemyData>
@@ -27,7 +28,7 @@ public class EnemyManager : CharactorManager<EnemyData>
         {
             damageDeal = CalcDamageRecieve(GetCharactorData(), damage);
             currentHp -= damageDeal;
-            TextDamageAsset.Instance.CreateTextDamage(transform.position, damageDeal, damage._elementalType);
+            TextDamageAsset.Instance.CreateTextDamage(DrawCasterUtil.GetMidTransformOf(transform).position, damageDeal, damage._elementalType);
         }
         OnEnemyTakeDamage?.Invoke(gameObject, damage);
     }

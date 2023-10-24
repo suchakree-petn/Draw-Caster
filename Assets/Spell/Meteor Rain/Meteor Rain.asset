@@ -18,8 +18,8 @@ MonoBehaviour:
   _level: 0
   _spellType: 1
   _elementalType: 1
-  _cooldown: 10
-  _manaCost: 130
+  _cooldown: 25
+  _manaCost: 160
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -27,11 +27,11 @@ MonoBehaviour:
   UI_image: {fileID: 21300000, guid: 026fac2b3b513c1489da6ab5fdea5032, type: 3}
   _lowThreshold: 0.3
   _midThreshold: 0.6
-  _baseSkillDamageMultiplier: 1
+  _baseSkillDamageMultiplier: 0.5
   _damageSpellLevelMultiplier1: 0.7
   _damageSpellLevelMultiplier2: 1
   _damageSpellLevelMultiplier3: 1.1
-  selectedPositionDuration: 1.5
+  selectedPositionDuration: 5
   knockbackGaugeDeal: 80
   iFrame: 1
   meteorAmount1: 7
@@ -39,8 +39,11 @@ MonoBehaviour:
   meteorAmount3: 19
   meteorMoveSpeed: 0.2
   randomPositionRadius: 3
-  _meteorPrefab: {fileID: 2792028505011184367, guid: b975da128b06c134da0ec8371e9f5ac2,
+  _meteorPrefab: {fileID: 2792028505011184367, guid: 66f3a50808acc884887d3804eeca82b1,
     type: 3}
   _selectPositionPrefab: {fileID: 402501787774780549, guid: 9ee0f28d7dd618448a696917cbe4b42e,
     type: 3}
-  selectedPosition: {x: -9.879083, y: 14.823341}
+  DurationBarPrefab: {fileID: 7614731784926023167, guid: d426b96bd75acfe4fab565f0fac64f93,
+    type: 3}
+  selectedPosition: {x: -1.0086412, y: 5.134303}
+  isSelected: 1

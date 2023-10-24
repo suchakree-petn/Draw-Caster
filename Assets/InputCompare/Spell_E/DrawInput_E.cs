@@ -182,7 +182,6 @@ public class DrawInput_E : MonoBehaviour
                 newMostRight = p.x;
             }
         }
-        sideLenght = 16;
         score = CosSim.CosineSimilarity(inputPos.ToArray(),
                                 templatePos,
                                 sideLenght);
@@ -262,6 +261,8 @@ public class DrawInput_E : MonoBehaviour
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = Time.timeScale * 0.01f;
 
+        MouseTrail.Instance.EnableMouseTrail();
+
         _playerAction.Player.DrawInput.Enable();
         _playerAction.Player.DrawInput.started += ctx => timer = new(0, 99);
         _playerAction.Player.DrawInput.canceled += ResamplingMouseInputPos;
@@ -271,6 +272,8 @@ public class DrawInput_E : MonoBehaviour
     {
         Time.timeScale = 1;
         Time.fixedDeltaTime = 0.02f;
+
+        MouseTrail.Instance.DisableMouseTrail();
 
         _playerAction.Player.DrawInput.Disable();
         _playerAction.Player.DrawInput.canceled -= ResamplingMouseInputPos;

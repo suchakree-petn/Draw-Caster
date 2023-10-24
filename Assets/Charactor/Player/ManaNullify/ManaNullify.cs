@@ -39,8 +39,9 @@ public class ManaNullify : MonoBehaviour
     [SerializeField] private Transform markPrefab;
     [SerializeField] private bool isActive;
     [SerializeField] private Vector2 spawnOffset;
-    public float activeDuration;
-    [SerializeField] private List<Transform> allMarkObject = new();
+    [SerializeField] private float activeDuration;
+    public float totalActiveDuration => activeDuration * allMarkObject.Count;
+    public List<Transform> allMarkObject = new();
     [SerializeField] private List<NullifyMark> allMark = new();
     public Action<float[], Vector2> OnFinishDraw;
     public float manaGainBase;
@@ -139,7 +140,8 @@ public class ManaNullify : MonoBehaviour
         .SetUpdate(true).SetEase(slowCurve).OnComplete(() =>
         {
             nullifySequence = DOTween.Sequence();
-            nullifySequence.AppendInterval(activeDuration).SetUpdate(true)
+            Debug.Log(totalActiveDuration);
+            nullifySequence.AppendInterval(totalActiveDuration).SetUpdate(true)
             .OnUpdate(() =>
             {
                 if (Input.GetMouseButtonUp(1) && !drawInput_Nullify.gameObject.activeInHierarchy && isActive)
@@ -212,12 +214,17 @@ public class ManaNullify : MonoBehaviour
             Debug.Log("score: " + score + " Max: " + max);
             if (score >= max || i == count1 - 1)
             {
+                if (allMarkObject[i] == null)
+                {
+                    break;
+                }
                 Destroy(allMarkObject[i].parent.gameObject);
                 Debug.Log("destroy " + allMarkObject[i].name);
                 allMarkObject.RemoveAt(i);
 
                 // Gain mana
-                float manaGain = manaGainBase * 1 + Mathf.Pow(1 + scores[i], 6);
+                float manaGain = manaGainBase * Mathf.Pow(1 + scores[i], 6);
+                Debug.Log(manaGainBase * Mathf.Pow(1 + scores[i], 6));
                 playerManager.GainMana(manaGain);
                 break;
             }
@@ -296,7 +303,6 @@ public class ManaNullify : MonoBehaviour
         };
         OnFinishDraw += DestroyMarkObject;
 
-        transform.root.GetComponent<PlayerManager>().OnPlayerKnockback += BackToNormal;
         playerAction.Player.DrawInput.canceled += (ctx) =>
         {
             List<Texture2D> texture2Ds = new();
@@ -308,6 +314,7 @@ public class ManaNullify : MonoBehaviour
                 drawInput_Nullify.ResamplingMouseInputPos(texture2Ds.ToArray()),
                 DrawCasterUtil.GetCurrentMousePosition()
                 );
+            MouseTrail.Instance.DisableMouseTrail();
         };
 
     }

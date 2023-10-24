@@ -12,12 +12,11 @@ public class ManaNullifyUI : MonoBehaviour
     private void OnEnable()
     {
         durationBar.value = 1;
-        durationBar.DOValue(0, manaNullify.activeDuration)
+        durationBar.DOValue(0, manaNullify.totalActiveDuration)
         .SetUpdate(true)
         .SetEase(Ease.Linear)
         .OnComplete(() =>
         {
-            // durationBar.gameObject.SetActive(false);
         });
     }
 }
