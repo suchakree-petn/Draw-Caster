@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Cinemachine;
+using UnityEngine.UI;
 
 
 public enum GameState
@@ -154,9 +155,6 @@ public class GameController : MonoBehaviour
         Scene sceneName = SceneManager.GetActiveScene();
         return sceneName.name;
     }
-    // private void SetPortalFalse(){
-    //     doorToNextStage.SetActive(false);
-    // }
     public void StageClear()
     {
         if (allEnemyInScene.Count == 0 && currentState == GameState.InGame)
@@ -176,9 +174,26 @@ public class GameController : MonoBehaviour
         // float offset = 3;
         // doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, offset, 0);
     }
+    void DisableTipsButton()
+    {
+        if (GameObject.Find("Canvas_UI_Learning") != null)
+        {
+            GameObject.Find("Canvas_UI_Learning").transform.GetChild(3).gameObject.GetComponent<Button>().interactable = false;
+            Debug.Log("DisableTipsButton");
+            SetUILearningToDefault();
+        }
+    }
+    void SetUILearningToDefault()
+    {
+        Transform canvasUILearning = GameObject.Find("Canvas_UI_Learning").transform;
+        canvasUILearning.GetChild(0).gameObject.SetActive(false);
+        canvasUILearning.GetChild(1).gameObject.SetActive(false);
+        canvasUILearning.GetChild(2).gameObject.SetActive(false);
+    }
     void LearningStage()
     {
-        if(GameObject.Find("Canvas_UI_Learning") != null){
+        if (GameObject.Find("Canvas_UI_Learning") != null)
+        {
             String currentSceneName = GetSceneName();
             GameObject spellSlots = GameObject.FindWithTag("Player").transform.GetChild(4).gameObject;
             GameObject manaNullify = GameObject.FindWithTag("Player").transform.GetChild(6).gameObject;
@@ -205,7 +220,8 @@ public class GameController : MonoBehaviour
                 tips_2.SetActive(true);
                 buttonTips.SetActive(true);
                 manaNullify.SetActive(false);
-            }else if (currentSceneName == "Stage_3_Learning")
+            }
+            else if (currentSceneName == "Stage_3_Learning")
             {
                 tips_3.SetActive(true);
                 buttonTips.SetActive(true);
@@ -220,20 +236,27 @@ public class GameController : MonoBehaviour
             AddAllEnemyInSceneToList();
             ShowStageFloor();
             LearningStage();
-            // SetPortalFalse();
             DontDestroyOnLoad(ManaNullify.Instance.transform.root);
             Instance.transform.GetChild(2).GetComponent<CinemachineVirtualCamera>().Follow = GameObject.FindWithTag("Player").transform;
             Instance.transform.GetChild(2).GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = GameObject.FindWithTag("BorderMap").GetComponent<Collider2D>();
         };
         WhileInGame += StageClear;
-        OnBeforeEnding += GenerateDoor;
+        OnBeforeEnding += () =>
+        {
+            GenerateDoor();
+            DisableTipsButton();
+        };
     }
     private void OnDisable()
     {
         OnInstantiateUI -= InstantiatePlayerUI;
         // OnBeforeStart -= ShowStageFloor;
         WhileInGame -= StageClear;
-        OnBeforeEnding -= GenerateDoor;
+        OnBeforeEnding -= () =>
+        {
+            GenerateDoor();
+            DisableTipsButton();
+        };
     }
 }
 
