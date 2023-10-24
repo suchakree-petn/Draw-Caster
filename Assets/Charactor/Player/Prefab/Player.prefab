@@ -1721,6 +1721,7 @@ MonoBehaviour:
   spell: {fileID: 11400000, guid: 22a7280cfc4f6b640bb4437eab4467bf, type: 2}
   cooldown: 0
   drawInput: {fileID: 4206557517871419735}
+  ShowScoreTime: 1
 --- !u!1001 &883863726198827089
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1839,6 +1840,7 @@ MonoBehaviour:
   spell: {fileID: 11400000, guid: 35b258b885c597f41a21266fbb7c4a2f, type: 2}
   cooldown: 0
   drawInput: {fileID: 9139472847491609556}
+  ShowScoreTime: 1
 --- !u!4 &6421424104873018365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6150059276157676460, guid: 086142b8bab44464587852bf39fa2a16,
@@ -1970,6 +1972,7 @@ MonoBehaviour:
   spell: {fileID: 11400000, guid: 4c9cf4eb2c073f94f82f962a34f869d6, type: 2}
   cooldown: 0
   drawInput: {fileID: 3255373487842983407}
+  ShowScoreTime: 1
 --- !u!114 &3255373487842983407 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 819392909622874620, guid: d338a9bb0f225674b8999a2592971934,

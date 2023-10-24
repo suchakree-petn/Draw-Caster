@@ -45,8 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95acbe5ca723e4449e15797bfa60018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isReadyToCast: 0
+  castLevel: 0
   spell: {fileID: 0}
+  cooldown: 0
   drawInput: {fileID: 8255647056622754693}
+  ShowScoreTime: 1
 --- !u!1001 &8197877066027596279
 PrefabInstance:
   m_ObjectHideFlags: 0

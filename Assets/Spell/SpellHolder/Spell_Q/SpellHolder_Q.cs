@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Collections;
 
 public class SpellHolder_Q : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class SpellHolder_Q : MonoBehaviour
     public static InputCompare OnFinishDraw;
     public delegate void CastBehaviour(GameObject player);
     public static CastBehaviour OnFinishCast;
+    
     private void Awake() {
         Instance = this;
     }
@@ -121,14 +123,28 @@ public class SpellHolder_Q : MonoBehaviour
             _isReadyToCast = true;
         }
     }
+    [SerializeField] private float ShowScoreTime;
     void ShowDrawScore(float score, GameObject player)
     {
-        GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text = "Draw Score: " + (score * 100).ToString("F2");
-        GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "Cast Level: " + spell.CalThreshold(score);
+        // GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "Cast Level: " + spell.CalThreshold(score);
+        GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text =(score * 100).ToString("F2") + "%";
+        float castLevel = spell.CalThreshold(score);
+        if(castLevel == 1){
+            GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "I";
+        }else if(castLevel == 2){
+            GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "II";
+        }else if(castLevel == 3){
+            GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "III";
+        }
+        StartCoroutine(DelayShowDrawScore(ShowScoreTime));
         drawInput.gameObject.SetActive(false);
     }
 
-
+    IEnumerator DelayShowDrawScore(float delayTime){
+        yield return new WaitForSeconds(delayTime);
+        GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text = "";
+        GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "";
+    }
 
 
 }
