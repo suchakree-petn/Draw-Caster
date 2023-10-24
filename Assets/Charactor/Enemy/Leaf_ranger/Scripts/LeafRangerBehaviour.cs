@@ -395,7 +395,8 @@ namespace LeafRanger
             yield return new WaitForSeconds(delayTime);
             coroutineKnockback = null;
             knockback = false;
-            currentState = State.Idle;
+            if (!death)currentState = State.Idle;
+
             // attack = false;
         }
         void ClearCoroutine()
