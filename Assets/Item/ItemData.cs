@@ -10,7 +10,7 @@ public class ItemData : MonoBehaviour, ICollectable
         if (GetComponent<SpriteRenderer>() != null)
         {
             SpriteRenderer sp = gameObject.AddComponent<SpriteRenderer>();
-            sp.sprite = item.icon;
+            sp.sprite = item._icon;
         }
     }
 }

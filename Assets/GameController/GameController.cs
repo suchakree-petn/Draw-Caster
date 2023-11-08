@@ -233,6 +233,12 @@ public class GameController : MonoBehaviour
         OnInstantiateUI += InstantiatePlayerUI;
         OnBeforeStart += () =>
         {
+            if(scene[scene.Count-1]==SceneManager.GetActiveScene().name){
+                Destroy(PlayerInputSystem.Instance.transform.root.gameObject);
+                Destroy(GameObject.FindWithTag("Player").transform.root.gameObject);
+                Destroy(Instance.transform.root.gameObject);
+                return;
+            }
             AddAllEnemyInSceneToList();
             ShowStageFloor();
             LearningStage();
