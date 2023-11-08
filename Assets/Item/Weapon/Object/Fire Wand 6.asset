@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b49b17fcc7b4743807b8055be769e2, type: 3}
+  m_Name: Fire Wand 6
+  m_EditorClassIdentifier: 
+  _name: Staff
+  _description: When attack hit enemy, has 30% chance to create a vortex to pull
+    nearby enemies
+  _icon: {fileID: -555151768, guid: e323cf5ee8db8d34da64d767c4688147, type: 3}
+  _itemType: 1
+  _itemRarity: 1
+  _maxStackCount: 0
+  _price: 3
+  itemPrefab: {fileID: 0}
+  elementalType: 2
+  fireDelay: 0
+  _baseSkillDamageMultiplier: 0
+  spreadAngle: 0
+  numberOfSpreads: 0
+  fireBallMoveSpeed: 0
+  fireBallAmount: 0
+  fireBallPrefab: {fileID: 0}

@@ -320,4 +320,4 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  pushPower: 1
+  pushPower: 0.3

@@ -25,7 +25,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   knockbackGaugeDeal: 15
-  _baseSkillDamageMultiplier: 0.05
+  _baseSkillDamageMultiplier: 10
   spreadAngle: 60
   fireBallMoveSpeed: 1600
   fireBallAmount: 1

@@ -280,6 +280,7 @@ MonoBehaviour:
   - Stage_3_Learning
   - Stage_4_Scene
   - Stage_5_Scene
+  - resultScene
   currentScene: 1
   doorToNextStage: {fileID: 3089283304333451467}
   tmpStageFloor: {fileID: 3089283304333451467}

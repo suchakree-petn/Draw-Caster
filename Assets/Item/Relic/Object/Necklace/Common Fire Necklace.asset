@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2519832d508b424786deed825214d48, type: 3}
+  m_Name: Common Fire Necklace
+  m_EditorClassIdentifier: 
+  _name: Common Fire Necklace
+  _description: Increase Fire Elemental Bonus Damage.
+  _icon: {fileID: -1747257885, guid: 590a6d83e89e87142a9a3de65b6ff87d, type: 3}
+  _itemType: 3
+  _itemRarity: 0
+  _maxStackCount: 1
+  _price: 135
+  itemPrefab: {fileID: 0}
+  _relicPart: 0
+  _bonusAttack: 0.12
+  _elementalBonusDamage: 0.06
+  _elementalBonusType: 0

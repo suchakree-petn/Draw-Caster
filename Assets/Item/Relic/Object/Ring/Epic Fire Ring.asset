@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d3b4d9349cf504ba876645d56dbb44, type: 3}
+  m_Name: Epic Fire Ring
+  m_EditorClassIdentifier: 
+  _name: Rare Fire Ring
+  _description: Increase Mana Regeneration by 12%. After Use Skill Mobility Incease
+    Fire Elemental Bonus Damage by 16%.
+  _icon: {fileID: 1940104404, guid: 590a6d83e89e87142a9a3de65b6ff87d, type: 3}
+  _itemType: 3
+  _itemRarity: 2
+  _maxStackCount: 1
+  _price: 543
+  itemPrefab: {fileID: 0}
+  _relicPart: 1
+  _bonusAttack: 0.24
+  _BonusMana: 0.45

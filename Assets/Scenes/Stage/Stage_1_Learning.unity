@@ -555,16 +555,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
-    - target: {fileID: 1829692135199322805, guid: 07ade20c3f977c5428ab6a39c3e3757a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5060573074977151621, guid: 07ade20c3f977c5428ab6a39c3e3757a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5410395923678494383, guid: 07ade20c3f977c5428ab6a39c3e3757a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -584,16 +574,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8193756375570348333, guid: 07ade20c3f977c5428ab6a39c3e3757a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8780092440822241475, guid: 07ade20c3f977c5428ab6a39c3e3757a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07ade20c3f977c5428ab6a39c3e3757a, type: 3}
