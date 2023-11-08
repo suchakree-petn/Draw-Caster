@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ResultScene/resultScene.unity
     guid: 85fe6ac29088f7348a16e097962a34dc
+  - enabled: 1
+    path: Assets/Scenes/Thanva/SpellSelect.unity
+    guid: 216c1cc02dd59f24fb16c4c8ac6c69aa
   m_configObjects: {}
