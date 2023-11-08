@@ -514,11 +514,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MoltenFire
       objectReference: {fileID: 0}
-    - target: {fileID: 8330262462644783004, guid: 098b5d0f787ab2a43b5aeddae736e6bb,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8330262462644783005, guid: 098b5d0f787ab2a43b5aeddae736e6bb,
         type: 3}
       propertyPath: m_RootOrder

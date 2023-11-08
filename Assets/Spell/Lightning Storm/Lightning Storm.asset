@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lightning Storm
   m_EditorClassIdentifier: 
   _name: Lightning Storm
-  _description: 
+  _description: Lightning strikes from enemy target in range every 0.3 s
   _icon: {fileID: 21300000, guid: 4f08fe916539fda40a1fee956d4a4ecc, type: 3}
   _level: 0
   _spellType: 2
