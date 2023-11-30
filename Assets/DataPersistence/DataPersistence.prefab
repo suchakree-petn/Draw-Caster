@@ -47,4 +47,5 @@ MonoBehaviour:
   fileName: Player_Data.game
   gameData:
     playerData: {fileID: 0}
-    defaultPlayerData: {fileID: 0}
+    defaultPlayerData: {fileID: 11400000, guid: 7bbff00b154858542988494be167eb75,
+      type: 2}

@@ -46,9 +46,6 @@ public abstract class CharactorData : ScriptableObject
    public float _frostBonusDamage;
    public float _windBonusDamage;
 
-   [Header("Prefab")]
-   public GameObject CharactorPrefab;
-
    public float GetMaxHp(){
       return (_hpBase * (1 + _hpMultiplier)) + _hpBonus;
    }

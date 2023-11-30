@@ -38,7 +38,6 @@ public class FileDataHandler
                 Debug.LogError("Error while trying to load data from file" + fullPath + "\n" + e);
             }
         }
-
         return loadedData;
     }
     public void Save(GameData data)

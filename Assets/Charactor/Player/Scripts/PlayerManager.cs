@@ -3,7 +3,7 @@ using DG.Tweening;
 using DrawCaster.Util;
 using UnityEngine;
 
-public class PlayerManager : CharactorManager<PlayerData>,IDataPersistence
+public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
 {
     [SerializeField] private PlayerAction _playerAction;
     [SerializeField] private PlayerData playerData;
@@ -119,11 +119,21 @@ public class PlayerManager : CharactorManager<PlayerData>,IDataPersistence
 
     public void LoadData(GameData data)
     {
-        this.playerData = data.playerData;
+        this.playerData._level = data._level;
+        this.playerData._moveSpeed = data._moveSpeed;
+        this.playerData._hpBase = data._hpBase;
+        this.playerData._manaBase = data._manaBase;
+        this.playerData._attackBase = data._attackBase;
+        this.playerData._defenseBase = data._defenseBase;
     }
 
     public void SaveData(ref GameData data)
     {
-        data.playerData = this.playerData;
+        data._level = this.playerData._level;
+        data._moveSpeed = this.playerData._moveSpeed;
+        data._hpBase = this.playerData._hpBase;
+        data._manaBase = this.playerData._manaBase;
+        data._attackBase = this.playerData._attackBase;
+        data._defenseBase = this.playerData._defenseBase;
     }
 }

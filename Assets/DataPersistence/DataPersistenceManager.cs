@@ -17,14 +17,16 @@ namespace DrawCaster.DataPersistence
 
         protected override void InitAfterAwake()
         {
+            this.dataPersistencesObjects = FindAllDataPersistenceObjects();
 
         }
 
         private void Start()
         {
             this.dataHandler = new(Application.persistentDataPath, fileName);
-            this.dataPersistencesObjects = FindAllDataPersistenceObjects();
+            // SaveGame();
             LoadGame();
+
         }
 
 
@@ -50,7 +52,7 @@ namespace DrawCaster.DataPersistence
             {
                 dataPersistenceObj.LoadData(gameData);
             }
-            Debug.Log("Loaded Player data: " + "ID: " + gameData.playerData.GetInstanceID() + "Name: " + gameData.playerData.name);
+            Debug.Log("Loaded Player data");
 
         }
 
@@ -61,17 +63,17 @@ namespace DrawCaster.DataPersistence
             {
                 dataPersistenceObj.SaveData(ref gameData);
             }
-            Debug.Log("Saved Player data: " + "ID: " + gameData.playerData.GetInstanceID() + "Name: " + gameData.playerData.name);
 
             //save data to file using data handler
             dataHandler.Save(gameData);
+            Debug.Log("Saved Player data");
 
         }
 
-        // private void OnApplicationQuit()
-        // {
-        //     SaveGame();
-        // }
+        private void OnApplicationQuit()
+        {
+            SaveGame();
+        }
 
         private List<IDataPersistence> FindAllDataPersistenceObjects()
         {
