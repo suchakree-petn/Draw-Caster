@@ -170,7 +170,7 @@ public class GameController : MonoBehaviour
     public void GenerateDoor()
     {
         Debug.Log("GenerateDoor");
-        doorToNextStage.SetActive(true);
+        Instance.doorToNextStage.SetActive(true);
         // float offset = 3;
         // doorToNextStage.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, offset, 0);
     }

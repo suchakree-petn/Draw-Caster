@@ -902,7 +902,7 @@ MonoBehaviour:
   gaugeRegen: 10
   hited: 0
   isKnockback: 0
-  playerData: {fileID: 11400000, guid: 7bbff00b154858542988494be167eb75, type: 2}
+  playerData: {fileID: 0}
   animator: {fileID: 1157048771}
   knockbackClip: {fileID: 7400000, guid: 885dcfc4ef97d4e4c969e1028db66f70, type: 2}
   playerKnockbackDistance: 1.29

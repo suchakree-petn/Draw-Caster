@@ -1,10 +1,9 @@
 using System;
-
 using DG.Tweening;
 using DrawCaster.Util;
 using UnityEngine;
 
-public class PlayerManager : CharactorManager<PlayerData>
+public class PlayerManager : CharactorManager<PlayerData>,IDataPersistence
 {
     [SerializeField] private PlayerAction _playerAction;
     [SerializeField] private PlayerData playerData;
@@ -116,5 +115,15 @@ public class PlayerManager : CharactorManager<PlayerData>
         {
             currentMana += amount;
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.playerData = data.playerData;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerData = this.playerData;
     }
 }
