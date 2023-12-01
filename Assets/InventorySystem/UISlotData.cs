@@ -1,14 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+
+using DrawCaster.DataPersistence;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UISlotData : MonoBehaviour, IPointerDownHandler
 {
-    public Item item;
+    // public Item item;
+
+    // public void OnPointerDown(PointerEventData eventData)
+    // {
+    //     UIInventory.OnSlotClick?.Invoke(this.item);
+    // }
+    public SpellData spellData;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        UIInventory.OnSlotClick?.Invoke(this.item);
+        SpellSelectUI_Vertical.OnSlotClick?.Invoke(this.spellData);
     }
 }

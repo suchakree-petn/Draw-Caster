@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using DrawCaster.DataPersistence;
 using DrawCaster.Util;
 using UnityEngine;
 
@@ -119,21 +120,21 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        this.playerData._level = data._level;
-        this.playerData._moveSpeed = data._moveSpeed;
-        this.playerData._hpBase = data._hpBase;
-        this.playerData._manaBase = data._manaBase;
-        this.playerData._attackBase = data._attackBase;
-        this.playerData._defenseBase = data._defenseBase;
+        this.playerData._level = data.playerStat._level;
+        this.playerData._moveSpeed = data.playerStat._moveSpeed;
+        this.playerData._hpBase = data.playerStat._hpBase;
+        this.playerData._manaBase = data.playerStat._manaBase;
+        this.playerData._attackBase = data.playerStat._attackBase;
+        this.playerData._defenseBase = data.playerStat._defenseBase;
     }
 
     public void SaveData(ref GameData data)
     {
-        data._level = this.playerData._level;
-        data._moveSpeed = this.playerData._moveSpeed;
-        data._hpBase = this.playerData._hpBase;
-        data._manaBase = this.playerData._manaBase;
-        data._attackBase = this.playerData._attackBase;
-        data._defenseBase = this.playerData._defenseBase;
+        data.playerStat._level = this.playerData._level;
+        data.playerStat._moveSpeed = this.playerData._moveSpeed;
+        data.playerStat._hpBase = this.playerData._hpBase;
+        data.playerStat._manaBase = this.playerData._manaBase;
+        data.playerStat._attackBase = this.playerData._attackBase;
+        data.playerStat._defenseBase = this.playerData._defenseBase;
     }
 }

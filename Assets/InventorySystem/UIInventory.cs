@@ -57,7 +57,7 @@ public abstract class UIInventory : MonoBehaviour
     private GameObject CreateUISlot(SlotItem slotItem)
     {
         GameObject slot = Instantiate(slotPrefab, _inventoryContentTransform);
-        slot.GetComponent<UISlotData>().item = slotItem.item;
+        // slot.GetComponent<UISlotData>().item = slotItem.item;
         slot.transform.GetChild(0).GetComponent<Image>().sprite = slotItem.item._icon;
         slot.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = slotItem.stackCount.ToString();
         return slot;

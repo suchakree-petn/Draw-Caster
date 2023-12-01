@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using Cinemachine;
 using UnityEngine.UI;
+using DrawCaster.DataPersistence;
 
 
 public enum GameState
@@ -46,6 +47,11 @@ public class GameController : MonoBehaviour
     public static Action<GameObject> OnPlayerDead;
     public static Action<GameObject, Elemental> OnPlayerTakeDamage;
 
+
+    private void Start() {
+        DataPersistenceManager.Instance.LoadGame();
+        
+    }
     private void Update()
     {
         switch (currentState)
@@ -91,7 +97,6 @@ public class GameController : MonoBehaviour
     {
         Instance = this;
         DontDestroyOnLoad(transform.root);
-
     }
 
 
@@ -233,7 +238,9 @@ public class GameController : MonoBehaviour
         OnInstantiateUI += InstantiatePlayerUI;
         OnBeforeStart += () =>
         {
-            if(scene[scene.Count-1]==SceneManager.GetActiveScene().name){
+
+            if (scene[scene.Count - 1] == SceneManager.GetActiveScene().name)
+            {
                 Destroy(PlayerInputSystem.Instance.transform.root.gameObject);
                 Destroy(GameObject.FindWithTag("Player").transform.root.gameObject);
                 Destroy(Instance.transform.root.gameObject);

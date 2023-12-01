@@ -27,7 +27,7 @@ MonoBehaviour:
   UI_image: {fileID: 21300000, guid: c17f8e48cdb3d1040b9af86cd528210d, type: 3}
   _lowThreshold: 0.2
   _midThreshold: 0.5
-  _baseSkillDamageMultiplier: 0.7
+  _baseSkillDamageMultiplier: 1.2
   _damageSpellLevelMultiplier1: 0.8
   _damageSpellLevelMultiplier2: 1
   _damageSpellLevelMultiplier3: 1.2

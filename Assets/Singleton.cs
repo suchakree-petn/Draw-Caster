@@ -1,32 +1,37 @@
 using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+{
+    static T instance;
+    public static T Instance
     {
-        static T instance;
-        public static T Instance
+        get
         {
-            get
-            {
-                if (instance == null)
-                    instance = (T)FindObjectOfType(typeof(T));
+            if (instance == null)
+                instance = (T)FindObjectOfType(typeof(T));
 
-                return instance;
-            }
-            protected set => instance = value;
+            return instance;
         }
-        
-        protected virtual void Awake()
-        {
-            if (instance != null && instance != this)
-            {
-                DestroyImmediate(gameObject);
-                return;
-            }
-
-            instance = GetComponent<T>();
-            DontDestroyOnLoad(gameObject.transform.root.gameObject);
-            InitAfterAwake();
-        }
-
-        protected abstract void InitAfterAwake();
+        protected set => instance = value;
     }
+
+    protected virtual void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+
+        instance = GetComponent<T>();
+        DontDestroyOnLoad(gameObject.transform.root.gameObject);
+        InitAfterAwake();
+    }
+
+    protected abstract void InitAfterAwake();
+
+    public void DestroyManager()
+    {
+        Destroy(Instance.gameObject);
+    }
+}

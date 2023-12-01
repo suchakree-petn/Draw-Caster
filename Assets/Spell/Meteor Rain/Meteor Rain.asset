@@ -27,7 +27,7 @@ MonoBehaviour:
   UI_image: {fileID: 21300000, guid: 026fac2b3b513c1489da6ab5fdea5032, type: 3}
   _lowThreshold: 0.3
   _midThreshold: 0.6
-  _baseSkillDamageMultiplier: 0.5
+  _baseSkillDamageMultiplier: 2
   _damageSpellLevelMultiplier1: 0.7
   _damageSpellLevelMultiplier2: 1
   _damageSpellLevelMultiplier3: 1.1
@@ -45,5 +45,5 @@ MonoBehaviour:
     type: 3}
   DurationBarPrefab: {fileID: 7614731784926023167, guid: d426b96bd75acfe4fab565f0fac64f93,
     type: 3}
-  selectedPosition: {x: -1.0086412, y: 5.134303}
+  selectedPosition: {x: -6.9059505, y: -4.7845216}
   isSelected: 1

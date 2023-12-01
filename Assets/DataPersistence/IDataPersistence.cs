@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using DrawCaster.DataPersistence;
 using UnityEngine;
 
-public interface IDataPersistence
+namespace DrawCaster.DataPersistence
 {
-    void LoadData(GameData data);
-    void SaveData(ref GameData data);
+    public interface IDataPersistence
+    {
+        void LoadData(GameData data);
+        void SaveData(ref GameData data);
+    }
 }
+

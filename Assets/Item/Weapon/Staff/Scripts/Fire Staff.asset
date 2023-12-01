@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Fire Staff
   _description: Shoot the fire shard  forward
-  icon: {fileID: 0}
+  _icon: {fileID: 0}
   _itemType: 0
   _itemRarity: 1
-  _isStackable: 0
+  _maxStackCount: 0
+  _price: 0
   itemPrefab: {fileID: 0}
   elementType: 1
   activeRate: 0.15
@@ -25,7 +26,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   knockbackGaugeDeal: 15
-  _baseSkillDamageMultiplier: 10
+  _baseSkillDamageMultiplier: 0.1
   spreadAngle: 60
   fireBallMoveSpeed: 1600
   fireBallAmount: 1

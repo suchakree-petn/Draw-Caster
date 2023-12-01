@@ -13,19 +13,19 @@ namespace DrawCaster.DataPersistence
 
         [SerializeField] private GameData gameData;
         private List<IDataPersistence> dataPersistencesObjects;
-        private FileDataHandler dataHandler;
+        public FileDataHandler dataHandler;
 
+        public static Action OnLoadSuccess;
         protected override void InitAfterAwake()
         {
-            this.dataPersistencesObjects = FindAllDataPersistenceObjects();
+            this.dataHandler = new(Application.persistentDataPath, fileName);
 
+            this.dataPersistencesObjects = FindAllDataPersistenceObjects();
         }
 
         private void Start()
         {
-            this.dataHandler = new(Application.persistentDataPath, fileName);
             // SaveGame();
-            LoadGame();
 
         }
 
@@ -39,12 +39,14 @@ namespace DrawCaster.DataPersistence
         {
             // load saved data
             this.gameData = dataHandler.Load();
+            bool isSaved = true;
 
             // if no data can be loaded, init a new game data
             if (this.gameData == null)
             {
                 Debug.LogWarning("No data was found, Init new game");
                 NewGame();
+                isSaved = false;
             }
 
             //push loaded data to other scripts that need
@@ -53,7 +55,13 @@ namespace DrawCaster.DataPersistence
                 dataPersistenceObj.LoadData(gameData);
             }
             Debug.Log("Loaded Player data");
+            OnLoadSuccess?.Invoke();
 
+            // Save game if file is not existed 
+            if (!isSaved)
+            {
+                SaveGame();
+            }
         }
 
         public void SaveGame()
@@ -72,7 +80,7 @@ namespace DrawCaster.DataPersistence
 
         private void OnApplicationQuit()
         {
-            SaveGame();
+            // SaveGame();
         }
 
         private List<IDataPersistence> FindAllDataPersistenceObjects()
@@ -81,5 +89,6 @@ namespace DrawCaster.DataPersistence
                 .OfType<IDataPersistence>();
             return new List<IDataPersistence>(dataPersistenceObjects);
         }
+        
     }
 }

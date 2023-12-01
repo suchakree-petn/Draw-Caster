@@ -12,7 +12,7 @@ public class UICategory : MonoBehaviour, IPointerDownHandler
         UIInventory currentActiveInventory = InventorySystem.Instance.transform.GetComponentInChildren<UIInventory>();
         GameObject firstSlotItem = currentActiveInventory.GetItemListByType(_categoryType)[0];
 
-        UIInventory.OnCategoryClick?.Invoke(firstSlotItem.GetComponent<UISlotData>().item);
+        // UIInventory.OnCategoryClick?.Invoke(firstSlotItem.GetComponent<UISlotData>().item);
     }
 
 }
