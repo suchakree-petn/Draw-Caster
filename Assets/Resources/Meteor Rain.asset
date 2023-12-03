@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meteor Rain
   m_EditorClassIdentifier: 
   _name: Meteor Rain
-  _description: 
+  _description: When cast, select an area to deploy meteors to deal continuous damage
   _icon: {fileID: 21300000, guid: da8199749c95a1f40b85b672258de61b, type: 3}
   _level: 0
   _spellType: 1

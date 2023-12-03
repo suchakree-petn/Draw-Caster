@@ -3,7 +3,7 @@ using DrawCaster.DataPersistence;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UISlotData : MonoBehaviour, IPointerDownHandler
+public class UISlotData : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     // public Item item;
 
@@ -15,6 +15,14 @@ public class UISlotData : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        SpellSelectUI_Vertical.OnSlotClick?.Invoke(this.spellData);
+
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            SpellSelectUI_Vertical.OnSlotClick?.Invoke(this.spellData);
+        }
     }
 }

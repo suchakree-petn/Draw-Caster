@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DrawCaster.DataPersistence;
+using System;
 
 
 public class SpellSelectUI_Vertical : MonoBehaviour
@@ -15,9 +16,8 @@ public class SpellSelectUI_Vertical : MonoBehaviour
 
 
     [Header("Description Panel")]
-    // [SerializeField] private TextMeshProUGUI _name;
-    // [SerializeField] private Image _descriptionIcon;
     [SerializeField] private TextMeshProUGUI _descriptionText;
+
 
     [Header("UI Transform")]
     [SerializeField] private Transform _inventoryContentTransform;
@@ -29,6 +29,7 @@ public class SpellSelectUI_Vertical : MonoBehaviour
 
     public delegate void SlotActions(SpellData spell);
     public static SlotActions OnSlotClick;
+    public static Action<SpellData, GameObject> OnSpellSlotClick;
 
 
     [SerializeField] private List<SpellData> _player_spells;
@@ -41,11 +42,11 @@ public class SpellSelectUI_Vertical : MonoBehaviour
     {
         GameObject slot = Instantiate(slotPrefab, _inventoryContentTransform);
         slot.GetComponent<UISlotData>().spellData = spell;
-        slot.transform.GetChild(1).GetComponent<Image>().sprite = DataPersistenceManager.Instance.dataHandler.LoadImageFromFile(spell.spritePath);
+        slot.transform.GetChild(1).GetComponent<Image>().sprite = DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(spell.spritePath);
         slot.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = spell.Name;
         return slot;
     }
-    
+
     public void RefreshInventoryData(SpellData spell)
     {
         // Is list empty?
@@ -90,17 +91,15 @@ public class SpellSelectUI_Vertical : MonoBehaviour
     private void RefreshUIInventory(SpellData currentSelectSpell)
     {
         Debug.Log("refresh ui");
-        RefreshDescriptionName(currentSelectSpell);
-        RefreshDescriptionIcon(currentSelectSpell);
         RefreshDescriptionText(currentSelectSpell);
     }
-    private void RefreshDescriptionName(SpellData spell)
+    private void RefreshSelectSpellIcon(SpellData spellData, GameObject slot)
     {
-        // _name.text = spell.Name;
-    }
-    private void RefreshDescriptionIcon(SpellData spell)
-    {
-        // _descriptionIcon.sprite = ReconstructSprite(spell.spriteData);
+        if (spellData.spritePath == "") return;
+
+        slot.GetComponentInChildren<Image>().sprite =
+            DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(spellData.spritePath);
+        Debug.Log("Refresh Icon");
     }
 
     private void RefreshDescriptionText(SpellData spell)
@@ -110,7 +109,7 @@ public class SpellSelectUI_Vertical : MonoBehaviour
 
     private void InitSpellDataList()
     {
-        _player_spells = SpellSelect.Instance.player_spells;
+        _player_spells = SpellSelect.Instance.all_spells_data;
 
         foreach (SpellData spellData in _player_spells)
         {
@@ -131,15 +130,17 @@ public class SpellSelectUI_Vertical : MonoBehaviour
     {
         DataPersistenceManager.OnLoadSuccess += InitSpellDataList;
 
-        // OnSlotClick += RefreshInventoryData;
         OnSlotClick += RefreshUIInventory;
+        OnSpellSlotClick += RefreshSelectSpellIcon;
     }
     private void OnDisable()
     {
         DataPersistenceManager.OnLoadSuccess -= InitSpellDataList;
 
-        // OnSlotClick -= RefreshInventoryData;
         OnSlotClick -= RefreshUIInventory;
+        OnSpellSlotClick -= RefreshSelectSpellIcon;
+
+
     }
 
 

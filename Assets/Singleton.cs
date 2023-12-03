@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
+    public bool CarryToOtherScene = true;
     static T instance;
     public static T Instance
     {
@@ -24,7 +25,10 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
 
         instance = GetComponent<T>();
-        DontDestroyOnLoad(gameObject.transform.root.gameObject);
+        if (CarryToOtherScene)
+        {
+            DontDestroyOnLoad(gameObject.transform.root.gameObject);
+        }
         InitAfterAwake();
     }
 

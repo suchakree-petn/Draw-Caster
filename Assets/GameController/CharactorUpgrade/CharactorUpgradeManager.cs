@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DrawCaster.DataPersistence;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IDataPersistence
 {
@@ -31,5 +32,23 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
         DataPersistenceManager.Instance.SaveGame();
     }
 
-    
+    private void OnApplicationQuit()
+    {
+        DataPersistenceManager.Instance.SaveGame();
+
+    }
+
+    private void EquipSpell(SpellData spellData,GameObject clickedSlot)
+    {
+        clickedSlot.GetComponentInChildren<Image>().sprite = DataPersistenceManager.Instance.
+            dataHandler.LoadSpriteFromFile(spellData.spritePath);
+    }
+
+    private void OnEnable()
+    {
+    }
+    private void OnDisable()
+    {
+
+    }
 }

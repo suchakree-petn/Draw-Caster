@@ -85,7 +85,7 @@ public class FileDataHandler
         return filePath;
     }
 
-    public Sprite LoadImageFromFile(string filePath)
+    public Sprite LoadSpriteFromFile(string filePath)
     {
         if (File.Exists(filePath))
         {

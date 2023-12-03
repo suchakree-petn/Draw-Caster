@@ -11,13 +11,15 @@ namespace DrawCaster.DataPersistence
     {
         public PlayerStat playerStat;
         public int Gold;
-        public List<SpellData> player_spells;
+        public List<SpellData> all_spells;
+        public List<string> player_equiped_spells;
 
         public GameData()
         {
             this.playerStat = new PlayerStat(0, 0, 0, 0, 0, 0);
             this.Gold = 0;
-            this.player_spells = new();
+            this.all_spells = new();
+            this.player_equiped_spells = new();
         }
     }
 
@@ -46,7 +48,7 @@ namespace DrawCaster.DataPersistence
         public PlayerStat(int _level, float _moveSpeed, float _hpBase, float _manaBase, float _attackBase, float _defenseBase)
         {
             this._level = 1;
-            this._moveSpeed = 5;
+            this._moveSpeed = 50;
             this._hpBase = 2000;
             this._manaBase = 300;
             this._attackBase = 5;
@@ -57,11 +59,13 @@ namespace DrawCaster.DataPersistence
     [System.Serializable]
     public struct SpellData
     {
+        public string Obj_Name;
         public string Name;
         public string Desc;
         public string spritePath;
         public SpellData(Spell spell)
         {
+            this.Obj_Name = spell.name;
             this.Name = spell._name;
             this.Desc = spell._description;
             this.spritePath = DataPersistenceManager.Instance.dataHandler.SaveImageToFile(spell._icon.texture, "Spell Icon", spell._name + "_icon");
