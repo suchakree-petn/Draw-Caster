@@ -11,6 +11,7 @@ public class SpellSelectUI_Vertical : MonoBehaviour
 {
     [Header("Spell List")]
     public List<GameObject> UISlot;
+    public List<GameObject> player_spell_slot;
     public SpellData _currentSelectSpell;
 
 
@@ -41,8 +42,11 @@ public class SpellSelectUI_Vertical : MonoBehaviour
     private GameObject CreateUISlot(SpellData spell)
     {
         GameObject slot = Instantiate(slotPrefab, _inventoryContentTransform);
-        slot.GetComponent<UISlotData>().spellData = spell;
+        UISlotData _slotData = slot.GetComponent<UISlotData>();
+        _slotData.spellData = spell;
+        _slotData.Is_HasData = true;
         slot.transform.GetChild(1).GetComponent<Image>().sprite = DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(spell.spritePath);
+        Debug.Log("Loaded file");
         slot.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = spell.Name;
         return slot;
     }
@@ -93,12 +97,18 @@ public class SpellSelectUI_Vertical : MonoBehaviour
         Debug.Log("refresh ui");
         RefreshDescriptionText(currentSelectSpell);
     }
-    private void RefreshSelectSpellIcon(SpellData spellData, GameObject slot)
+    private void RefreshSelectSpellIcon()
     {
-        if (spellData.spritePath == "") return;
-
-        slot.GetComponentInChildren<Image>().sprite =
-            DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(spellData.spritePath);
+        foreach (GameObject slot in player_spell_slot)
+        {
+            UISlotData uiSlot = slot.GetComponent<UISlotData>();
+            if (uiSlot.Is_HasData)
+            {
+                slot.GetComponentInChildren<Image>().sprite =
+                DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(uiSlot.spellData.spritePath);
+                Debug.Log("Loaded file here");
+            }
+        }
         Debug.Log("Refresh Icon");
     }
 
@@ -119,7 +129,6 @@ public class SpellSelectUI_Vertical : MonoBehaviour
         if (_player_spells.Count > 0)
         {
             _currentSelectSpell = _player_spells[0];
-            OnSlotClick?.Invoke(_currentSelectSpell);
         }
         else
         {
@@ -131,14 +140,14 @@ public class SpellSelectUI_Vertical : MonoBehaviour
         DataPersistenceManager.OnLoadSuccess += InitSpellDataList;
 
         OnSlotClick += RefreshUIInventory;
-        OnSpellSlotClick += RefreshSelectSpellIcon;
+        SpellSelect.OnUpdateSpellSelectSlotSuccess += RefreshSelectSpellIcon;
     }
     private void OnDisable()
     {
         DataPersistenceManager.OnLoadSuccess -= InitSpellDataList;
 
         OnSlotClick -= RefreshUIInventory;
-        OnSpellSlotClick -= RefreshSelectSpellIcon;
+        SpellSelect.OnUpdateSpellSelectSlotSuccess -= RefreshSelectSpellIcon;
 
 
     }

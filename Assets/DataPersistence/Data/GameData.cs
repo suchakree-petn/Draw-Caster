@@ -10,7 +10,7 @@ namespace DrawCaster.DataPersistence
     public class GameData
     {
         public PlayerStat playerStat;
-        public int Gold;
+        public double Gold;
         public List<SpellData> all_spells;
         public List<string> player_equiped_spells;
 

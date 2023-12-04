@@ -16,17 +16,14 @@ namespace DrawCaster.DataPersistence
         public FileDataHandler dataHandler;
 
         public static Action OnLoadSuccess;
+
+        public bool IsLoaded = false;
+        
         protected override void InitAfterAwake()
         {
             this.dataHandler = new(Application.persistentDataPath, fileName);
 
             this.dataPersistencesObjects = FindAllDataPersistenceObjects();
-        }
-
-        private void Start()
-        {
-            // SaveGame();
-
         }
 
 
@@ -55,6 +52,7 @@ namespace DrawCaster.DataPersistence
                 dataPersistenceObj.LoadData(gameData);
             }
             Debug.Log("Loaded Player data");
+            IsLoaded = true;
             OnLoadSuccess?.Invoke();
 
             // Save game if file is not existed 
@@ -89,6 +87,6 @@ namespace DrawCaster.DataPersistence
                 .OfType<IDataPersistence>();
             return new List<IDataPersistence>(dataPersistenceObjects);
         }
-        
+
     }
 }

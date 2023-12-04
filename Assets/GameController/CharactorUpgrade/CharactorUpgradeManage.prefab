@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2272987896836574379}
   - component: {fileID: 2272987896836574388}
+  - component: {fileID: 748651334}
   m_Layer: 0
   m_Name: CharactorUpgradeManage
   m_TagString: Untagged
@@ -44,11 +45,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d81801a3eb3ec4985ca7c592afb855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CarryToOtherScene: 0
   Gold: 0
   playerStat:
-    _level: 0
-    _moveSpeed: 0
-    _hpBase: 0
-    _manaBase: 0
-    _attackBase: 0
-    _defenseBase: 0
+    _level: 1
+    _moveSpeed: 5
+    _hpBase: 2000
+    _manaBase: 300
+    _attackBase: 5
+    _defenseBase: 100
+--- !u!114 &748651334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272987896836574389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d583cbac1649e4cb1123727719b6d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CarryToOtherScene: 0
+  all_spells_data: []
+  all_spells:
+  - {fileID: 11400000, guid: 35b258b885c597f41a21266fbb7c4a2f, type: 2}
+  - {fileID: 11400000, guid: 4c9cf4eb2c073f94f82f962a34f869d6, type: 2}
+  - {fileID: 11400000, guid: 2c1897851bbae41439674375ab576a20, type: 2}
+  - {fileID: 11400000, guid: 22a7280cfc4f6b640bb4437eab4467bf, type: 2}
+  equip_spells: []
+  spell_slot:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _maxSlot: 0

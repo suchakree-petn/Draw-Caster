@@ -1,9 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using DrawCaster.DataPersistence;
 using System;
+using System.Linq;
+using UnityEngine.UI;
 
 public class SpellSelect : Singleton<SpellSelect>, IDataPersistence
 {
@@ -62,20 +62,61 @@ public class SpellSelect : Singleton<SpellSelect>, IDataPersistence
 
     private void UpdateSpellSelectSlot()
     {
+        for (int i = 0; i < 4; i++)
+        {
+            spell_slot[i].transform.GetComponentInChildren<Image>().sprite = null;
+            spell_slot[i].Is_HasData = false;
+        }
         for (int i = 0; i < equip_spells.Count; i++)
         {
+
+
             Spell equipSpell = equip_spells[i];
-            if (equip_spells != null)
+            if (equipSpell != null)
             {
                 spell_slot[i].spellData = new SpellData(equipSpell);
+                spell_slot[i].Is_HasData = true;
             }
         }
         OnUpdateSpellSelectSlotSuccess?.Invoke();
     }
 
+    private void EquipSpell(SpellData spellData)
+    {
+        if (equip_spells.Count < 4)
+        {
+            Spell spell = Resources.Load<Spell>(spellData.Obj_Name);
+            equip_spells.Add(spell);
+            equip_spells = equip_spells.Distinct().ToList();
+            UpdateSpellSelectSlot();
+        }
+        else
+        {
+            Debug.Log("Slots already full");
+        }
+
+
+    }
+    private void UnEquipSpell(SpellData spellData, GameObject slot)
+    {
+        Spell spell = Resources.Load<Spell>(spellData.Obj_Name);
+        equip_spells.Remove(spell);
+        UpdateSpellSelectSlot();
+    }
+
     private void OnEnable()
     {
         DataPersistenceManager.OnLoadSuccess += UpdateSpellSelectSlot;
+        SpellSelectUI_Vertical.OnSlotClick += EquipSpell;
+        SpellSelectUI_Vertical.OnSpellSlotClick += UnEquipSpell;
+    }
+
+    private void OnDisable()
+    {
+        DataPersistenceManager.OnLoadSuccess -= UpdateSpellSelectSlot;
+        SpellSelectUI_Vertical.OnSlotClick -= EquipSpell;
+        SpellSelectUI_Vertical.OnSpellSlotClick -= UnEquipSpell;
+
     }
 
 

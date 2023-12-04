@@ -1,20 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using DrawCaster.DataPersistence;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(UISlotData))]
-public class SpellSlotUI : MonoBehaviour, IPointerClickHandler
+public class PlayerSpellUI : MonoBehaviour, IPointerClickHandler
 {
     private UISlotData slotData;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        OnClicked();
+        OnClicked(eventData);
     }
 
-    private void OnClicked()
+    private void OnClicked(PointerEventData eventData)
     {
         if (slotData == null)
         {
@@ -22,21 +21,14 @@ public class SpellSlotUI : MonoBehaviour, IPointerClickHandler
         }
         if (slotData.Is_HasData)
         {
-            SpellSelectUI_Vertical.OnSpellSlotClick?.Invoke(slotData.spellData, gameObject);
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                SpellSelectUI_Vertical.OnSlotClick?.Invoke(slotData.spellData);
+            }
         }
         else
         {
             Debug.Log("This slot doesn't has data");
         }
     }
-
-    private void OnEnable()
-    {
-    }
-
-    private void OnDisable()
-    {
-    }
-
-
 }

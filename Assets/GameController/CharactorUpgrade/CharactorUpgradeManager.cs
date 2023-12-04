@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IDataPersistence
 {
-    public int Gold;
+    public double Gold;
     public PlayerStat playerStat;
 
     public void LoadData(GameData data)
@@ -38,11 +38,7 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
 
     }
 
-    private void EquipSpell(SpellData spellData,GameObject clickedSlot)
-    {
-        clickedSlot.GetComponentInChildren<Image>().sprite = DataPersistenceManager.Instance.
-            dataHandler.LoadSpriteFromFile(spellData.spritePath);
-    }
+    
 
     private void OnEnable()
     {
