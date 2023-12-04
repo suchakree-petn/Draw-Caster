@@ -32,11 +32,11 @@ public class StatShowTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         PlayerStat player_stats = CharactorUpgradeManager.Instance.playerStat;
         stat_ui[0].text = stat_text[0] + player_stats._level.ToString();
-        stat_ui[1].text = stat_text[1] + player_stats._hpBase.ToString();
-        stat_ui[2].text = stat_text[2] + player_stats._attackBase.ToString();
-        stat_ui[3].text = stat_text[3] + player_stats._defenseBase.ToString();
-        stat_ui[4].text = stat_text[4] + player_stats._manaBase.ToString();
-        stat_ui[5].text = stat_text[5] + player_stats._moveSpeed.ToString();
+        stat_ui[1].text = stat_text[1] + ((int)player_stats._hpBase).ToString();
+        stat_ui[2].text = stat_text[2] + ((int)player_stats._attackBase).ToString();
+        stat_ui[3].text = stat_text[3] + ((int)player_stats._defenseBase).ToString();
+        stat_ui[4].text = stat_text[4] + ((int)player_stats._manaBase).ToString();
+        stat_ui[5].text = stat_text[5] + ((int)player_stats._moveSpeed).ToString();
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -54,6 +54,8 @@ MonoBehaviour:
     _manaBase: 300
     _attackBase: 5
     _defenseBase: 100
+  gold_text: {fileID: 0}
+  upgrade_cost_text: {fileID: 0}
 --- !u!114 &748651334
 MonoBehaviour:
   m_ObjectHideFlags: 0
