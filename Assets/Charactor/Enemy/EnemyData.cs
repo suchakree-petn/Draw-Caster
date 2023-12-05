@@ -7,6 +7,6 @@ public class EnemyData : CharactorData
 {
   public ElementalType elementalType;
 
-  
+  public float goldDrop = 1;
 
 }

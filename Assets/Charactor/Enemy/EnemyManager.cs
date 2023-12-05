@@ -41,12 +41,19 @@ public class EnemyManager : CharactorManager<EnemyData>
         maxKnockBackGauge = GetCharactorData().GetMaxKnockbackGauge();
         curentKnockBackGauge = maxKnockBackGauge;
     }
+
+    private void AddGoldToRewardTracker(GameObject enemy)
+    {
+        RewardTrackerManager.Instance.AddGoldObtain(enemyData.goldDrop);
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
         OnEnemyTakeDamage += KnockBackGauge;
         OnEnemyTakeDamage += CheckDead;
         OnEnemyDead += Dead;
+        OnEnemyDead += AddGoldToRewardTracker;
 
     }
 
@@ -57,7 +64,8 @@ public class EnemyManager : CharactorManager<EnemyData>
         OnEnemyTakeDamage -= KnockBackGauge;
         OnEnemyTakeDamage -= CheckDead;
         OnEnemyDead -= Dead;
-
+        OnEnemyDead -= AddGoldToRewardTracker;
+    
     }
     public override void KnockBackGauge(GameObject charactor, Elemental damage)
     {

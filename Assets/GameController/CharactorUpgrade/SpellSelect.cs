@@ -23,6 +23,7 @@ public class SpellSelect : Singleton<SpellSelect>, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        Debug.Log(data.all_spells);
         this.all_spells_data = data.all_spells;
 
         List<Spell> allSpell = new();
@@ -89,6 +90,8 @@ public class SpellSelect : Singleton<SpellSelect>, IDataPersistence
             equip_spells.Add(spell);
             equip_spells = equip_spells.Distinct().ToList();
             UpdateSpellSelectSlot();
+
+            DataPersistenceManager.Instance.SaveGame();
         }
         else
         {
@@ -102,18 +105,21 @@ public class SpellSelect : Singleton<SpellSelect>, IDataPersistence
         Spell spell = Resources.Load<Spell>(spellData.Obj_Name);
         equip_spells.Remove(spell);
         UpdateSpellSelectSlot();
+
+        DataPersistenceManager.Instance.SaveGame();
+
     }
 
     private void OnEnable()
     {
-        DataPersistenceManager.OnLoadSuccess += UpdateSpellSelectSlot;
+        SpellSelectUI_Vertical.OnInitSpellSuccess += UpdateSpellSelectSlot;
         SpellSelectUI_Vertical.OnSlotClick += EquipSpell;
         SpellSelectUI_Vertical.OnSpellSlotClick += UnEquipSpell;
     }
 
     private void OnDisable()
     {
-        DataPersistenceManager.OnLoadSuccess -= UpdateSpellSelectSlot;
+        SpellSelectUI_Vertical.OnInitSpellSuccess -= UpdateSpellSelectSlot;
         SpellSelectUI_Vertical.OnSlotClick -= EquipSpell;
         SpellSelectUI_Vertical.OnSpellSlotClick -= UnEquipSpell;
 

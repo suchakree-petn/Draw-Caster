@@ -56,6 +56,7 @@ MonoBehaviour:
     _defenseBase: 100
   gold_text: {fileID: 0}
   upgrade_cost_text: {fileID: 0}
+  back_button: {fileID: 0}
 --- !u!114 &748651334
 MonoBehaviour:
   m_ObjectHideFlags: 0

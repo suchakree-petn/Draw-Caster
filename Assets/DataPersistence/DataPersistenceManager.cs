@@ -23,7 +23,6 @@ namespace DrawCaster.DataPersistence
         {
             this.dataHandler = new(Application.persistentDataPath, fileName);
 
-            this.dataPersistencesObjects = FindAllDataPersistenceObjects();
         }
 
 
@@ -34,6 +33,8 @@ namespace DrawCaster.DataPersistence
 
         public void LoadGame()
         {
+            this.dataPersistencesObjects = FindAllDataPersistenceObjects();
+
             // load saved data
             this.gameData = dataHandler.Load();
             bool isSaved = true;
@@ -64,6 +65,8 @@ namespace DrawCaster.DataPersistence
 
         public void SaveGame()
         {
+            this.dataPersistencesObjects = FindAllDataPersistenceObjects();
+
             //pass loaded data to other scripts so  they can update it
             foreach (IDataPersistence dataPersistenceObj in dataPersistencesObjects)
             {

@@ -104,6 +104,7 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
     public override void Dead(GameObject deadCharactor)
     {
         Destroy(deadCharactor);
+        GameController.Instance.ToResultScene();
     }
     public void GainMana(float amount)
     {
@@ -130,11 +131,5 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        data.playerStat._level = this.playerData._level;
-        data.playerStat._moveSpeed = this.playerData._moveSpeed;
-        data.playerStat._hpBase = this.playerData._hpBase;
-        data.playerStat._manaBase = this.playerData._manaBase;
-        data.playerStat._attackBase = this.playerData._attackBase;
-        data.playerStat._defenseBase = this.playerData._defenseBase;
     }
 }

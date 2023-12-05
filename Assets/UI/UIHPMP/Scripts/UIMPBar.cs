@@ -11,15 +11,15 @@ public class UIMPBar : MonoBehaviour
     [SerializeField] private TextMeshProUGUI mpValueText;
     public void SetMPDefault(){
         charactorManager = GameObject.Find("Player").GetComponent<CharactorManager<PlayerData>>();
-        float maxMp = charactorManager.GetCharactorData().GetMaxMana();
-        float currentMp = charactorManager.currentMana;
+        int maxMp = (int)charactorManager.GetCharactorData().GetMaxMana();
+        int currentMp = (int)charactorManager.currentMana;
         fillMPBar.maxValue = maxMp;
         fillMPBar.value = currentMp;
         mpValueText.SetText(currentMp + " / " + maxMp);
     }
     public void ShowMPValue(){
-        float maxMp = charactorManager.GetCharactorData().GetMaxMana();
-        float currentMp = charactorManager.currentMana;
+        int maxMp = (int)charactorManager.GetCharactorData().GetMaxMana();
+        int currentMp = (int)charactorManager.currentMana;
         fillMPBar.value = currentMp;
         mpValueText.SetText(currentMp + " / " + maxMp);
     }

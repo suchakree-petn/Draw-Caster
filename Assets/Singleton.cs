@@ -34,8 +34,4 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected abstract void InitAfterAwake();
 
-    public void DestroyManager()
-    {
-        Destroy(Instance.gameObject);
-    }
 }

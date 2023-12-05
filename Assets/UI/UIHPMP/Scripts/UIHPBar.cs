@@ -11,15 +11,15 @@ public class UIHPBar : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hpValueText;
     public void SetHPDefault(){
         charactorManager = GameObject.Find("Player").GetComponent<CharactorManager<PlayerData>>();
-        float maxHp = charactorManager.GetCharactorData().GetMaxHp();
-        float currentHp = charactorManager.currentHp;
+        int maxHp = (int)charactorManager.GetCharactorData().GetMaxHp();
+        int currentHp = (int)charactorManager.currentHp;
         fillHPBar.maxValue = maxHp;
         fillHPBar.value = currentHp;
         hpValueText.SetText(currentHp + " / " + maxHp);
     }
     public void ShowHPValue(){
-        float maxHp = charactorManager.GetCharactorData().GetMaxHp();
-        float currentHp = charactorManager.currentHp;
+        int maxHp = (int)charactorManager.GetCharactorData().GetMaxHp();
+        int currentHp = (int)charactorManager.currentHp;
         fillHPBar.value = currentHp;
         hpValueText.SetText(currentHp + " / " + maxHp);
     }

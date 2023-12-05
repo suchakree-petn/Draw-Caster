@@ -46,11 +46,13 @@ public class GameController : MonoBehaviour
 
     public static Action<GameObject> OnPlayerDead;
     public static Action<GameObject, Elemental> OnPlayerTakeDamage;
+    public static Action OnGoToNextFloor;
 
 
-    private void Start() {
+    private void Start()
+    {
         DataPersistenceManager.Instance.LoadGame();
-        
+
     }
     private void Update()
     {
@@ -233,6 +235,20 @@ public class GameController : MonoBehaviour
             }
         }
     }
+
+    public void ToResultScene()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Destroy(player);
+        
+        // Save game
+        DataPersistenceManager.Instance.SaveGame();
+
+        // Result Scene
+        SceneManager.LoadScene(6);
+        Destroy(gameObject);
+    }
+
     private void OnEnable()
     {
         OnInstantiateUI += InstantiatePlayerUI;
@@ -254,22 +270,20 @@ public class GameController : MonoBehaviour
             Instance.transform.GetChild(2).GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = GameObject.FindWithTag("BorderMap").GetComponent<Collider2D>();
         };
         WhileInGame += StageClear;
-        OnBeforeEnding += () =>
-        {
-            GenerateDoor();
-            DisableTipsButton();
-        };
+        OnBeforeEnding += GenerateDoor;
+        OnBeforeEnding += DisableTipsButton;
+
+
     }
     private void OnDisable()
     {
         OnInstantiateUI -= InstantiatePlayerUI;
         // OnBeforeStart -= ShowStageFloor;
         WhileInGame -= StageClear;
-        OnBeforeEnding -= () =>
-        {
-            GenerateDoor();
-            DisableTipsButton();
-        };
+        OnBeforeEnding -= GenerateDoor;
+        OnBeforeEnding -= DisableTipsButton;
+
+
     }
 }
 

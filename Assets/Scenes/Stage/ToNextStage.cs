@@ -9,7 +9,8 @@ public class ToNextStage : MonoBehaviour, IInteractable
     [SerializeField] private GameObject IUBoxPrefab;
     public void NextScene()
     {
-        List<string> sceneList = GameController.Instance.scene;
+        GameController.OnGoToNextFloor?.Invoke();
+
         Scene scene = SceneManager.GetActiveScene();
         List<string> scenes = GameController.Instance.scene;
         int nextScene = scenes.IndexOf(scene.name) + 1;

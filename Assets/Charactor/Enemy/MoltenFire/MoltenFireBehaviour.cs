@@ -423,6 +423,7 @@ namespace MoltenFire
                 AnimStopMoving();
                 animator.SetTrigger("Death");
                 DelayDestroy(moltenFireManager.enemyDeadClip.length, deadEnemy);
+                GameController.Instance.ToResultScene();
             };
         }
         Coroutine delayStun = null;

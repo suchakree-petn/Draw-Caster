@@ -2,6 +2,7 @@ using System;
 using DrawCaster.DataPersistence;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IDataPersistence
 {
@@ -17,9 +18,10 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
         }
     }
 
-
+    [Header("Ref Component")]
     [SerializeField] private TextMeshProUGUI gold_text;
     [SerializeField] private TextMeshProUGUI upgrade_cost_text;
+    [SerializeField] private Button back_button;
 
     public static Action OnSuccessUpgradeLevel;
     public static Action OnFailUpgradeLevel;
@@ -38,13 +40,12 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
 
     protected override void InitAfterAwake()
     {
-
+        // back_button.onClick.AddListener(DataPersistenceManager.Instance.SaveGame);
 
     }
     private void Start()
     {
         DataPersistenceManager.Instance.LoadGame();
-        DataPersistenceManager.Instance.SaveGame();
     }
 
     private void OnApplicationQuit()
@@ -59,6 +60,8 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
         {
             Gold -= upgrade_cost;
             OnSuccessUpgradeLevel?.Invoke();
+            DataPersistenceManager.Instance.SaveGame();
+
         }
         else
         {
@@ -72,8 +75,8 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
         playerStat._attackBase = 0.3f * 50 * playerStat._level + 50;
         playerStat._defenseBase = 0.3f * 100 * playerStat._level + 100;
         playerStat._hpBase = 0.1f * 2000 * playerStat._level + 2000;
-        playerStat._moveSpeed = 0.05f * 5 * playerStat._level + 5;
-        playerStat._manaBase = 0.1f * 300 * playerStat._level + 300;
+        playerStat._moveSpeed = 0.03f * 5 * playerStat._level + 5;
+        playerStat._manaBase = 0.05f * 300 * playerStat._level + 300;
     }
 
     public void UpdateGold()
@@ -93,6 +96,7 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
         OnSuccessUpgradeLevel += PlayerStatGrowth;
         OnSuccessUpgradeLevel += UpdateGold;
         OnSuccessUpgradeLevel += UpdateUpgradeCost;
+
     }
     private void OnDisable()
     {
@@ -102,5 +106,6 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
         OnSuccessUpgradeLevel -= PlayerStatGrowth;
         OnSuccessUpgradeLevel -= UpdateGold;
         OnSuccessUpgradeLevel -= UpdateUpgradeCost;
+
     }
 }

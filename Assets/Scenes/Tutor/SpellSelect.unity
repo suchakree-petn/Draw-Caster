@@ -129,75 +129,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1941300239}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &90424961
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849160, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8102276489456849162, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-        type: 3}
-      propertyPath: m_Name
-      value: DataPersistence
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dbc4eb6f130668b4f8ce5fcd42a43092, type: 3}
 --- !u!1 &93845355
 GameObject:
   m_ObjectHideFlags: 0
@@ -3229,7 +3160,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1791953348
 MonoBehaviour:
@@ -3793,18 +3724,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61349c74a42cd5d4bb675b4a1c8781e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1958580747 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8102276489456849161, guid: dbc4eb6f130668b4f8ce5fcd42a43092,
-    type: 3}
-  m_PrefabInstance: {fileID: 90424961}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6eb34a04400b984393d8a28325a163a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1967585952
 GameObject:
   m_ObjectHideFlags: 0
@@ -3892,19 +3811,6 @@ MonoBehaviour:
       - m_Target: {fileID: 339174204}
         m_TargetAssemblyTypeName: CharactorUpgradeManager, Assembly-CSharp
         m_MethodName: PlayerLevelUp
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1958580747}
-        m_TargetAssemblyTypeName: DrawCaster.DataPersistence.DataPersistenceManager,
-          Assembly-CSharp
-        m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4440,19 +4346,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1958580747}
-        m_TargetAssemblyTypeName: DrawCaster.DataPersistence.DataPersistenceManager,
-          Assembly-CSharp
-        m_MethodName: SaveGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2101518515}
         m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
         m_MethodName: Load
@@ -4610,6 +4503,11 @@ PrefabInstance:
       propertyPath: gold_text
       value: 
       objectReference: {fileID: 270198100}
+    - target: {fileID: 2272987896836574388, guid: 127fd022871cbe246be665bc8f865def,
+        type: 3}
+      propertyPath: back_button
+      value: 
+      objectReference: {fileID: 2101518516}
     - target: {fileID: 2272987896836574388, guid: 127fd022871cbe246be665bc8f865def,
         type: 3}
       propertyPath: upgrade_cost_text

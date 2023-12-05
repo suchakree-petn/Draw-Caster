@@ -16,6 +16,11 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     public bool isKnockback;
     public Coroutine restoreCoroutine;
 
+    private void Awake()
+    {
+        InitHp();
+        InitMana();
+    }
     public abstract void TakeDamage(Elemental elementalDamage);
     public abstract void StartKnockback(Elemental damage);
     public abstract void EndKnockback();
@@ -46,16 +51,16 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     public abstract T GetCharactorData();
     protected virtual void OnEnable()
     {
-        GameController.OnBeforeStart += InitHp;
-        GameController.OnBeforeStart += InitMana;
+        // GameController.OnBeforeStart += InitHp;
+        // GameController.OnBeforeStart += InitMana;
         GameController.OnBeforeStart += InitKnockbackGauge;
         GameController.WhileInGame += RestoreKnockbackGauge;
 
     }
     protected virtual void OnDisable()
     {
-        GameController.OnBeforeStart -= InitHp;
-        GameController.OnBeforeStart -= InitMana;
+        // GameController.OnBeforeStart -= InitHp;
+        // GameController.OnBeforeStart -= InitMana;
         GameController.OnBeforeStart -= InitKnockbackGauge;
         GameController.WhileInGame -= RestoreKnockbackGauge;
     }
@@ -77,7 +82,7 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     public virtual void InitHp() { }
     public virtual void InitMana() { }
     public virtual void InitKnockbackGauge() { }
-    
-   public abstract void Dead(GameObject deadCharactor);
-   public abstract void CheckDead(GameObject charactor,Elemental damage);
+
+    public abstract void Dead(GameObject deadCharactor);
+    public abstract void CheckDead(GameObject charactor, Elemental damage);
 }

@@ -31,6 +31,7 @@ public class SpellSelectUI_Vertical : MonoBehaviour
     public delegate void SlotActions(SpellData spell);
     public static SlotActions OnSlotClick;
     public static Action<SpellData, GameObject> OnSpellSlotClick;
+    public static Action OnInitSpellSuccess;
 
 
     [SerializeField] private List<SpellData> _player_spells;
@@ -134,6 +135,7 @@ public class SpellSelectUI_Vertical : MonoBehaviour
         {
             Debug.Log("No spell in list");
         }
+        OnInitSpellSuccess?.Invoke();
     }
     private void OnEnable()
     {
