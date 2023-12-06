@@ -19,7 +19,8 @@ public class SpellHolder_E : MonoBehaviour
     public static InputCompare OnFinishDraw;
     public delegate void CastBehaviour(GameObject player);
     public static CastBehaviour OnFinishCast;
-    private void Awake() {
+    private void Awake()
+    {
         Instance = this;
     }
 
@@ -30,10 +31,13 @@ public class SpellHolder_E : MonoBehaviour
         {
             if (CheckMana(spell) && _isReadyToCast)
             {
+                SoundSource.Instance.PlaySfxCastSpell();
                 DisableInput();
                 ReceiveDrawInput();
                 PayManaCost();
                 OnFinishCast?.Invoke(transform.root.gameObject);
+            }else{
+                SoundSource.Instance.PlaySfxCastSpellFail();
             }
         }
         else
@@ -63,7 +67,8 @@ public class SpellHolder_E : MonoBehaviour
         }
         return false;
     }
-    public void PayManaCost(){
+    public void PayManaCost()
+    {
         PlayerManager _playerManager = transform.root.GetComponent<PlayerManager>();
         _playerManager.currentMana -= spell._manaCost;
     }
@@ -130,16 +135,20 @@ public class SpellHolder_E : MonoBehaviour
         float castLevel = spell.CalThreshold(score);
         if(castLevel == 1){
             GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "I";
+            SoundSource.Instance.PlaySfxCast1();
         }else if(castLevel == 2){
             GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "II";
+            SoundSource.Instance.PlaySfxCast2();
         }else if(castLevel == 3){
             GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "III";
+            SoundSource.Instance.PlaySfxCast3();
         }
         StartCoroutine(DelayShowDrawScore(ShowScoreTime));
         drawInput.gameObject.SetActive(false);
     }
 
-    IEnumerator DelayShowDrawScore(float delayTime){
+    IEnumerator DelayShowDrawScore(float delayTime)
+    {
         yield return new WaitForSeconds(delayTime);
         GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text = "";
         GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "";

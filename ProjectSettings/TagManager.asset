@@ -8,6 +8,7 @@ TagManager:
   - Hitbox
   - BossUI
   - BorderMap
+  - Sound Soucre
   layers:
   - Default
   - TransparentFX
