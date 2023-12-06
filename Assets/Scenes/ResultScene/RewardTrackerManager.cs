@@ -8,7 +8,7 @@ using UnityEngine;
 public class RewardTrackerManager : Singleton<RewardTrackerManager>, IDataPersistence
 {
     [Header("File Config")]
-    public float obtain_gold;
+    public double obtain_gold;
     public List<Spell> obtain_spell = new();
 
     public void LoadData(GameData data)
@@ -28,9 +28,6 @@ public class RewardTrackerManager : Singleton<RewardTrackerManager>, IDataPersis
 
         data.all_spells = all_spells;
         Debug.Log("Save Reward Tracker");
-
-        obtain_gold = 0;
-        obtain_spell = new();
     }
 
     protected override void InitAfterAwake()
