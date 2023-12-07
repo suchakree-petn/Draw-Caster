@@ -81,6 +81,8 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
     protected override void OnEnable()
     {
         base.OnEnable();
+        DataPersistenceManager.OnLoadSuccess += InitHp;
+        DataPersistenceManager.OnLoadSuccess += InitMana;
         GameController.OnPlayerTakeDamage += KnockBackGauge;
         GameController.OnPlayerDead += Dead;
         GameController.OnPlayerTakeDamage += CheckDead;
@@ -90,6 +92,8 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
     protected override void OnDisable()
     {
         base.OnDisable();
+        DataPersistenceManager.OnLoadSuccess -= InitHp;
+        DataPersistenceManager.OnLoadSuccess -= InitMana;
         GameController.OnPlayerTakeDamage -= KnockBackGauge;
         GameController.OnPlayerDead -= Dead;
         GameController.OnPlayerTakeDamage -= CheckDead;

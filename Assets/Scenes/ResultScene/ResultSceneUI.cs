@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DrawCaster.DataPersistence;
 using DrawCaster.ResultManager;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class ResultSceneUI : MonoBehaviour
     [Header("Ref Component")]
     [SerializeField] private Transform content_transform;
     [SerializeField] private GameObject rewardIcon_prf;
+    [SerializeField] private TextMeshProUGUI last_play_time_text;
+    [SerializeField] private TextMeshProUGUI best_play_time_text;
     private void UpdateRewardIcon()
     {
         if (resultManager == null) return;
@@ -40,7 +43,7 @@ public class ResultSceneUI : MonoBehaviour
     {
         double obtain_gold = resultManager.obtain_gold;
         if (obtain_gold <= 0) return;
-        
+
         GameObject ui_GO = CreateRewardIconGold(obtain_gold, content_transform);
 
         // To do, Show gold Icon
@@ -74,16 +77,33 @@ public class ResultSceneUI : MonoBehaviour
         return go;
     }
 
+    private void UpdatePlayTime()
+    {
+        float best_play_time = resultManager.best_play_time;
+        TimeSpan best_play_time_span = TimeSpan.FromSeconds(best_play_time);
+        best_play_time_text.text = string.Format("{0:D2}:{1:D2}", best_play_time_span.Minutes, best_play_time_span.Seconds);
+
+        float last_play_time = resultManager.last_play_time;
+        TimeSpan last_play_time_span = TimeSpan.FromSeconds(last_play_time);
+        last_play_time_text.text = string.Format("{0:D2}:{1:D2}", last_play_time_span.Minutes, last_play_time_span.Seconds);
+    }
+
     private void OnEnable()
     {
         ResultSceneManager.OnInitRewardSuccess += UpdateRewardIcon;
         OnUpdateRewardIcon += UpdateSpellIcon;
         OnUpdateRewardIcon += UpdateGoldIcon;
+
+        ResultSceneManager.OnInitPlayTimeSuccess += UpdatePlayTime;
+
     }
     private void OnDisable()
     {
         ResultSceneManager.OnInitRewardSuccess -= UpdateRewardIcon;
         OnUpdateRewardIcon -= UpdateSpellIcon;
         OnUpdateRewardIcon -= UpdateGoldIcon;
+
+        ResultSceneManager.OnInitPlayTimeSuccess -= UpdatePlayTime;
+
     }
 }

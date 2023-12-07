@@ -13,6 +13,8 @@ namespace DrawCaster.DataPersistence
         public double Gold;
         public List<SpellData> all_spells;
         public List<string> player_equiped_spells;
+        public float last_play_time;
+        public float best_play_time;
 
         public GameData()
         {
@@ -20,6 +22,8 @@ namespace DrawCaster.DataPersistence
             this.Gold = 0;
             this.all_spells = new();
             this.player_equiped_spells = new();
+            this.last_play_time = 0;
+            this.best_play_time = float.MaxValue;
         }
     }
 

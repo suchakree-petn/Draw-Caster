@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   _name: Default Charactor
-  _level: 1
+  _level: 8
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  _moveSpeed: 5
-  _hpBase: 2000
+  _moveSpeed: 6.2
+  _hpBase: 3600
   _hpMultiplier: 0.1
   _hpBonus: 0
-  _manaBase: 300
+  _manaBase: 420
   _manaMultiplier: 0
   _manaBonus: 0
-  _attackBase: 50
+  _attackBase: 1700000
   _attackMultiplier: 0
   _attackBonus: 0
   _bonusDamage: 0
-  _defenseBase: 100
+  _defenseBase: 340
   _defenseMultiplier: 0
   _defenseBonus: 0
   _bonusDamageReduction: 0

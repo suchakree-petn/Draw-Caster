@@ -1585,6 +1585,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   UI: {fileID: 276752581}
   bgFadeDuration: 1
+  player_hitbox: {fileID: 4713767990457361565}
 --- !u!1001 &1337545712
 PrefabInstance:
   m_ObjectHideFlags: 0

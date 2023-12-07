@@ -52,6 +52,7 @@ public class ManaNullify : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private GameObject UI;
     public float bgFadeDuration;
+    [SerializeField] private Collider2D player_hitbox;
 
     void ZoomAnim()
     {
@@ -82,6 +83,7 @@ public class ManaNullify : MonoBehaviour
         nullifySequence.Kill();
         DisableInput();
         isActive = true;
+        player_hitbox.enabled = false;
         SlowIn();
         playerAction.Player.ManaNullify.Disable();
         Sequence sequence = DOTween.Sequence();
@@ -235,6 +237,7 @@ public class ManaNullify : MonoBehaviour
     {
         FadeOutUI();
         isActive = false;
+        player_hitbox.enabled = true;
         SlowOut();
         ResetZoom();
         EnableInput();

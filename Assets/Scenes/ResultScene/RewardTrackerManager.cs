@@ -7,13 +7,19 @@ using UnityEngine;
 
 public class RewardTrackerManager : Singleton<RewardTrackerManager>, IDataPersistence
 {
-    [Header("File Config")]
+    [Header("Reward")]
     public double obtain_gold;
     public List<Spell> obtain_spell = new();
 
-    public void LoadData(GameData data)
-    {
+    [Header("Play time")]
+    public float last_play_time;
+    public float best_play_time;
 
+
+    public void LoadData(GameData data)
+    { 
+        last_play_time = data.last_play_time;
+        best_play_time = data.best_play_time;
     }
 
     public void SaveData(ref GameData data)

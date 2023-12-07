@@ -1,11 +1,12 @@
+using DrawCaster.DataPersistence;
 using TMPro;
 using UnityEngine;
 
-public class StageTimer : MonoBehaviour
+public class StageTimer : MonoBehaviour, IDataPersistence
 {
     public float stageTimer;
     public GameObject timerUIPrefab;
-    [SerializeField] private  TextMeshProUGUI timer;
+    [SerializeField] private TextMeshProUGUI timer;
     private void OnEnable()
     {
         GameController.OnInstantiateUI += InitUI;
@@ -39,5 +40,19 @@ public class StageTimer : MonoBehaviour
         int seconds = Mathf.FloorToInt(stageTimer % 60);
         string temp = string.Format("{0:00}:{1:00}", minutes, seconds);
         return temp;
+    }
+
+    public void LoadData(GameData data)
+    {
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.last_play_time = stageTimer;
+        if (stageTimer < data.best_play_time)
+        {
+            data.best_play_time = stageTimer;
+            Debug.Log("New best time recorded!");
+        }
     }
 }
