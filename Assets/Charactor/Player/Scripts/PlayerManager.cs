@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using DrawCaster.DataPersistence;
 using DrawCaster.Util;
@@ -127,6 +128,31 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
         this.playerData._manaBase = data.playerStat._manaBase;
         this.playerData._attackBase = data.playerStat._attackBase;
         this.playerData._defenseBase = data.playerStat._defenseBase;
+
+        List<string> spells = data.player_equiped_spells;
+        for (int i = 0; i < spells.Count; i++)
+        {
+            Spell spell = Resources.Load<Spell>(spells[i]);
+            switch (i)
+            {
+                case 0:
+                    SpellHolder_Q.Instance.spell = spell;
+                    break;
+                case 1:
+                    SpellHolder_E.Instance.spell = spell;
+                    break;
+                case 2:
+                    SpellHolder_R.Instance.spell = spell;
+                    break;
+                case 3:
+                    SpellHolder_Shift.Instance.spell = spell;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
     }
 
     public void SaveData(ref GameData data)

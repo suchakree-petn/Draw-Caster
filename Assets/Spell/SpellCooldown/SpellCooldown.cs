@@ -50,25 +50,36 @@ public class SpellCooldown : MonoBehaviour
         spellE = SpellHolder_E.Instance;
         spellR = SpellHolder_R.Instance;
         spellShift = SpellHolder_Shift.Instance;
-        if (spellQ.spell._icon != null) iconQ.sprite = spellQ.spell._icon;
-        if (spellE.spell._icon != null) iconE.sprite = spellE.spell._icon;
-        if (spellR.spell._icon != null) iconR.sprite = spellR.spell._icon;
-        if (spellShift.spell._icon != null) iconShift.sprite = spellShift.spell._icon;
+        if (spellQ.spell != null)
+            if (spellQ.spell._icon != null) iconQ.sprite = spellQ.spell._icon;
+
+        if (spellE.spell != null)
+            if (spellE.spell._icon != null) iconE.sprite = spellE.spell._icon;
+
+        if (spellR.spell != null)
+            if (spellR.spell._icon != null) iconR.sprite = spellR.spell._icon;
+
+        if (spellShift.spell != null)
+            if (spellShift.spell._icon != null) iconShift.sprite = spellShift.spell._icon;
     }
     void SpellQCooldown()
     {
-        iconQ.fillAmount = 1 - spellQ.cooldown / spellQ.spell._cooldown;
+        if (spellQ.spell != null)
+            iconQ.fillAmount = 1 - spellQ.cooldown / spellQ.spell._cooldown;
     }
     void SpellECooldown()
     {
-        iconE.fillAmount = 1 - spellE.cooldown / spellE.spell._cooldown;
+        if (spellE.spell != null)
+            iconE.fillAmount = 1 - spellE.cooldown / spellE.spell._cooldown;
     }
     void SpellRCooldown()
     {
-        iconR.fillAmount = 1 - spellR.cooldown / spellR.spell._cooldown;
+        if (spellR.spell != null)
+            iconR.fillAmount = 1 - spellR.cooldown / spellR.spell._cooldown;
     }
     void SpellShiftCooldown()
     {
-        iconShift.fillAmount = 1 - spellShift.cooldown / spellShift.spell._cooldown;
+        if (spellShift.spell != null)
+            iconShift.fillAmount = 1 - spellShift.cooldown / spellShift.spell._cooldown;
     }
 }

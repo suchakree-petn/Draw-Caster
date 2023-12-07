@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2218697556253604769}
-  - component: {fileID: 5143097464299151527}
-  m_Layer: 0
+  - component: {fileID: 1159658678}
+  m_Layer: 6
   m_Name: SpellHolder_Shift
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5143097464299151527
+--- !u!114 &1159658678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,8 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405802fa7f37244498d4ce508dc55882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isReadyToCast: 1
+  castLevel: 0
   spell: {fileID: 0}
+  cooldown: 0
   drawInput: {fileID: 4206557516936561319}
+  ShowScoreTime: 1
 --- !u!1001 &2405827594079220625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54,6 +58,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2218697556253604769}
     m_Modifications:
+    - target: {fileID: 1946547575963021622, guid: d1be16e9d464d3845ba92758d6fc6be4,
+        type: 3}
+      propertyPath: sideLenght
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294881233334117959, guid: d1be16e9d464d3845ba92758d6fc6be4,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294881233334117959, guid: d1be16e9d464d3845ba92758d6fc6be4,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294881233334117959, guid: d1be16e9d464d3845ba92758d6fc6be4,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294881233334117959, guid: d1be16e9d464d3845ba92758d6fc6be4,
+        type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284761365588878300, guid: d1be16e9d464d3845ba92758d6fc6be4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7143530721935033642, guid: d1be16e9d464d3845ba92758d6fc6be4,
         type: 3}
       propertyPath: m_RootOrder
@@ -113,6 +147,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InputCompare_Shift
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143530721935033646, guid: d1be16e9d464d3845ba92758d6fc6be4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387747305117667602, guid: d1be16e9d464d3845ba92758d6fc6be4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1be16e9d464d3845ba92758d6fc6be4, type: 3}
