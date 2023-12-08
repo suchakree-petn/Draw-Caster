@@ -120,7 +120,6 @@ public class LightningStorm : Spell
             spawnPos = DrawCasterUtil.RandomPosition(player.transform.position, randomPositionRadius);
         }
         SpawnLightning(player, spawnPos, _damageSpellLevelMultiplier3);
-        //CinemachineShake.Instance.Shake(target);
     }
     private GameObject SpawnLightning(GameObject player, Vector2 spawnPos, float multiplier)
     {

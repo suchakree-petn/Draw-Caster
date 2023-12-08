@@ -1,8 +1,6 @@
 using DG.Tweening;
 using DrawCaster.Util;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "new Flame Pillars", menuName = "Spell/Flame Pillars")]
 public class FlamePillars : Spell
@@ -53,7 +51,7 @@ public class FlamePillars : Spell
         Transform player_transform = DrawCasterUtil.GetMidTransformOf(player.transform);
 
         Vector3 position = DrawCasterUtil.RandomPosition(player_transform.position, random_radius);
-        SpawnFlamePillar(position, Quaternion.identity, player);
+        SpawnFlamePillar(position, Quaternion.identity, player, _damageSpellLevelMultiplier1);
     }
 
     public override void Cast2(GameObject player, GameObject target)
@@ -61,7 +59,7 @@ public class FlamePillars : Spell
         Transform player_transform = DrawCasterUtil.GetMidTransformOf(player.transform);
 
         Vector3 position = DrawCasterUtil.RandomPosition(player_transform.position, random_radius);
-        SpawnFlamePillar(position, Quaternion.identity, player);
+        SpawnFlamePillar(position, Quaternion.identity, player, _damageSpellLevelMultiplier2);
     }
 
     public override void Cast3(GameObject player, GameObject target)
@@ -69,16 +67,16 @@ public class FlamePillars : Spell
         Transform player_transform = DrawCasterUtil.GetMidTransformOf(player.transform);
 
         Vector3 position = DrawCasterUtil.RandomPosition(player_transform.position, random_radius);
-        SpawnFlamePillar(position, Quaternion.identity, player);
+        SpawnFlamePillar(position, Quaternion.identity, player, _damageSpellLevelMultiplier3);
     }
 
-    private GameObject SpawnFlamePillar(Vector3 position, Quaternion quaternion, GameObject attacker)
+    private GameObject SpawnFlamePillar(Vector3 position, Quaternion quaternion, GameObject attacker, float multiplier)
     {
         GameObject flamePillar = Instantiate(flamePillar_prf, position, quaternion);
         flamePillar = DrawCasterUtil.AddAttackHitTo(
             flamePillar,
             _elementalType, attacker,
-            _baseSkillDamageMultiplier,
+            _baseSkillDamageMultiplier * multiplier,
             flamePillar_clip.length,
             targetLayer,
             knockbackGaugeDeal,

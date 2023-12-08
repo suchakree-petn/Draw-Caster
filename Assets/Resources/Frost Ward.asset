@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09aa1fbfdb62a004b8247f4334ed2cc4, type: 3}
+  m_Name: Frost Ward
+  m_EditorClassIdentifier: 
+  _name: Frost Ward
+  _description: Create frost aura that follow the caster and deal damage to enemy
+    in range
+  _icon: {fileID: 21300000, guid: f954258e05c4b2b4e8c8cc0fa72f6e87, type: 3}
+  _level: 0
+  _spellType: 0
+  _elementalType: 3
+  _cooldown: 17
+  _manaCost: 90
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _templateImage: {fileID: 2800000, guid: 0f2e3e35f99d8e0499319bc7598cfe3e, type: 3}
+  UI_image: {fileID: 21300000, guid: 7ba0b0767d29adb4493fbdbf838b9573, type: 3}
+  _lowThreshold: 0.1
+  _midThreshold: 0.3
+  _baseSkillDamageMultiplier: 0.5
+  _damageSpellLevelMultiplier1: 0
+  _damageSpellLevelMultiplier2: 0
+  _damageSpellLevelMultiplier3: 0
+  cast1_radius: 5
+  cast2_radius: 7
+  cast3_radius: 9
+  duration: 9
+  knockbackGaugeDeal: 25
+  hit_interval: 1
+  frostWard_prf: {fileID: 2880852003300503754, guid: 378c033b99d7ae246aeef2fb4fef7cc7,
+    type: 3}
