@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 4
   sprites:
-  - {fileID: 21300000, guid: 2d9a2ddc4e7d39344b569e438de10732, type: 3}
-  - {fileID: 21300000, guid: c17f8e48cdb3d1040b9af86cd528210d, type: 3}
-  - {fileID: 21300000, guid: 1bf82ae9b4717dc4eb09d3f3647c06a3, type: 3}
+  - {fileID: 21300000, guid: 37307dcd7e8e50a479b6403ce2adad65, type: 3}
+  - {fileID: 21300000, guid: 897a5b87f24230b418912d7cdb41e6e4, type: 3}
+  - {fileID: 21300000, guid: 4248802874687284aa4db5dd140d989a, type: 3}
+  - {fileID: 21300000, guid: 363a2e6450cea6f45ac025babb926bfb, type: 3}
   textures:
-  - {fileID: 2800000, guid: 9d654d5982f7dec43b87e3045999020b, type: 3}
-  - {fileID: 2800000, guid: dec5c62b7c9bc7f4dab7f0fba6d42057, type: 3}
-  - {fileID: 2800000, guid: 34760e6c17865ed48a7084e7edc2652d, type: 3}
+  - {fileID: 2800000, guid: 623de101bb1ebe34faf7511146021ad5, type: 3}
+  - {fileID: 2800000, guid: c6bc1002b1ceeb64db48118dcb85bd10, type: 3}
+  - {fileID: 2800000, guid: 0f2e3e35f99d8e0499319bc7598cfe3e, type: 3}
+  - {fileID: 2800000, guid: 08450acd23b8dfc439867c4fc1e6d472, type: 3}

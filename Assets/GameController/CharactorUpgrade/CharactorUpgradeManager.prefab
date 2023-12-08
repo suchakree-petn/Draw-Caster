@@ -76,6 +76,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c9cf4eb2c073f94f82f962a34f869d6, type: 2}
   - {fileID: 11400000, guid: 2c1897851bbae41439674375ab576a20, type: 2}
   - {fileID: 11400000, guid: 22a7280cfc4f6b640bb4437eab4467bf, type: 2}
+  - {fileID: 11400000, guid: 559cdda0b358b5f4c83c39f98d06f907, type: 2}
   equip_spells: []
   spell_slot:
   - {fileID: 0}

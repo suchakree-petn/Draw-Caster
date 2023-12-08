@@ -299,7 +299,7 @@ public class ManaNullify : MonoBehaviour
             SlowOut();
             ResetZoom();
             Debug.Log("nullify canceled");
-            if (!isActive)
+            if (!isActive && drawInput_Nullify.gameObject.activeInHierarchy)
             {
                 drawInput_Nullify.gameObject.SetActive(false);
             }

@@ -83,6 +83,11 @@ PrefabInstance:
       propertyPath: m_ReferencePixelsPerUnit
       value: 32
       objectReference: {fileID: 0}
+    - target: {fileID: 625897120485710998, guid: bb721071728df4245b23eb96fdb93673,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5692903946190800777, guid: bb721071728df4245b23eb96fdb93673,
         type: 3}
       propertyPath: m_Layer

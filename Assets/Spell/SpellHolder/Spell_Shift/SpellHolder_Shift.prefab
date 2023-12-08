@@ -58,6 +58,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2218697556253604769}
     m_Modifications:
+    - target: {fileID: 1196012252602628291, guid: d1be16e9d464d3845ba92758d6fc6be4,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1946547575963021622, guid: d1be16e9d464d3845ba92758d6fc6be4,
         type: 3}
       propertyPath: sideLenght

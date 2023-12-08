@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d49f731fbbd72494bb0380091196a47f, type: 3}
+  m_Name: Flame Pillars
+  m_EditorClassIdentifier: 
+  _name: Flame Pillars
+  _description: Summon flame pillars around caster
+  _icon: {fileID: 21300000, guid: ba577ee7418200849aa191a8140c2a66, type: 3}
+  _level: 0
+  _spellType: 0
+  _elementalType: 1
+  _cooldown: 1
+  _manaCost: 120
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _templateImage: {fileID: 2800000, guid: 08450acd23b8dfc439867c4fc1e6d472, type: 3}
+  UI_image: {fileID: 21300000, guid: 363a2e6450cea6f45ac025babb926bfb, type: 3}
+  _lowThreshold: 0.1
+  _midThreshold: 0.3
+  _baseSkillDamageMultiplier: 0.1
+  _damageSpellLevelMultiplier1: 0.6
+  _damageSpellLevelMultiplier2: 1
+  _damageSpellLevelMultiplier3: 1.2
+  cast1_amount: 3
+  cast2_amount: 4
+  cast3_amount: 5
+  random_radius: 5
+  _delayTime: 0.5
+  knockbackGaugeDeal: 8
+  hit_interval: 0.2
+  flamePillar_prf: {fileID: 1951053022745430761, guid: 875eb7d1759b47842ae9188198f6220a,
+    type: 3}
+  flamePillar_clip: {fileID: 7400000, guid: 181eeabffa67c9a48bb88a684d603dd0, type: 2}

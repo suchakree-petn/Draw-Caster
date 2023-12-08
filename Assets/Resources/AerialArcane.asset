@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AerialArcane
   m_EditorClassIdentifier: 
   _name: AerialArcane
-  _description: 
+  _description: Summon tornadoes that pull enemy into them
   _icon: {fileID: 21300000, guid: 2f4874d33abc86449926b948629937d3, type: 3}
   _level: 0
   _spellType: 2
@@ -23,8 +23,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  _templateImage: {fileID: 2800000, guid: 34760e6c17865ed48a7084e7edc2652d, type: 3}
-  UI_image: {fileID: 21300000, guid: 1bf82ae9b4717dc4eb09d3f3647c06a3, type: 3}
+  _templateImage: {fileID: 2800000, guid: c372bd2eb48c9f544952dde8190265cb, type: 3}
+  UI_image: {fileID: 21300000, guid: 7ba0b0767d29adb4493fbdbf838b9573, type: 3}
   _lowThreshold: 0.2
   _midThreshold: 0.5
   _baseSkillDamageMultiplier: 0.7

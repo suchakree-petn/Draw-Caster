@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: sideLenght
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 30323745573665220, guid: 59dbeabd8e845144cb07f8bb12258d93,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1093147470040311616, guid: 59dbeabd8e845144cb07f8bb12258d93,
         type: 3}
       propertyPath: m_UiScaleMode

@@ -23,8 +23,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  _templateImage: {fileID: 2800000, guid: 34760e6c17865ed48a7084e7edc2652d, type: 3}
-  UI_image: {fileID: 21300000, guid: 1bf82ae9b4717dc4eb09d3f3647c06a3, type: 3}
+  _templateImage: {fileID: 2800000, guid: 0f2e3e35f99d8e0499319bc7598cfe3e, type: 3}
+  UI_image: {fileID: 21300000, guid: 4248802874687284aa4db5dd140d989a, type: 3}
   _lowThreshold: 0.2
   _midThreshold: 0.5
   _baseSkillDamageMultiplier: 1.5

@@ -77,9 +77,9 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
         playerStat._hpBase = 0.1f * 2000 * playerStat._level + 2000;
         playerStat._moveSpeed = 0.03f * 5 * playerStat._level + 5;
         playerStat._manaBase = 0.05f * 300 * playerStat._level + 300;
-        if (playerStat._moveSpeed > 10)
+        if (playerStat._moveSpeed > 7.5f)
         {
-            playerStat._moveSpeed = 10;
+            playerStat._moveSpeed = 7.5f;
         }
     }
 
