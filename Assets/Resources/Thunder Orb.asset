@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d90e2cc49c28504aa5da171a4aa3c47, type: 3}
+  m_Name: Thunder Orb
+  m_EditorClassIdentifier: 
+  _name: Thunder Orb
+  _description: Release lightning ball in selected direction, travel forward while
+    shocking enemies in range
+  _icon: {fileID: 21300000, guid: 024e56ed78152ff46aa31a1a0d8d3f91, type: 3}
+  _level: 0
+  _spellType: 0
+  _elementalType: 2
+  _cooldown: 0.1
+  _manaCost: 150
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _templateImage: {fileID: 2800000, guid: c6bc1002b1ceeb64db48118dcb85bd10, type: 3}
+  UI_image: {fileID: 21300000, guid: 897a5b87f24230b418912d7cdb41e6e4, type: 3}
+  _lowThreshold: 0.1
+  _midThreshold: 0.3
+  _baseSkillDamageMultiplier: 0.3
+  _damageSpellLevelMultiplier1: 0.7
+  _damageSpellLevelMultiplier2: 1
+  _damageSpellLevelMultiplier3: 1.15
+  cast1_size: 0.7
+  cast2_size: 1
+  cast3_size: 1.5
+  duration: 5
+  knockbackGaugeDeal: 10
+  hit_interval_1: 1
+  hit_interval_2: 0.5
+  hit_interval_3: 0.25
+  select_duration: 5
+  travel_speed: 100
+  thunderOrb_prf: {fileID: 1558108451665019957, guid: 6718f70cde822b64880bcd91999341d1,
+    type: 3}
+  direction_prf: {fileID: 8743437274346547566, guid: 0fc44f6479939fd44af2d6cdb7d6e1ba,
+    type: 3}
+  durationBar_prf: {fileID: 7614731784926023167, guid: a4067acd9af24f545b1aad91508755b6,
+    type: 3}

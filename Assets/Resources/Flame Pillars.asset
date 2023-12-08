@@ -35,9 +35,9 @@ MonoBehaviour:
   cast2_amount: 4
   cast3_amount: 5
   random_radius: 5
-  _delayTime: 0.5
+  _delayTime: 0.2
   knockbackGaugeDeal: 8
   hit_interval: 0.2
-  flamePillar_prf: {fileID: 1951053022745430761, guid: 875eb7d1759b47842ae9188198f6220a,
+  flamePillar_prf: {fileID: 1951053022745430761, guid: a577738f221f07f42a0c2f1a1dde3b02,
     type: 3}
   flamePillar_clip: {fileID: 7400000, guid: 181eeabffa67c9a48bb88a684d603dd0, type: 2}

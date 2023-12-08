@@ -113,6 +113,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1635,8 +1647,8 @@ TextureImporter:
       demon_slime_FREE_v1.0_288x160_spritesheet_0: -63135188
       demon_slime_FREE_v1.0_288x160_spritesheet_64: -79849055
       demon_slime_FREE_v1.0_288x160_spritesheet_63: -454447356
-      demon_slime_FREE_v1.0_288x160_spritesheet_69: -160472633
       demon_slime_FREE_v1.0_288x160_spritesheet_38: -393094315
+      demon_slime_FREE_v1.0_288x160_spritesheet_69: -160472633
       demon_slime_FREE_v1.0_288x160_spritesheet_2: 1831535781
       demon_slime_FREE_v1.0_288x160_spritesheet_18: -419711826
       demon_slime_FREE_v1.0_288x160_spritesheet_17: -1372813017
