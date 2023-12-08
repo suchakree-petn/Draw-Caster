@@ -19,7 +19,7 @@ MonoBehaviour:
   _level: 0
   _spellType: 0
   _elementalType: 3
-  _cooldown: 17
+  _cooldown: 0.1
   _manaCost: 90
   targetLayer:
     serializedVersion: 2
@@ -29,9 +29,9 @@ MonoBehaviour:
   _lowThreshold: 0.1
   _midThreshold: 0.3
   _baseSkillDamageMultiplier: 0.5
-  _damageSpellLevelMultiplier1: 0
-  _damageSpellLevelMultiplier2: 0
-  _damageSpellLevelMultiplier3: 0
+  _damageSpellLevelMultiplier1: 0.7
+  _damageSpellLevelMultiplier2: 1
+  _damageSpellLevelMultiplier3: 1.3
   cast1_radius: 5
   cast2_radius: 7
   cast3_radius: 9

@@ -178,6 +178,16 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
         DataPersistenceManager.Instance.LoadGame();
     }
     [Command]
+    public void SetPlayerMana(float value)
+    {
+        currentMana = value;
+    }
+    [Command]
+    public void SetPlayerHP(float value)
+    {
+        currentHp = value;
+    }
+    [Command]
     public void ResetPlayerStatToCurrentLevelGrowth()
     {
         playerData._level--;
