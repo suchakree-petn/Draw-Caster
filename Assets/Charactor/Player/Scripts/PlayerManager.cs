@@ -4,6 +4,7 @@ using DG.Tweening;
 using DrawCaster.DataPersistence;
 using DrawCaster.Util;
 using UnityEngine;
+using QFSW.QC;
 
 public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
 {
@@ -161,5 +162,21 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
+        data.playerStat._attackBase = playerData._attackBase;
+        data.playerStat._hpBase = playerData._hpBase;
+        data.playerStat._defenseBase = playerData._defenseBase;
+        data.playerStat._moveSpeed = playerData._moveSpeed;
+        data.playerStat._level = playerData._level;
+        data.playerStat._manaBase = playerData._manaBase;
+    }
+
+    [Command]
+    public void SetPlayerAttack(float value)
+    {
+        playerData._attackBase = value;
+        DataPersistenceManager.Instance.SaveGame();
+        DataPersistenceManager.Instance.LoadGame();
     }
 }
+
+

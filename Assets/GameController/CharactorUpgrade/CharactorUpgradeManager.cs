@@ -1,5 +1,6 @@
 using System;
 using DrawCaster.DataPersistence;
+using QFSW.QC;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -107,5 +108,22 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
         OnSuccessUpgradeLevel -= UpdateGold;
         OnSuccessUpgradeLevel -= UpdateUpgradeCost;
 
+    }
+
+    [Command]
+    public void ResetPlayerStatToCurrentLevelGrowth()
+    {
+        playerStat._level--;
+        PlayerStatGrowth();
+        DataPersistenceManager.Instance.SaveGame();
+        DataPersistenceManager.Instance.LoadGame();
+    }
+    [Command]
+    public void SetPlayerLevel(int level)
+    {
+        playerStat._level = level - 1;
+        PlayerStatGrowth();
+        DataPersistenceManager.Instance.SaveGame();
+        DataPersistenceManager.Instance.LoadGame();
     }
 }
