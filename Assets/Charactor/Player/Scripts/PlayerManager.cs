@@ -177,6 +177,37 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
         DataPersistenceManager.Instance.SaveGame();
         DataPersistenceManager.Instance.LoadGame();
     }
+    [Command]
+    public void ResetPlayerStatToCurrentLevelGrowth()
+    {
+        playerData._level--;
+        playerData = PlayerStatGrowth(playerData);
+        DataPersistenceManager.Instance.SaveGame();
+        DataPersistenceManager.Instance.LoadGame();
+    }
+    [Command]
+    public void SetPlayerLevel(int level)
+    {
+        playerData._level = level - 1;
+        playerData = PlayerStatGrowth(playerData);
+        DataPersistenceManager.Instance.SaveGame();
+        DataPersistenceManager.Instance.LoadGame();
+    }
+    private PlayerData PlayerStatGrowth(PlayerData playerStat)
+    {
+        playerStat._level++;
+        playerStat._attackBase = 0.3f * 50 * playerStat._level + 50;
+        playerStat._defenseBase = 0.3f * 100 * playerStat._level + 100;
+        playerStat._hpBase = 0.1f * 2000 * playerStat._level + 2000;
+        playerStat._moveSpeed = 0.03f * 5 * playerStat._level + 5;
+        playerStat._manaBase = 0.05f * 300 * playerStat._level + 300;
+        if (playerStat._moveSpeed > 10)
+        {
+            playerStat._moveSpeed = 10;
+        }
+
+        return playerStat;
+    }
 }
 
 

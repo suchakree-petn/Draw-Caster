@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2272987896836574388}
   - component: {fileID: 748651334}
   m_Layer: 0
-  m_Name: CharactorUpgradeManage
+  m_Name: CharactorUpgradeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

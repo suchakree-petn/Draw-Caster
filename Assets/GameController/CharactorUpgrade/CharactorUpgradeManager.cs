@@ -41,7 +41,6 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
 
     protected override void InitAfterAwake()
     {
-        // back_button.onClick.AddListener(DataPersistenceManager.Instance.SaveGame);
 
     }
     private void Start()
@@ -78,6 +77,10 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
         playerStat._hpBase = 0.1f * 2000 * playerStat._level + 2000;
         playerStat._moveSpeed = 0.03f * 5 * playerStat._level + 5;
         playerStat._manaBase = 0.05f * 300 * playerStat._level + 300;
+        if (playerStat._moveSpeed > 10)
+        {
+            playerStat._moveSpeed = 10;
+        }
     }
 
     public void UpdateGold()
@@ -110,20 +113,5 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
 
     }
 
-    [Command]
-    public void ResetPlayerStatToCurrentLevelGrowth()
-    {
-        playerStat._level--;
-        PlayerStatGrowth();
-        DataPersistenceManager.Instance.SaveGame();
-        DataPersistenceManager.Instance.LoadGame();
-    }
-    [Command]
-    public void SetPlayerLevel(int level)
-    {
-        playerStat._level = level - 1;
-        PlayerStatGrowth();
-        DataPersistenceManager.Instance.SaveGame();
-        DataPersistenceManager.Instance.LoadGame();
-    }
+    
 }
