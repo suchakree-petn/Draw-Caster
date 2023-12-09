@@ -73,7 +73,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1491291925
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -1009263808, guid: deb12e28a9eac4b4db1f04e5d75c25a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -181,7 +181,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 0
   currentMana: 0
+  maxKnockBackGauge: 0
+  curentKnockBackGauge: 0
+  restoreGaugeDelayTime: 0
+  gaugeRegen: 0
+  hited: 0
+  isKnockback: 0
   enemyData: {fileID: 11400000, guid: 803916aa81a830e479f695fc0bfcc0b1, type: 2}
+  enemyKnockbackDistance: 0
+  enemyKnockbackClip: {fileID: 0}
+  enemyDeadClip: {fileID: 0}
 --- !u!114 &8032879043305235565
 MonoBehaviour:
   m_ObjectHideFlags: 0
