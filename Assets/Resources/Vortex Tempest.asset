@@ -12,32 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac3dc028424729449c83cd016ddfc67, type: 3}
   m_Name: Vortex Tempest
   m_EditorClassIdentifier: 
-  _name: 
-  _description: 
-  _icon: {fileID: 0}
+  _name: Vortex Tempest
+  _description: Summon the vortex that pulling all enemies in range and deal small
+    amount of damage
+  _icon: {fileID: 21300000, guid: c1df40d40cc814a5695dee0e707cc03a, type: 3}
   _level: 0
   _spellType: 0
-  _elementalType: 0
-  _cooldown: 0
-  _manaCost: 0
+  _elementalType: 4
+  _cooldown: 0.1
+  _manaCost: 120
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
-  _templateImage: {fileID: 0}
-  UI_image: {fileID: 0}
-  _lowThreshold: 0
-  _midThreshold: 0
-  _baseSkillDamageMultiplier: 0
-  _damageSpellLevelMultiplier1: 0
-  _damageSpellLevelMultiplier2: 0
-  _damageSpellLevelMultiplier3: 0
-  cast1_size: 0
-  cast2_size: 0
-  cast3_size: 0
-  duration: 0
-  knockbackGaugeDeal: 0
-  hit_interval: 0
-  select_duration: 0
-  vortexTempest_prf: {fileID: 0}
-  area_prf: {fileID: 0}
-  durationBar_prf: {fileID: 0}
+    m_Bits: 128
+  _templateImage: {fileID: 2800000, guid: c372bd2eb48c9f544952dde8190265cb, type: 3}
+  UI_image: {fileID: 21300000, guid: 7ba0b0767d29adb4493fbdbf838b9573, type: 3}
+  _lowThreshold: 0.1
+  _midThreshold: 0.3
+  _baseSkillDamageMultiplier: 0.1
+  _damageSpellLevelMultiplier1: 0.7
+  _damageSpellLevelMultiplier2: 1
+  _damageSpellLevelMultiplier3: 1.2
+  cast1_size: 4
+  cast2_size: 11
+  cast3_size: 18
+  duration: 7
+  knockbackGaugeDeal: 10
+  hit_interval: 1.5
+  select_duration: 4
+  vortexTempest_prf: {fileID: 1558108451665019957, guid: 0e5e87ef25cf10f4dabb636b64644c0a,
+    type: 3}
+  area_prf: {fileID: 1558108451665019957, guid: 2c4a0c96b3dd267448f0bf063407cea0,
+    type: 3}
+  durationBar_prf: {fileID: 7614731784926023167, guid: adf4cff48738e1643998cf9266c3d3c1,
+    type: 3}
