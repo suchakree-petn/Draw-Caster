@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isReadyToCast: 1
   castLevel: 0
-  spell: {fileID: 11400000, guid: 35b258b885c597f41a21266fbb7c4a2f, type: 2}
+  spell: {fileID: 0}
   cooldown: 0
   drawInput: {fileID: 8255647056622754693}
   ShowScoreTime: 1
