@@ -4,6 +4,7 @@ using DrawCaster.DataPersistence;
 using System;
 using System.Linq;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class SpellSelect : Singleton<SpellSelect>, IDataPersistence
 {
@@ -67,6 +68,8 @@ public class SpellSelect : Singleton<SpellSelect>, IDataPersistence
         {
             spell_slot[i].transform.GetComponentInChildren<Image>().sprite = null;
             spell_slot[i].Is_HasData = false;
+
+            spell_slot[i].transform.GetComponentInChildren<Image>().enabled = false;
         }
         for (int i = 0; i < equip_spells.Count; i++)
         {
@@ -75,6 +78,8 @@ public class SpellSelect : Singleton<SpellSelect>, IDataPersistence
             Spell equipSpell = equip_spells[i];
             if (equipSpell != null)
             {
+                spell_slot[i].transform.GetComponentInChildren<Image>().enabled = true;
+                
                 spell_slot[i].spellData = new SpellData(equipSpell);
                 spell_slot[i].Is_HasData = true;
             }
