@@ -1469,8 +1469,8 @@ MonoBehaviour:
   playerManager: {fileID: 1366102689556583805}
   manaNullifyData: {fileID: 11400000, guid: c37e15154c0a1a24ca89f74177f6185f, type: 2}
   vCam: {fileID: 0}
-  zoomIn: -1
-  zoomInDuration: 0.2
+  zoomIn: 0
+  zoomInDuration: 0
   zoomInCurve:
     serializedVersion: 2
     m_Curve:
@@ -1495,8 +1495,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  zoomOut: 2
-  zoomOutDuration: 0.1
+  zoomOut: 0
+  zoomOutDuration: 0
   zoomOutCurve:
     serializedVersion: 2
     m_Curve:
@@ -1521,7 +1521,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  resetZoomDuration: 0.5
+  resetZoomDuration: 0
   resetZoomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1583,6 +1583,7 @@ MonoBehaviour:
   manaGainBase: 5
   drawInput_Nullify: {fileID: 1050196540}
   icon: {fileID: 0}
+  textCd: {fileID: 0}
   UI: {fileID: 276752581}
   bgFadeDuration: 1
   player_hitbox: {fileID: 4713767990457361565}

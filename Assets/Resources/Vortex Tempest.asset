@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac3dc028424729449c83cd016ddfc67, type: 3}
+  m_Name: Vortex Tempest
+  m_EditorClassIdentifier: 
+  _name: 
+  _description: 
+  _icon: {fileID: 0}
+  _level: 0
+  _spellType: 0
+  _elementalType: 0
+  _cooldown: 0
+  _manaCost: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _templateImage: {fileID: 0}
+  UI_image: {fileID: 0}
+  _lowThreshold: 0
+  _midThreshold: 0
+  _baseSkillDamageMultiplier: 0
+  _damageSpellLevelMultiplier1: 0
+  _damageSpellLevelMultiplier2: 0
+  _damageSpellLevelMultiplier3: 0
+  cast1_size: 0
+  cast2_size: 0
+  cast3_size: 0
+  duration: 0
+  knockbackGaugeDeal: 0
+  hit_interval: 0
+  select_duration: 0
+  vortexTempest_prf: {fileID: 0}
+  area_prf: {fileID: 0}
+  durationBar_prf: {fileID: 0}
