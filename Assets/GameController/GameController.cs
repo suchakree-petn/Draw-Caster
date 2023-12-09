@@ -7,6 +7,7 @@ using TMPro;
 using Cinemachine;
 using UnityEngine.UI;
 using DrawCaster.DataPersistence;
+using QFSW.QC;
 
 
 public enum GameState
@@ -240,7 +241,7 @@ public class GameController : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Destroy(player);
-        
+
         // Save game
         DataPersistenceManager.Instance.SaveGame();
 
@@ -284,6 +285,16 @@ public class GameController : MonoBehaviour
         OnBeforeEnding -= DisableTipsButton;
 
 
+    }
+    [Command]
+    public void ClearEnemy()
+    {
+        foreach (GameObject enemy in allEnemyInScene)
+        {
+            Destroy(enemy);
+        }
+        allEnemyInScene.Clear();
+        StageClear();
     }
 }
 

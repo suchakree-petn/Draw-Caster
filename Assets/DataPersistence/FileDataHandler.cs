@@ -68,7 +68,7 @@ public class FileDataHandler
     {
         // Ensure the folder exists
         string fullPath = Path.Combine(dataDirPath, "/" + folderName + "/" + fileName);
-
+        Debug.Log((fullPath));
         if (!Directory.Exists(Path.Combine(dataDirPath, "/" + folderName)))
         {
             Directory.CreateDirectory(Path.Combine(dataDirPath, "/" + folderName));

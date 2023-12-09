@@ -218,6 +218,21 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
 
         return playerStat;
     }
+    [Command]
+    public void GodMode()
+    {
+        currentHp = 99999999;
+        currentMana = 99999999;
+
+    }
+    [Command]
+    public void GodModeSave()
+    {
+        playerData._hpBase = 99999999;
+        playerData._manaBase = 99999999;
+        DataPersistenceManager.Instance.SaveGame();
+        DataPersistenceManager.Instance.LoadGame();
+    }
 }
 
 
