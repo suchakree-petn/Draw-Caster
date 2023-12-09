@@ -5,6 +5,7 @@ using System.Linq;
 using Cinemachine;
 using DG.Tweening;
 using DrawCaster.Util;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -50,6 +51,8 @@ public class ManaNullify : MonoBehaviour
     Sequence nullifySequence;
     float originalSize;
     [SerializeField] private Image icon;
+    [SerializeField] private TextMeshProUGUI textCd;
+    float _cooldown;
     [SerializeField] private GameObject UI;
     public float bgFadeDuration;
     [SerializeField] private Collider2D player_hitbox;
@@ -78,6 +81,7 @@ public class ManaNullify : MonoBehaviour
     }
     void Active()
     {
+        _cooldown = manaNullifyData.cooldown;
         // Play animation
         Debug.Log("ActiveNullify");
         nullifySequence.Kill();
@@ -94,15 +98,28 @@ public class ManaNullify : MonoBehaviour
                 icon = GameObject.Find("PlayerUI").transform.GetChild(3).GetChild(4).GetChild(1).GetComponent<Image>();
             }
             icon.fillAmount = 0;
+            if (textCd == null)
+            {
+                if(GameObject.Find("textCdMN") != null)textCd = GameObject.Find("textCdMN").gameObject.GetComponent<TextMeshProUGUI>();
+            }
         });
         sequence.AppendInterval(manaNullifyData.cooldown).OnUpdate(() =>
         {
             icon.fillAmount += Time.deltaTime / manaNullifyData.cooldown;
+            ShowCooldown();
         }).OnComplete(() =>
         {
             icon.fillAmount = 1;
             gameObject.SetActive(true);
         });
+    }
+    void ShowCooldown(){
+        if(_cooldown >= 1 && !textCd.enabled){
+            textCd.enabled = true;
+        }else if(textCd.text == "0"){
+            textCd.enabled = false;
+        }
+        textCd.text = (_cooldown -= Time.deltaTime).ToString("0");
     }
     private void DisableInput()
     {
