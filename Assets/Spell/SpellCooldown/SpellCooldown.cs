@@ -61,11 +61,15 @@ public class SpellCooldown : MonoBehaviour
         spellShift = SpellHolder_Shift.Instance;
         if (spellQ.spell != null)
             if (spellQ.spell._icon != null) {
+                iconQ.enabled = true;
+                bgQ.enabled = true;
                 iconQ.sprite = spellQ.spell._icon;
                 bgQ.sprite = spellQ.spell._icon;
             }
         if (spellE.spell != null)
             if (spellE.spell._icon != null){
+                iconE.enabled = true;
+                bgE.enabled = true;
                 iconE.sprite = spellE.spell._icon;
                 bgE.sprite = spellE.spell._icon;
             }
@@ -73,12 +77,16 @@ public class SpellCooldown : MonoBehaviour
 
         if (spellR.spell != null)
             if (spellR.spell._icon != null) {
+                iconR.enabled = true;
+                bgR.enabled = true;
                 iconR.sprite = spellR.spell._icon;
                 bgR.sprite = spellR.spell._icon;
             }
 
         if (spellShift.spell != null)
             if (spellShift.spell._icon != null) {
+                iconShift.enabled = true;
+                bgShift.enabled = true;
                 iconShift.sprite = spellShift.spell._icon;
                 bgShift.sprite = spellShift.spell._icon;
             }

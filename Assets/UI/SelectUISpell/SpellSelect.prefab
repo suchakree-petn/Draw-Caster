@@ -65,6 +65,7 @@ MonoBehaviour:
     Name: 
     Desc: 
     spritePath: 
+  Is_HasData: 0
 --- !u!114 &2576375820585551492
 MonoBehaviour:
   m_ObjectHideFlags: 0
