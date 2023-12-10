@@ -54,7 +54,7 @@ public class FrostWard : Spell
 
     private GameObject SpawnFrostWard(GameObject attacker, float multiplier, float radius)
     {
-        GameObject frostward = Instantiate(frostWard_prf, DrawCasterUtil.GetMidTransformOf(attacker.transform));
+        GameObject frostward = Instantiate(frostWard_prf, DrawCasterUtil.GetLowerTransformOf(attacker.transform));
         frostward = DrawCasterUtil.AddAttackHitTo(
             frostward,
             _elementalType, attacker,
