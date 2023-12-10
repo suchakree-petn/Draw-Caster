@@ -38,12 +38,12 @@ public class GameController : MonoBehaviour
     [Header("Entity in scene")]
     [SerializeField] private List<GameObject> allEnemyInScene = new List<GameObject>();
     public GameObject[] AllEnemy => allEnemyInScene.ToArray();
-    //public List<GameObject> allEnemyInCamera = new List<GameObject>();
     public List<string> scene = new List<string>();
     public int currentScene = 0;
     public GameObject doorToNextStage;
     [SerializeField] private GameObject tmpStageFloor;
     [SerializeField] private GameObject playerUI;
+    public float player_primary_damage_value;
 
     public static Action<GameObject> OnPlayerDead;
     public static Action<GameObject, Elemental> OnPlayerTakeDamage;
@@ -103,38 +103,6 @@ public class GameController : MonoBehaviour
     }
 
 
-    private bool IsObjectInCameraView(GameObject target)
-    {
-        if (target == null)
-        {
-            return false;
-        }
-        Camera mainCamera = Camera.main;
-        if (mainCamera == null)
-        {
-            Debug.LogError("Main camera not found.");
-            return false;
-        }
-
-        // Get the GameObject's bounds
-        Bounds bounds = target.transform.GetComponentInChildren<SpriteRenderer>().bounds;
-
-        // Calculate the camera's orthographic size
-        float cameraOrthoSize = mainCamera.orthographicSize;
-        float cameraAspect = mainCamera.aspect;
-
-        // Calculate the camera's orthographic width and height
-        float cameraOrthoWidth = cameraOrthoSize * cameraAspect;
-        float cameraOrthoHeight = cameraOrthoSize;
-
-        // Calculate the bounds of the camera's view in world space
-        Vector2 cameraMin = (Vector2)mainCamera.transform.position - new Vector2(cameraOrthoWidth, cameraOrthoHeight);
-        Vector2 cameraMax = (Vector2)mainCamera.transform.position + new Vector2(cameraOrthoWidth, cameraOrthoHeight);
-
-        // Check if the bounds of the GameObject intersect with the camera's view bounds
-        return bounds.min.x < cameraMax.x - 10 && bounds.max.x > cameraMin.x - 10 &&
-               bounds.min.y < cameraMax.y - 10 && bounds.max.y > cameraMin.y - 10;
-    }
 
     void AddAllEnemyInSceneToList()
     {
@@ -145,18 +113,6 @@ public class GameController : MonoBehaviour
             this.allEnemyInScene.Add(enemy);
         }
     }
-    // public GameObject[] GetAllEnemyInScene()
-    // {
-    //     allEnemyInCamera.Clear();
-    //     foreach (GameObject enemy in allEnemyInScene)
-    //     {
-    //         if (IsObjectInCameraView(enemy))
-    //         {
-    //             allEnemyInCamera.Add(enemy);
-    //         }
-    //     }
-    //     return allEnemyInCamera.ToArray();
-    // }
 
     public string GetSceneName()
     {
@@ -250,6 +206,12 @@ public class GameController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void InitPlayerDamageValue()
+    {
+        FireStaff fireStaff = Resources.Load<FireStaff>("Weapon/Fire Staff");
+        PlayerData playerData = GameObject.FindWithTag("Player").GetComponent<PlayerManager>().GetCharactorData();
+        player_primary_damage_value = fireStaff._baseSkillDamageMultiplier * playerData._attackBase;
+    }
     private void OnEnable()
     {
         OnInstantiateUI += InstantiatePlayerUI;
@@ -270,6 +232,7 @@ public class GameController : MonoBehaviour
             Instance.transform.GetChild(2).GetComponent<CinemachineVirtualCamera>().Follow = GameObject.FindWithTag("Player").transform;
             Instance.transform.GetChild(2).GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = GameObject.FindWithTag("BorderMap").GetComponent<Collider2D>();
         };
+        OnBeforeStart += InitPlayerDamageValue;
         WhileInGame += StageClear;
         OnBeforeEnding += GenerateDoor;
         OnBeforeEnding += DisableTipsButton;
@@ -283,6 +246,7 @@ public class GameController : MonoBehaviour
         WhileInGame -= StageClear;
         OnBeforeEnding -= GenerateDoor;
         OnBeforeEnding -= DisableTipsButton;
+        OnBeforeStart -= InitPlayerDamageValue;
 
 
     }

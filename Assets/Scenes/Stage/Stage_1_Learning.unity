@@ -846,21 +846,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
-    - target: {fileID: 1017575587981265878, guid: 07ade20c3f977c5428ab6a39c3e3757a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1017575587981265878, guid: 07ade20c3f977c5428ab6a39c3e3757a,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 92
-      objectReference: {fileID: 0}
-    - target: {fileID: 1017575587981265878, guid: 07ade20c3f977c5428ab6a39c3e3757a,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 92
-      objectReference: {fileID: 0}
     - target: {fileID: 5410395923678494383, guid: 07ade20c3f977c5428ab6a39c3e3757a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -880,11 +865,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170159240451445388, guid: 07ade20c3f977c5428ab6a39c3e3757a,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07ade20c3f977c5428ab6a39c3e3757a, type: 3}

@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 1818835484}
   m_Layer: 6
   m_Name: CM vcam1
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 1906288048}
   - component: {fileID: 1906288050}
   - component: {fileID: 1906288049}
+  - component: {fileID: 8997747596890955356}
   m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
@@ -222,6 +223,23 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!114 &8997747596890955356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906288047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &894491475397668715
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +305,7 @@ MonoBehaviour:
   tmpStageFloor: {fileID: 3089283304333451467}
   playerUI: {fileID: 5060573075060576846, guid: bea2fa5cf230c3a45b3c91cf567abc7c,
     type: 3}
+  player_primary_damage_value: 0
 --- !u!1 &3660777658886747731
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,6 +599,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170159240266439291, guid: bea2fa5cf230c3a45b3c91cf567abc7c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bea2fa5cf230c3a45b3c91cf567abc7c, type: 3}
