@@ -1,23 +1,16 @@
-using DrawCaster.Util;
 using UnityEngine;
 
-public class State_Crystal_Mauler_Attack : StateMachineBehaviour
+public class State_Crystal_Mauler_Knockback : StateMachineBehaviour
 {
     [SerializeField] private Crystal_Mauler crystal_Mauler;
-    [SerializeField] private Vector2 boxCenter;
-    [SerializeField] private Vector2 boxSize;
-    [SerializeField] private float boxAngle;
     private float timer;
     private bool isAttacked;
-    Transform attacker;
     public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         if (crystal_Mauler == null)
         {
             crystal_Mauler = animator.GetComponent<Crystal_Mauler>();
         }
-        timer = 0;
-        isAttacked = false;
     }
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
@@ -26,16 +19,15 @@ public class State_Crystal_Mauler_Attack : StateMachineBehaviour
         if (timer >= attack_frame && !isAttacked)
         {
             isAttacked = true;
-            attacker = DrawCasterUtil.GetMidTransformOf(animator.transform);
-            PerformMeleeAttack(attacker, crystal_Mauler.Detect_range, crystal_Mauler);
+            PerformMeleeAttack(animator.transform, crystal_Mauler.Detect_range, crystal_Mauler);
         }
     }
 
     public void PerformMeleeAttack(Transform attacker, float attackRange, Crystal_Mauler crystal_Mauler)
     {
-        boxCenter = (Vector2)attacker.position + (Vector2)attacker.right * attackRange / 2f;
-        boxSize = new Vector2(attackRange, attackRange);
-        boxAngle = 0f;
+        Vector2 boxCenter = (Vector2)attacker.position + (Vector2)attacker.right * attackRange / 2f;
+        Vector2 boxSize = new Vector2(attackRange, attackRange);
+        float boxAngle = 0f;
 
         RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCenter, boxSize, boxAngle, attacker.right, attackRange);
 
@@ -50,6 +42,4 @@ public class State_Crystal_Mauler_Attack : StateMachineBehaviour
             }
         }
     }
-   
-
 }
