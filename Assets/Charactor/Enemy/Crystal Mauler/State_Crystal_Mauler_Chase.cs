@@ -23,7 +23,7 @@ public class State_Crystal_Mauler_Chase : StateMachineBehaviour
     {
         animator.SetBool("isChase", false);
         crystal_Mauler.canMove = false;
-
+        crystal_Mauler.SetZeroVelocity();
     }
 
     private void CheckFaceDir(Transform crystalMauler, Vector2 targetPos)

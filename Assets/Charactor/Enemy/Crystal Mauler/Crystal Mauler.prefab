@@ -365,7 +365,7 @@ MonoBehaviour:
   hited: 0
   isKnockback: 0
   enemyData: {fileID: 11400000, guid: f19cf10b9ab0ca948af038fd31bf18e1, type: 2}
-  enemyKnockbackDistance: 20
+  enemyKnockbackDistance: 30
   enemyKnockbackClip: {fileID: 7400000, guid: 8442dcb8ca7ee8d4a960496454356c60, type: 2}
   enemyDeadClip: {fileID: 7400000, guid: c4d5c61f505d8dd46a13dc03ec00c190, type: 2}
   target: {fileID: 0}

@@ -45,7 +45,6 @@ public class Crystal_Mauler : EnemyManager
         }
         else
         {
-            SetZeroVelocity();
             timer = 0;
             chaseTime = ChaseTime;
         }
@@ -80,15 +79,11 @@ public class Crystal_Mauler : EnemyManager
     private void AnimKnockback(Elemental elemental)
     {
         animator.SetTrigger("Knockback");
-        isKnockback = false;
 
-        Vector2 dir = DrawCasterUtil.GetDirectionFromLower(transform, elemental.attacker.transform);
-        crystalMaulerRb.AddForce(-1 * enemyKnockbackDistance * dir.normalized);
-
-        Invoke(nameof(SetZeroVelocity), knockback_clip.length);
     }
     public void SetZeroVelocity()
     {
+        Debug.Log("Zeroo");
         crystalMaulerRb.velocity = Vector2.zero;
     }
     private void AnimDead(GameObject deadCharactor)
