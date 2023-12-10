@@ -5691,6 +5691,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 748651334, guid: 127fd022871cbe246be665bc8f865def, type: 3}
+      propertyPath: all_spells.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 748651334, guid: 127fd022871cbe246be665bc8f865def, type: 3}
+      propertyPath: all_spells.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ce17175cf9556348ab0243aac9dc877,
+        type: 2}
+    - target: {fileID: 748651334, guid: 127fd022871cbe246be665bc8f865def, type: 3}
+      propertyPath: all_spells.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 475f8e3dc1e9af244beb135d785d7f36,
+        type: 2}
+    - target: {fileID: 748651334, guid: 127fd022871cbe246be665bc8f865def, type: 3}
+      propertyPath: all_spells.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2bd627fcd979fa04bb3da6e9d7c5add5,
+        type: 2}
+    - target: {fileID: 748651334, guid: 127fd022871cbe246be665bc8f865def, type: 3}
       propertyPath: spell_slot.Array.data[0]
       value: 
       objectReference: {fileID: 2014360114}

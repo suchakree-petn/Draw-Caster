@@ -112,6 +112,7 @@ public class AerialArcane : Spell
         float angleRad = Mathf.Atan2(direction.y, direction.x);
         float angleDeg = angleRad * Mathf.Rad2Deg;
         spawnedObject.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
+        spawnedObject.transform.GetChild(0).DORotate(new Vector3(0, 180, 0), 0);
         rb2d.AddForce(direction * speed, ForceMode2D.Impulse);
     }
 
@@ -211,7 +212,7 @@ public class AerialArcane : Spell
         float angleRad = Mathf.Atan2(direction.y, direction.x);
         float angleDeg = angleRad * Mathf.Rad2Deg;
         spawnedObject.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
-
+        spawnedObject.transform.GetChild(0).DORotate(new Vector3(0, 180, 0), 0);
         rb2d.AddForce(direction * speed, ForceMode2D.Impulse);
 
     }
@@ -278,6 +279,7 @@ public class AerialArcane : Spell
             float angleRad = Mathf.Atan2(direction.y, direction.x);
             float angleDeg = angleRad * Mathf.Rad2Deg;
             spawnedObject.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
+            spawnedObject.transform.GetChild(0).DORotate(new Vector3(0, 180, 0), 0);
             rb2d.AddForce(direction * (speed * 0.4f), ForceMode2D.Impulse);
         }
     }

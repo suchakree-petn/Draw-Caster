@@ -45,5 +45,6 @@ MonoBehaviour:
     type: 3}
   DurationBarPrefab: {fileID: 7614731784926023167, guid: d426b96bd75acfe4fab565f0fac64f93,
     type: 3}
-  selectedPosition: {x: -4.0387096, y: 2.9643426}
+  boomEffectClip: {fileID: 7400000, guid: ba3da7a6f76d141408b702014aa5d106, type: 2}
+  selectedPosition: {x: 3.5198317, y: 7.1326284}
   isSelected: 1
