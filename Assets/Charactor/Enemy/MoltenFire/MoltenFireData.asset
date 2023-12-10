@@ -39,5 +39,6 @@ MonoBehaviour:
   _thunderBonusDamage: 0
   _frostBonusDamage: 0
   _windBonusDamage: 0
-  CharactorPrefab: {fileID: 0}
   elementalType: 1
+  goldDrop: 1
+  spellDrop: {fileID: 11400000, guid: 559cdda0b358b5f4c83c39f98d06f907, type: 2}

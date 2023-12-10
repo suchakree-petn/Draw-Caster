@@ -418,6 +418,7 @@ namespace MoltenFire
 
             moltenFireManager.OnEnemyDead += (deadEnemy) =>
             {
+                RewardTrackerManager.Instance.AddSpellObtain(moltenFireData.spellDrop);
                 Debug.Log(transform.root.name);
                 hitBox.enabled = false;
                 AnimStopMoving();

@@ -17,7 +17,7 @@ public class RewardTrackerManager : Singleton<RewardTrackerManager>, IDataPersis
 
 
     public void LoadData(GameData data)
-    { 
+    {
         last_play_time = data.last_play_time;
         best_play_time = data.best_play_time;
     }
@@ -44,8 +44,10 @@ public class RewardTrackerManager : Singleton<RewardTrackerManager>, IDataPersis
     {
         obtain_gold += gold;
     }
-
-    private void OnEnable()
+    public void AddSpellObtain(Spell spell)
     {
+        obtain_spell.Add(spell);
+        obtain_spell = obtain_spell.Distinct().ToList();
     }
+
 }
