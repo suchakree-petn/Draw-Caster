@@ -129,7 +129,7 @@ public class SpellHolder_R : MonoBehaviour
     void ShowDrawScore(float score, GameObject player)
     {
         // GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "Cast Level: " + spell.CalThreshold(score);
-        GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text =(score * 100).ToString("F2") + "%";
+        // GameObject.Find("Draw score").GetComponent<TextMeshProUGUI>().text =(score * 100).ToString("F2") + "%";
         float castLevel = spell.CalThreshold(score);
         if(castLevel == 1){
             GameObject.Find("Cast level").GetComponent<TextMeshProUGUI>().text = "I";
