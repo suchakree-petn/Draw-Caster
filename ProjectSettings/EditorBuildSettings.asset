@@ -32,4 +32,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene/SpellSelect.unity
     guid: c9b38677a6f910e4fb3c507baf4ebb5c
+  - enabled: 1
+    path: Assets/Scenes/GameScene/Dimension_1/Dimension 1_1.unity
+    guid: 996ba9524fe5e7d40a9e0e2f2d1d0d4c
+  - enabled: 1
+    path: Assets/Scenes/GameScene/Dimension_2/Dimension 2_1.unity
+    guid: 6b7ffeeed65e20b47b6f1cdcbd9c7974
+  - enabled: 1
+    path: Assets/Scenes/GameScene/Dimension_3/Dimension 3_1.unity
+    guid: a5d8081f4ed9b884abd63c3156dad959
   m_configObjects: {}

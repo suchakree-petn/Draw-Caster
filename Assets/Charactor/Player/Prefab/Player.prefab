@@ -1036,6 +1036,7 @@ MonoBehaviour:
   knockbackClip: {fileID: 7400000, guid: 885dcfc4ef97d4e4c969e1028db66f70, type: 2}
   playerKnockbackDistance: 1.29
   playerRB: {fileID: 2026698819}
+  skillSlot: {fileID: 4059827016498840105}
 --- !u!1 &3653981621525836488
 GameObject:
   m_ObjectHideFlags: 0
