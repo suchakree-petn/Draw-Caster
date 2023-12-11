@@ -81,7 +81,6 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
     }
     private void ShakeScreen(GameObject charactor, Elemental damage)
     {
-        Debug.Log("Player Shake");
         ScreenShakeManager.Instance.Shake(0.1f, 5);
     }
     protected override void OnEnable()
