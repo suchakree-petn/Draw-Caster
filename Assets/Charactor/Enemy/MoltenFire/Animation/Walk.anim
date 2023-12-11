@@ -43,6 +43,8 @@ AnimationClip:
       value: {fileID: 21300000, guid: ba6a4a15589dd994fa2ecc7f1866ba88, type: 3}
     - time: 0.9166667
       value: {fileID: 21300000, guid: d7f2f8c7192a7b844af6679bb7d779eb, type: 3}
+    - time: 1
+      value: {fileID: 21300000, guid: 047730421c6bac0488d5a7c2a78d74bd, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -74,12 +76,13 @@ AnimationClip:
     - {fileID: 21300000, guid: 945f3b7a1dc62b849beaf7ba5abb87c5, type: 3}
     - {fileID: 21300000, guid: ba6a4a15589dd994fa2ecc7f1866ba88, type: 3}
     - {fileID: 21300000, guid: d7f2f8c7192a7b844af6679bb7d779eb, type: 3}
+    - {fileID: 21300000, guid: 047730421c6bac0488d5a7c2a78d74bd, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 1.0833334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -106,8 +109,22 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.5
+    functionName: PlayFoot1Sound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6666667
     functionName: MoveToChaseTarget
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1
+    functionName: PlayFoot2Sound
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

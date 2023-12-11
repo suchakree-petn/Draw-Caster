@@ -79,8 +79,12 @@ public class ManaNullify : MonoBehaviour
     {
         Gizmos.DrawWireSphere(DrawCasterUtil.GetMidTransformOf(transform.root).position, detectionRange);
     }
+    void PlaySoundTimestop(){
+        gameObject.GetComponentInChildren<AudioSource>().Play();
+    }
     void Active()
     {
+        PlaySoundTimestop();
         _cooldown = manaNullifyData.cooldown;
         // Play animation
         Debug.Log("ActiveNullify");

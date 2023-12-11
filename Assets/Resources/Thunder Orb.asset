@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Thunder Orb
   _description: Release lightning ball in selected direction, travel forward while
     shocking enemies in range
-  _icon: {fileID: 21300000, guid: 024e56ed78152ff46aa31a1a0d8d3f91, type: 3}
+  _icon: {fileID: 21300000, guid: e9e2fde7aa477ba4694a95fea3c1c083, type: 3}
   _level: 0
   _spellType: 0
   _elementalType: 2

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Flame Pillars
   _description: Summon flame pillars around caster
-  _icon: {fileID: 21300000, guid: ba577ee7418200849aa191a8140c2a66, type: 3}
+  _icon: {fileID: 21300000, guid: ed779c0cb20a68c4a9588357839f32c6, type: 3}
   _level: 0
   _spellType: 0
   _elementalType: 1
@@ -38,6 +38,7 @@ MonoBehaviour:
   _delayTime: 0.2
   knockbackGaugeDeal: 8
   hit_interval: 0.2
+  screenShakePower: 9
   flamePillar_prf: {fileID: 1951053022745430761, guid: a577738f221f07f42a0c2f1a1dde3b02,
     type: 3}
   flamePillar_clip: {fileID: 7400000, guid: 181eeabffa67c9a48bb88a684d603dd0, type: 2}

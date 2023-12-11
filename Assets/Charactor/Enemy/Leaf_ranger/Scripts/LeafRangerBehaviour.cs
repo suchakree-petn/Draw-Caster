@@ -489,5 +489,9 @@ namespace LeafRanger
                 Death(deadEnemy);
             };
         }
+
+        public void PlayShootSound(){
+            transform.root.GetChild(3).GetChild(0).GetComponent<AudioSource>().Play();
+        }
     }
 }
