@@ -501,6 +501,7 @@ namespace MoltenFire
         }
         public void PlayFoot2Sound(){
             transform.root.GetChild(7).GetChild(2).GetComponent<AudioSource>().Play();
+        }
     }
 
 
