@@ -29,16 +29,11 @@ namespace DrawCaster.ResultManager
             }
 
 
-            info_transform = Instantiate(info_prf, eventData.position, Quaternion.identity, transform);
 
             if (spell.Name != "")
             {
+                info_transform = Instantiate(info_prf, eventData.position, Quaternion.identity, transform);
                 ShowSpellInfo();
-            }
-            else
-            if (gold > 0)
-            {
-                ShowGoldInfo();
             }
             else
             {
