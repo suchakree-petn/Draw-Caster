@@ -1,11 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundSource : MonoBehaviour
 {
-    // public AudioSource src;
-    [SerializeField] private AudioSource  sfx_back, sfx_go, sfx_cast, sfx_castFail, sfx_c1, sfx_c2, sfx_c3, loopMusic;
+    [SerializeField] private AudioSource  sfx_back, sfx_go, sfx_cast, sfx_castFail, sfx_c1, sfx_c2, sfx_c3;
+    [SerializeField] private AudioClip mainMenu,normal,boss;
+    [SerializeField] private GameObject loopPlayer;
+    [SerializeField] private LoadSceneMode loadSceneMode;
+    
     public static SoundSource Instance;
     private void Awake() 
     {
@@ -20,6 +25,26 @@ public class SoundSource : MonoBehaviour
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
+    }
+    public void ChangeSoundLoop(Scene scene, LoadSceneMode loadSceneMode){
+        string scenename = scene.name;
+        AudioSource sourcePlayer = loopPlayer.GetComponent<AudioSource>();
+        if(scenename == "MainMenu"){
+            sourcePlayer.clip = mainMenu;
+            if(sourcePlayer.clip != mainMenu)sourcePlayer.Play();
+        }else if(scenename == "Tutorial 1" || scenename == "Dimension 1_1" || scenename == "Dimension 2_1" || scenename == "Dimension 3_1"){
+            sourcePlayer.clip = normal;
+            sourcePlayer.Play();
+        }
+        else if(scenename == "Dimension 1_4" || scenename == "Dimension 2_4" || scenename == "Dimension 3_4"){
+            sourcePlayer.clip = boss;
+            sourcePlayer.Play();
+        }
+    }
+    public string GetSceneName()
+    {
+        Scene sceneName = SceneManager.GetActiveScene();
+        return sceneName.name;
     }
     public void PlaySfxGo()
     {
@@ -48,5 +73,11 @@ public class SoundSource : MonoBehaviour
     public void PlaySfxCast3()
     {
         sfx_c3.Play();
+    }
+    private void OnEnable() {
+        SceneManager.sceneLoaded += ChangeSoundLoop;
+    }
+    private void OnDisable() {
+        SceneManager.sceneLoaded -= ChangeSoundLoop;
     }
 }
