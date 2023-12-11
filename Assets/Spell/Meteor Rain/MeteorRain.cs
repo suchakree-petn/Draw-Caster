@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using DrawCaster.Util;
 using UnityEngine;
@@ -47,6 +48,7 @@ public class MeteorRain : Spell
             if (!isSelected)
             {
                 selectedPos.transform.position = DrawCasterUtil.GetCurrentMousePosition();
+                EnableInput();
             }
         })
         .SetUpdate(true)
@@ -153,7 +155,7 @@ public class MeteorRain : Spell
                             knockbackGaugeDeal * 2
                             );
             meteors[index].transform.right = (Vector3)selectedPosition - meteors[index].transform.position;
-            meteors[index].transform.DOMove(selectedPosition, 0.8f, false).OnComplete(() => BoomEffect(meteors[index]));
+            meteors[index].transform.DOMove(selectedPosition,  0.8f, false).OnComplete(() => BoomEffect(meteors[index]));
         });
     }
     public override void Cast3(GameObject player, GameObject target)
@@ -204,9 +206,13 @@ public class MeteorRain : Spell
     }
     void BoomEffect(GameObject meteor)
     {
+        meteor.GetComponent<Collider2D>().enabled = true;
         Animator animator = meteor.transform.GetComponentInChildren<Animator>();
         animator.SetTrigger("Explosion");
-        Destroy(meteor, boomEffectClip.length);
+        meteor.transform.GetChild(2).GetComponent<AudioSource>().Play();
+        Destroy(meteor.transform.GetChild(0).gameObject, boomEffectClip.length);
+        Destroy(meteor.transform.GetChild(1).gameObject, boomEffectClip.length);
+        Destroy(meteor, boomEffectClip.length+2f);
     }
     private GameObject SpawnMeteor(GameObject player, float multiplier)
     {

@@ -457,7 +457,7 @@ namespace MoltenFire
             StartCoroutine(moltenFireManager.DelayKnockback(moltenFireManager.enemyKnockbackClip.length));
 
         }
-
+        
         void DelayDestroy(float time, GameObject gameObject)
         {
             Destroy(gameObject, time);
@@ -478,6 +478,15 @@ namespace MoltenFire
             OnWaitForNextAttack -= RandomAttackType;
             OnMeleeAttack += FacingToTarget;
 
+        }
+        public void PlayMeleeSound(){
+            transform.root.GetChild(7).GetChild(0).GetComponent<AudioSource>().Play();
+        }
+        public void PlayFoot1Sound(){
+            transform.root.GetChild(7).GetChild(1).GetComponent<AudioSource>().Play();
+        }
+        public void PlayFoot2Sound(){
+            transform.root.GetChild(7).GetChild(2).GetComponent<AudioSource>().Play();
         }
     }
 

@@ -7,6 +7,7 @@ public class CheckFlamePillarAttack : MonoBehaviour
 {
     [SerializeField] private MoltenFireBehaviour moltenFireBehaviour;
     [SerializeField] private float activeDuration;
+    [SerializeField] private AnimationClip framePillearClip;
     private void OnEnable()
     {
         StartCoroutine(ActiveDuration());
@@ -26,7 +27,7 @@ public class CheckFlamePillarAttack : MonoBehaviour
     }
     IEnumerator ActiveDuration()
     {
-        yield return new WaitForSeconds(activeDuration);
+        yield return new WaitForSeconds(framePillearClip.length+1f);
         moltenFireBehaviour.currentState = State.Wandering;
 
         gameObject.SetActive(false);

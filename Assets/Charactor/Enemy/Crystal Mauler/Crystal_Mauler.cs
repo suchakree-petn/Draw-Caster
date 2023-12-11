@@ -83,7 +83,6 @@ public class Crystal_Mauler : EnemyManager
     }
     public void SetZeroVelocity()
     {
-        Debug.Log("Zeroo");
         crystalMaulerRb.velocity = Vector2.zero;
     }
     private void AnimDead(GameObject deadCharactor)
@@ -116,5 +115,8 @@ public class Crystal_Mauler : EnemyManager
         Gizmos.DrawWireCube(attacker.position + attacker.right * (attackRange / 2f), boxSize);
 
         Debug.DrawLine(transform.root.position, transform.root.position + new Vector3(detect_range, 0, 0), Color.red);
+    }
+    public void PlayHitSound(){
+        transform.GetChild(3).GetChild(0).GetComponent<AudioSource>().Play();
     }
 }

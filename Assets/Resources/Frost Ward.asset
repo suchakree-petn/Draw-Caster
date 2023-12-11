@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Frost Ward
   _description: Create frost aura that follow the caster and deal damage to enemy
     in range
-  _icon: {fileID: 21300000, guid: f954258e05c4b2b4e8c8cc0fa72f6e87, type: 3}
+  _icon: {fileID: 21300000, guid: 8ff53ee5e0034ec4fb247b613d2e4745, type: 3}
   _level: 0
   _spellType: 0
   _elementalType: 3

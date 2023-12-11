@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Vortex Tempest
   _description: Summon the vortex that pulling all enemies in range and deal small
     amount of damage
-  _icon: {fileID: 21300000, guid: c1df40d40cc814a5695dee0e707cc03a, type: 3}
+  _icon: {fileID: 21300000, guid: 764683dd3ea1b054bbf1f54adc85a23b, type: 3}
   _level: 0
   _spellType: 0
   _elementalType: 4

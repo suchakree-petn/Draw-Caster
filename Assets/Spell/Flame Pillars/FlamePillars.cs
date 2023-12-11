@@ -19,6 +19,7 @@ public class FlamePillars : Spell
     [SerializeField] private float _delayTime;
     [SerializeField] private float knockbackGaugeDeal;
     [SerializeField] private float hit_interval;
+    [SerializeField] private float screenShakePower;
 
     [Header("Reference")]
     [SerializeField] private GameObject flamePillar_prf;
@@ -38,7 +39,8 @@ public class FlamePillars : Spell
         {
             sequence.AppendCallback(() =>
                  {
-                     CastByLevel(castLevel, player, null);
+                    ShakeScreen();
+                    CastByLevel(castLevel, player, null);
                  });
             sequence.AppendInterval(_delayTime);
         }
@@ -82,7 +84,13 @@ public class FlamePillars : Spell
             knockbackGaugeDeal,
             hit_interval
             );
+            
         return flamePillar;
+    }
+
+    private void ShakeScreen()
+    {
+        ScreenShakeManager.Instance.Shake(0.2f,screenShakePower);
     }
     public int GetAmount(int castLevel)
     {

@@ -32,7 +32,7 @@ public class AerialArcane : Spell
 
 
     }
-    public override void Cast2(GameObject player, GameObject target)
+    public override void Cast3(GameObject player, GameObject target)
     {
         Debug.Log("Cast2");
 
@@ -40,7 +40,7 @@ public class AerialArcane : Spell
         HandleMouseClick2(player); //mouse click to skill
 
     }
-    public override void Cast3(GameObject player, GameObject target)
+    public override void Cast2(GameObject player, GameObject target)
     {
         Debug.Log("Cast3");
 
@@ -196,10 +196,10 @@ public class AerialArcane : Spell
                     spawnedObject,
                     _elementalType,
                     player,
-                    _baseSkillDamageMultiplier * _damageSpellLevelMultiplier2,
+                    _baseSkillDamageMultiplier * _damageSpellLevelMultiplier3,
                     selfDestructTime,
                     targetLayer,
-                    knockback2,
+                    knockback3,
                     iFrame
                     );
         Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
@@ -213,7 +213,7 @@ public class AerialArcane : Spell
         float angleDeg = angleRad * Mathf.Rad2Deg;
         spawnedObject.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
         spawnedObject.transform.GetChild(0).DORotate(new Vector3(0, 180, 0), 0);
-        rb2d.AddForce(direction * speed, ForceMode2D.Impulse);
+        rb2d.AddForce(direction * (speed*0.7f), ForceMode2D.Impulse);
 
     }
 
@@ -264,10 +264,10 @@ public class AerialArcane : Spell
                                 spawnedObject,
                                 _elementalType,
                                 player,
-                                _baseSkillDamageMultiplier * _damageSpellLevelMultiplier3,
+                                _baseSkillDamageMultiplier * _damageSpellLevelMultiplier2,
                                 selfDestructTime,
                                 targetLayer,
-                                knockback3,
+                                knockback2,
                                 iFrame
                                 );
             Rigidbody2D rb2d = spawnedObject.GetComponent<Rigidbody2D>();
@@ -280,7 +280,7 @@ public class AerialArcane : Spell
             float angleDeg = angleRad * Mathf.Rad2Deg;
             spawnedObject.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
             spawnedObject.transform.GetChild(0).DORotate(new Vector3(0, 180, 0), 0);
-            rb2d.AddForce(direction * (speed * 0.4f), ForceMode2D.Impulse);
+            rb2d.AddForce(direction * speed, ForceMode2D.Impulse);
         }
     }
 

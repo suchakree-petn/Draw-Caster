@@ -82,7 +82,7 @@ public abstract class Spell : ScriptableObject
         return castLevel;
     }
     
-    private void EnableInput()
+    public void EnableInput()
     {
         PlayerAction playerAction = PlayerInputSystem.Instance.playerAction;
         playerAction.Player.PressAttack.Enable();
