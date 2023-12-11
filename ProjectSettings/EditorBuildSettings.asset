@@ -9,17 +9,17 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene/MainMenu.unity
     guid: 36ee99a87aaa9314f8e2bb49ee4b2f2d
   - enabled: 1
-    path: Assets/Scenes/Stage/Stage_1_Learning.unity
-    guid: 1e410c3cf38ddc743a39297cd3de7962
+    path: Assets/Scenes/GameScene/Tutorial 1.unity
+    guid: 1486855b13a6d0e4f8e6bd54feb01d2f
   - enabled: 1
-    path: Assets/Scenes/Stage/Stage_2_Learning.unity
-    guid: d59384b0c8be4954db669d62afede3b0
+    path: Assets/Scenes/GameScene/Tutorial 2.unity
+    guid: fea30be2e5118fd409e09c5b163b56f7
   - enabled: 1
-    path: Assets/Scenes/Stage/Stage_3_Learning.unity
-    guid: 2d154421e63aa2e48890cde4c9b39300
+    path: Assets/Scenes/GameScene/Tutorial 3.unity
+    guid: 8337c5be35b1f754cb9b214ca2289219
   - enabled: 1
-    path: Assets/Scenes/Stage/Stage_4_Scene.unity
-    guid: 3df00eaec1e8c4449b2539a72596e1af
+    path: Assets/Scenes/GameScene/Tutorial 4.unity
+    guid: 3ab49f312d32a434294213bdaebe4bc6
   - enabled: 1
     path: Assets/Scenes/Stage/Stage_5_Scene.unity
     guid: bf030723e5e8ab242ba8b20484e53738

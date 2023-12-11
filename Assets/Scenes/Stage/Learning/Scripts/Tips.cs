@@ -8,15 +8,15 @@ public class Tips : MonoBehaviour
     public void ClickTips()
     {
         string currentSceneName = GetSceneName();
-        if (currentSceneName == "Stage_1_Learning")
+        if (currentSceneName == "Tutorial 1")
         {
             transform.GetChild(0).gameObject.SetActive(true);
         }
-        else if (currentSceneName == "Stage_2_Learning")
+        else if (currentSceneName == "Tutorial 2")
         {
             transform.GetChild(1).gameObject.SetActive(true);
         }
-        else if (currentSceneName == "Stage_3_Learning")
+        else if (currentSceneName == "Tutorial 3")
         {
             transform.GetChild(2).gameObject.SetActive(true);
         }

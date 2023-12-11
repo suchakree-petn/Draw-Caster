@@ -45,16 +45,16 @@ public class ClickLearning : MonoBehaviour
         WeaponHolder weaponHolder = GameObject.FindWithTag("Player").transform.GetChild(1).gameObject.GetComponent<WeaponHolder>();
         GameObject spellSlots = GameObject.FindWithTag("Player").transform.GetChild(4).gameObject;
         GameObject manaNullify = GameObject.FindWithTag("Player").transform.GetChild(6).gameObject;
-        if (currentSceneName == "Stage_1_Learning")
+        if (currentSceneName == "Tutorial 1")
         {
             weaponHolder.enabled = true;
         }
-        else if (currentSceneName == "Stage_2_Learning")
+        else if (currentSceneName == "Tutorial 2")
         {
             weaponHolder.enabled = true;
             spellSlots.SetActive(true);
         }
-        else if (currentSceneName == "Stage_3_Learning")
+        else if (currentSceneName == "Tutorial 3")
         {
             weaponHolder.enabled = true;
             spellSlots.SetActive(true);

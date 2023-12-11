@@ -49,11 +49,10 @@ public class GameController : MonoBehaviour
     public static Action<GameObject, Elemental> OnPlayerTakeDamage;
     public static Action OnGoToNextFloor;
 
-
     private void Start()
     {
-        DataPersistenceManager.Instance.LoadGame();
 
+        DataPersistenceManager.Instance.LoadGame();
     }
     private void Update()
     {
@@ -102,7 +101,9 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(transform.root);
     }
 
-
+    void OpenInput(){
+        PlayerInputSystem.Instance.playerAction.Player.PressAttack.Enable();
+    }
 
     void AddAllEnemyInSceneToList()
     {
@@ -172,20 +173,20 @@ public class GameController : MonoBehaviour
             buttonTips.SetActive(false);
             spellSlots.SetActive(true);
             manaNullify.SetActive(true);
-            if (currentSceneName == "Stage_1_Learning")
+            if (currentSceneName == "Tutorial 1")
             {
                 tips_1.SetActive(true);
                 buttonTips.SetActive(true);
                 spellSlots.SetActive(false);
                 manaNullify.SetActive(false);
             }
-            else if (currentSceneName == "Stage_2_Learning")
+            else if (currentSceneName == "Tutorial 2")
             {
                 tips_2.SetActive(true);
                 buttonTips.SetActive(true);
                 manaNullify.SetActive(false);
             }
-            else if (currentSceneName == "Stage_3_Learning")
+            else if (currentSceneName == "Tutorial 3")
             {
                 tips_3.SetActive(true);
                 buttonTips.SetActive(true);
@@ -225,6 +226,7 @@ public class GameController : MonoBehaviour
                 Destroy(Instance.transform.root.gameObject);
                 return;
             }
+            // OpenInput();
             AddAllEnemyInSceneToList();
             ShowStageFloor();
             LearningStage();
