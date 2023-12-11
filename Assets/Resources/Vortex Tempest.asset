@@ -33,8 +33,8 @@ MonoBehaviour:
   _damageSpellLevelMultiplier2: 1
   _damageSpellLevelMultiplier3: 1.2
   cast1_size: 4
-  cast2_size: 11
-  cast3_size: 18
+  cast2_size: 8
+  cast3_size: 14
   duration: 7
   knockbackGaugeDeal: 10
   hit_interval: 1.5

@@ -8,7 +8,7 @@ public class AttackHit : MonoBehaviour
 {
     public float selfDestructTime;
     public Elemental elementalDamage;
-    public float iFrameTime;
+    public float iFrameTime = 1;
     private void OnTriggerEnter2D(Collider2D other)
     {
         IDamageable damageable = other.transform.root.GetComponent<IDamageable>();
