@@ -14,8 +14,12 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
     [SerializeField] private AnimationClip knockbackClip;
     [SerializeField] private float playerKnockbackDistance;
     [SerializeField] private Rigidbody2D playerRB;
+    [SerializeField] private GameObject skillSlot;
     public Action OnPlayerKnockback;
-
+    void Start() {
+        skillSlot.SetActive(false);
+        skillSlot.SetActive(true);
+    }
     public override PlayerData GetCharactorData()
     {
         return playerData;
