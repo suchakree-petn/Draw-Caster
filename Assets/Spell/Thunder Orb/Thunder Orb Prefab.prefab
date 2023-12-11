@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 2492785246146316601}
   - component: {fileID: 5993554463527259458}
   - component: {fileID: 3267534439956974350}
+  - component: {fileID: 1584527476025629683}
   m_Layer: 0
   m_Name: Thunder Orb Prefab
   m_TagString: Untagged
@@ -274,6 +275,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1584527476025629683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558108451665019957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582926e33e2ea454aa6083adc26f956c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timedelay: 0.3
 --- !u!1 &4542009788172263507
 GameObject:
   m_ObjectHideFlags: 0
