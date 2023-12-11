@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ThaFallDown
   m_EditorClassIdentifier: 
   _name: ThaFallDown
-  _description: 
+  _description: Summon icicle around caster that follow caster and deal damage to
+    enemy
   _icon: {fileID: 21300000, guid: 31ddbfbedb5eb014e944f4590cdfac70, type: 3}
   _level: 0
   _spellType: 2

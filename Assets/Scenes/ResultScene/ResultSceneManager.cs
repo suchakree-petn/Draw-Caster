@@ -22,6 +22,7 @@ public class ResultSceneManager : Singleton<ResultSceneManager>
     }
     private void Start()
     {
+        DataPersistenceManager.Instance.SaveGame();
         DataPersistenceManager.Instance.LoadGame();
         InitRewardData();
         InitPlayTime();

@@ -13,8 +13,8 @@ namespace DrawCaster.DataPersistence
         public double Gold;
         public List<SpellData> all_spells;
         public List<string> player_equiped_spells;
+        public List<DimensionData> dimensionData;
         public float last_play_time;
-        public float best_play_time;
 
         public GameData()
         {
@@ -23,7 +23,7 @@ namespace DrawCaster.DataPersistence
             this.all_spells = new();
             this.player_equiped_spells = new();
             this.last_play_time = 0;
-            this.best_play_time = float.MaxValue;
+            dimensionData = new();
         }
     }
 
@@ -76,24 +76,17 @@ namespace DrawCaster.DataPersistence
         }
 
     }
-    // [System.Serializable]
-    // public class SpriteData
-    // {
-    //     public string name;
-    //     public float pixelsPerUnit;
-    //     public Vector2 pivot;
-    //     public SerializableTexture texture; // You might need to convert the texture separately
-    //                                         // Add other necessary properties
-
-    //     public SpriteData(Sprite sprite)
-    //     {
-    //         name = sprite.name;
-    //         pixelsPerUnit = sprite.pixelsPerUnit;
-    //         pivot = sprite.pivot;
-    //         // Convert the sprite's texture to a SerializableTexture (see below)
-    //         texture = new SerializableTexture(sprite.texture);
-    //     }
-    // }
+    [System.Serializable]
+    public struct DimensionData
+    {
+        public string dimension_id;
+        public float best_play_time;
+        public DimensionData(string dimension_id, float best_play_time)
+        {
+            this.dimension_id = dimension_id;
+            this.best_play_time = best_play_time;
+        }
+    }
 
     // [System.Serializable]
     // public class SerializableTexture

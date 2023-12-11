@@ -17,6 +17,8 @@ public class ResultSceneUI : MonoBehaviour
     [SerializeField] private GameObject rewardIcon_prf;
     [SerializeField] private TextMeshProUGUI last_play_time_text;
     [SerializeField] private TextMeshProUGUI best_play_time_text;
+    [SerializeField] private Sprite gold_icon;
+
     private void UpdateRewardIcon()
     {
         if (resultManager == null) return;
@@ -34,7 +36,7 @@ public class ResultSceneUI : MonoBehaviour
             SpellData spell = new(obtain_spell[i]);
             GameObject ui_GO = CreateRewardIconSpell(spell, content_transform);
             Sprite sprite = DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(spell.spritePath);
-            ui_GO.GetComponent<Image>().sprite = sprite;
+            ui_GO.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
         }
         Debug.Log("Update spell icon");
 
@@ -46,9 +48,8 @@ public class ResultSceneUI : MonoBehaviour
 
         GameObject ui_GO = CreateRewardIconGold(obtain_gold, content_transform);
 
-        // To do, Show gold Icon
-        // Sprite sprite = DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile("Gold/GoldIcon.png");
-        // ui_GO.GetComponent<Image>().sprite = sprite;
+        ui_GO.transform.GetChild(1).GetComponent<Image>().sprite = gold_icon;
+
         Debug.Log("Update gold icon");
 
 
@@ -74,6 +75,7 @@ public class ResultSceneUI : MonoBehaviour
             go.AddComponent(typeof(RewardUIData));
         }
         uiData.gold = reward;
+        go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = reward.ToString();
         return go;
     }
 
