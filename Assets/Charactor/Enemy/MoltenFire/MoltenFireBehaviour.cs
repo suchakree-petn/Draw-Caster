@@ -59,6 +59,7 @@ namespace MoltenFire
                         currentState = State.Idle;
                         break;
                     case State.FlamePillarAttack:
+                        Debug.Log("flame pillar atk");
                         OnFlamePillarAttack?.Invoke(target);
                         currentState = State.Idle;
                         break;
@@ -457,7 +458,7 @@ namespace MoltenFire
             StartCoroutine(moltenFireManager.DelayKnockback(moltenFireManager.enemyKnockbackClip.length));
 
         }
-        
+
         void DelayDestroy(float time, GameObject gameObject)
         {
             Destroy(gameObject, time);
@@ -476,19 +477,24 @@ namespace MoltenFire
             OnWandering -= Wandering;
             OnWandering -= FacingToTarget;
             OnWaitForNextAttack -= RandomAttackType;
-            OnMeleeAttack += FacingToTarget;
+            OnMeleeAttack -= FacingToTarget;
 
         }
-        public void PlayMeleeSound(){
-            transform.root.GetChild(7).GetChild(0).GetComponent<AudioSource>().Play();
+        public void CoolDownFlamePillar(float activeDuration,GameObject gameObject)
+        {
+            StartCoroutine(ActiveDuration(activeDuration, gameObject));
+
         }
-        public void PlayFoot1Sound(){
-            transform.root.GetChild(7).GetChild(1).GetComponent<AudioSource>().Play();
-        }
-        public void PlayFoot2Sound(){
-            transform.root.GetChild(7).GetChild(2).GetComponent<AudioSource>().Play();
+        public IEnumerator ActiveDuration(float activeDuration, GameObject gameObject)
+        {
+            yield return new WaitForSeconds(activeDuration);
+            currentState = State.Wandering;
+            Debug.Log("Opps");
+
+            gameObject.SetActive(false);
         }
     }
+
 
 }
 

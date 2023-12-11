@@ -36,62 +36,18 @@ public class SpellSelectUI_Vertical : MonoBehaviour
 
     [SerializeField] private List<SpellData> _player_spells;
 
-    private void Start()
-    {
-
-    }
     private GameObject CreateUISlot(SpellData spell)
     {
         GameObject slot = Instantiate(slotPrefab, _inventoryContentTransform);
         UISlotData _slotData = slot.GetComponent<UISlotData>();
         _slotData.spellData = spell;
         _slotData.Is_HasData = true;
-        slot.transform.GetChild(1).GetComponent<Image>().sprite = DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(spell.spritePath);
+        slot.transform.GetChild(2).GetComponent<Image>().sprite = DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(spell.spritePath);
         Debug.Log("Loaded file");
-        slot.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = spell.Name;
+        slot.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text = spell.Name;
         return slot;
     }
 
-    public void RefreshInventoryData(SpellData spell)
-    {
-        // Is list empty?
-        if (_player_spells == null)
-        {
-            return;
-        }
-
-        // Clear inventory
-        foreach (Transform child in _inventoryContentTransform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        // Clear list
-        UISlot.Clear();
-
-
-        // Enable description
-        InitDescriptionUI();
-
-        // Refresh to show current select item info
-        Debug.Log("refresh data");
-        // RefreshUIInventory(_currentSelectItem);
-    }
-
-
-    private void InitDescriptionUI()
-    {
-        if (_player_spells == null)
-        {
-            _inventoryContentTransform.gameObject.SetActive(false);
-            _descriptionContentTransform.gameObject.SetActive(false);
-        }
-        else
-        {
-            _inventoryContentTransform.gameObject.SetActive(true);
-            _descriptionContentTransform.gameObject.SetActive(true);
-        }
-    }
 
     private void RefreshUIInventory(SpellData currentSelectSpell)
     {
@@ -105,8 +61,8 @@ public class SpellSelectUI_Vertical : MonoBehaviour
             UISlotData uiSlot = slot.GetComponent<UISlotData>();
             if (uiSlot.Is_HasData)
             {
-                slot.GetComponentInChildren<Image>().sprite =
-                DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(uiSlot.spellData.spritePath);
+                slot.transform.GetChild(0).GetComponent<Image>().sprite =
+                    DataPersistenceManager.Instance.dataHandler.LoadSpriteFromFile(uiSlot.spellData.spritePath);
                 Debug.Log("Loaded file here");
             }
         }

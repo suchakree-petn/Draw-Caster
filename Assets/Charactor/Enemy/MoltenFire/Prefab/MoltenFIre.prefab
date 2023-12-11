@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8abc3b5878f1f147bd27ecaadb4eff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moltenFireBehaviour: {fileID: 0}
+  moltenFireBehaviour: {fileID: 1516326432}
   activeDuration: 2
   framePillearClip: {fileID: 0}
 --- !u!1 &72454336583663013

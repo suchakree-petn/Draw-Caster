@@ -7,29 +7,34 @@ public class CheckFlamePillarAttack : MonoBehaviour
 {
     [SerializeField] private MoltenFireBehaviour moltenFireBehaviour;
     [SerializeField] private float activeDuration;
-    [SerializeField] private AnimationClip framePillearClip;
+
     private void OnEnable()
     {
-        StartCoroutine(ActiveDuration());
+        Invoke("GoWandering", 2);
+    }
+    private void OnDisable()
+    {
+        Debug.Log("Here!!");
+        moltenFireBehaviour.CoolDownFlamePillar(activeDuration, gameObject);
     }
     private void Awake()
     {
-        moltenFireBehaviour = transform.root.GetComponentInChildren<MoltenFireBehaviour>();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.root.CompareTag(moltenFireBehaviour.targetTag) && other.CompareTag("Hitbox"))
         {
             moltenFireBehaviour.currentState = State.FlamePillarAttack;
+
             gameObject.SetActive(false);
+
         }
 
     }
-    IEnumerator ActiveDuration()
+    private void GoWandering()
     {
-        yield return new WaitForSeconds(framePillearClip.length+1f);
         moltenFireBehaviour.currentState = State.Wandering;
-
         gameObject.SetActive(false);
+
     }
 }

@@ -79,12 +79,17 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
         curentKnockBackGauge = GetCharactorData().GetMaxKnockbackGauge();
         maxKnockBackGauge = GetCharactorData().GetMaxKnockbackGauge();
     }
+    private void ShakeScreen(GameObject charactor, Elemental damage)
+    {
+        ScreenShakeManager.Instance.Shake(0.1f, 5);
+    }
     protected override void OnEnable()
     {
         base.OnEnable();
         DataPersistenceManager.OnLoadSuccess += InitHp;
         DataPersistenceManager.OnLoadSuccess += InitMana;
         GameController.OnPlayerTakeDamage += KnockBackGauge;
+        GameController.OnPlayerTakeDamage += ShakeScreen;
         GameController.OnPlayerDead += Dead;
         GameController.OnPlayerTakeDamage += CheckDead;
         _playerAction = PlayerInputSystem.Instance.playerAction;
@@ -96,6 +101,7 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
         DataPersistenceManager.OnLoadSuccess -= InitHp;
         DataPersistenceManager.OnLoadSuccess -= InitMana;
         GameController.OnPlayerTakeDamage -= KnockBackGauge;
+        GameController.OnPlayerTakeDamage -= ShakeScreen;
         GameController.OnPlayerDead -= Dead;
         GameController.OnPlayerTakeDamage -= CheckDead;
     }
