@@ -59,8 +59,6 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     }
     protected virtual void OnDisable()
     {
-        GameController.OnStart -= InitHp;
-        GameController.OnStart -= InitMana;
         GameController.OnStart -= InitKnockbackGauge;
         GameController.WhileInGame -= RestoreKnockbackGauge;
     }
