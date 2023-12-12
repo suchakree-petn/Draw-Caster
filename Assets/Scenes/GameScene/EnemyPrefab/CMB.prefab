@@ -582,7 +582,7 @@ MonoBehaviour:
   enemyDeadClip: {fileID: 7400000, guid: c4d5c61f505d8dd46a13dc03ec00c190, type: 2}
   target: {fileID: 0}
   detect_range: 2.63
-  melee_dmg_multiplier: 3
+  melee_dmg_multiplier: 1
   melee_kb_deal: 50
   move_speed: 100
   chaseTime: 3

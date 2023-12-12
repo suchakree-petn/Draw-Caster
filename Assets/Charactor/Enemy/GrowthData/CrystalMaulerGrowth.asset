@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860105f2e20e25845ab633f20aada1ab, type: 3}
   m_Name: CrystalMaulerGrowth
   m_EditorClassIdentifier: 
-  lgBaseAtk: 100
-  lgBaseHp: 1500
-  lgBaseDef: 40
+  lgBaseAtk: 65
+  lgBaseHp: 700
+  lgBaseDef: 30
   lgBaseMoveS: 4.5
   lgBaseKnckB: 300
   lgBaseGold: 2
-  lgAtk: 10
-  lgHp: 800
-  lgDef: 10
+  lgAtk: 5
+  lgHp: 300
+  lgDef: 1
   lgMoveS: 0.15
   lgKnckB: 40
   lgGold: 4

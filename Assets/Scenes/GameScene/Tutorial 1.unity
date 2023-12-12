@@ -130,6 +130,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4862825033676528578, guid: 0c221b2fa336f404eb15ac9623a66cab,
+        type: 3}
+      propertyPath: melee_dmg_multiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4862825033676528579, guid: 0c221b2fa336f404eb15ac9623a66cab,
         type: 3}
       propertyPath: m_RootOrder
@@ -844,7 +849,7 @@ PrefabInstance:
     - target: {fileID: 808624394743124874, guid: 77e88fd6bdc44284ea82f0c2c6663e41,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 808624394743124874, guid: 77e88fd6bdc44284ea82f0c2c6663e41,
         type: 3}
