@@ -70,7 +70,7 @@ public class EnemyManager : CharactorManager<EnemyData>
         OnEnemyTakeDamage += CheckDead;
         OnEnemyDead += Dead;
         OnEnemyDead += AddGoldToRewardTracker;
-        GameController.OnInstantiateUI += SetEnemyStat;
+        GameController.OnBeforeStart += SetEnemyStat;
     }
 
 
@@ -81,7 +81,7 @@ public class EnemyManager : CharactorManager<EnemyData>
         OnEnemyTakeDamage -= CheckDead;
         OnEnemyDead -= Dead;
         OnEnemyDead -= AddGoldToRewardTracker;
-        GameController.OnInstantiateUI -= SetEnemyStat;
+        GameController.OnBeforeStart -= SetEnemyStat;
     }
     public override void KnockBackGauge(GameObject charactor, Elemental damage)
     {

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382b1f0c99fef804080d0dd3c27f61ab, type: 3}
+  m_Name: CMData Lv7
+  m_EditorClassIdentifier: 
+  _name: Crystal Mauler
+  _level: 7
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _moveSpeed: 5.1
+  _hpBase: 6200
+  _hpMultiplier: 0
+  _hpBonus: 0
+  _manaBase: 150
+  _manaMultiplier: 0
+  _manaBonus: 0
+  _attackBase: 420
+  _attackMultiplier: 0
+  _attackBonus: 0
+  _bonusDamage: 0
+  _defenseBase: 80
+  _defenseMultiplier: 0
+  _defenseBonus: 0
+  _bonusDamageReduction: 0
+  _knockbackBase: 460
+  _knockbackMultiplier: 0
+  _knockbackBonus: 0
+  _fireBonusDamage: 0
+  _thunderBonusDamage: 0
+  _frostBonusDamage: 0
+  _windBonusDamage: 0
+  enemyLGData: {fileID: 11400000, guid: 2df34583adf56924a89621b01e835f83, type: 2}
+  elementalType: 3
+  elementalResistant: 1
+  goldDrop: 18
+  spellDrop: {fileID: 0}
