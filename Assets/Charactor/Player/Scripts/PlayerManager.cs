@@ -121,6 +121,7 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
 
     public override void Dead(GameObject deadCharactor)
     {
+        PlayerInputSystem.Instance.playerAction.Player.Disable();
         hitbox.enabled = false;
         animator.SetTrigger("isDead");
         GameController.Instance.ToResultScene();

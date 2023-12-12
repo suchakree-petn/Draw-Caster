@@ -6,39 +6,51 @@ using UnityEngine.SceneManagement;
 
 public class SoundSource : MonoBehaviour
 {
-    [SerializeField] private AudioSource  sfx_back, sfx_go, sfx_cast, sfx_castFail, sfx_c1, sfx_c2, sfx_c3;
-    [SerializeField] private AudioClip mainMenu,normal,boss;
+    [SerializeField] private AudioSource sfx_back, sfx_go, sfx_cast, sfx_castFail, sfx_c1, sfx_c2, sfx_c3;
+    [SerializeField] private AudioClip mainMenu, normal, boss;
+    [SerializeField] private AudioSource mainMenu_source, normal_source, boss_source;
     [SerializeField] private GameObject loopPlayer;
     [SerializeField] private LoadSceneMode loadSceneMode;
-    
+
     public static SoundSource Instance;
-    private void Awake() 
+    private void Awake()
     {
         GameObject[] soundSourceObj = GameObject.FindGameObjectsWithTag("Sound Soucre");
-        if(soundSourceObj.Length > 1){
+        if (soundSourceObj.Length > 1)
+        {
             Destroy(gameObject);
         }
         if (Instance != null && Instance != this)
-            {
-                DestroyImmediate(gameObject);
-            }else{
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-    }
-    public void ChangeSoundLoop(Scene scene, LoadSceneMode loadSceneMode){
-        string scenename = scene.name;
-        AudioSource sourcePlayer = loopPlayer.GetComponent<AudioSource>();
-        if(scenename == "MainMenu"){
-            sourcePlayer.clip = mainMenu;
-            if(sourcePlayer.clip != mainMenu)sourcePlayer.Play();
-        }else if(scenename == "Tutorial 1" || scenename == "Dimension 1_1" || scenename == "Dimension 2_1" || scenename == "Dimension 3_1"){
-            sourcePlayer.clip = normal;
-            sourcePlayer.Play();
+        {
+            DestroyImmediate(gameObject);
         }
-        else if(scenename == "Dimension 1_4" || scenename == "Dimension 2_4" || scenename == "Dimension 3_4"){
-            sourcePlayer.clip = boss;
-            sourcePlayer.Play();
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    public void ChangeSoundLoop(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        string scenename = scene.name;
+        // AudioSource sourcePlayer = loopPlayer.GetComponent<AudioSource>();
+        if (scenename == "MainMenu" || scenename == "SpellSelect" || scenename == "resultScene" || scenename == "DimensionSelect")
+        {
+            mainMenu_source.Play();
+            normal_source.Pause();
+            boss_source.Pause();
+        }
+        else if (scenename == "Tutorial 1" || scenename == "Dimension 1_1" || scenename == "Dimension 2_1" || scenename == "Dimension 3_1")
+        {
+            mainMenu_source.Pause();
+            normal_source.Play();
+            boss_source.Pause();
+        }
+        else if (scenename == "Dimension 1_4" || scenename == "Dimension 2_4" || scenename == "Dimension 3_4")
+        {
+            mainMenu_source.Pause();
+            normal_source.Pause();
+            boss_source.Play();
         }
     }
     public string GetSceneName()
@@ -74,10 +86,12 @@ public class SoundSource : MonoBehaviour
     {
         sfx_c3.Play();
     }
-    private void OnEnable() {
+    private void OnEnable()
+    {
         SceneManager.sceneLoaded += ChangeSoundLoop;
     }
-    private void OnDisable() {
+    private void OnDisable()
+    {
         SceneManager.sceneLoaded -= ChangeSoundLoop;
     }
 }
