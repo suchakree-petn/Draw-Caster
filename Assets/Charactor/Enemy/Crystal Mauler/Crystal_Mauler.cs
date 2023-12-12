@@ -67,11 +67,9 @@ public class Crystal_Mauler : EnemyManager
     }
     public Elemental GetMeleeAttackDMG()
     {
-        return new Elemental(
-            enemyData.elementalType,
+        return Elemental.DamageCalculation(enemyData.elementalType,
+            transform.gameObject,
             melee_dmg_multiplier,
-            gameObject,
-            enemyData,
             enemyData.targetLayer,
             melee_kb_deal
         );
@@ -116,7 +114,8 @@ public class Crystal_Mauler : EnemyManager
 
         Debug.DrawLine(transform.root.position, transform.root.position + new Vector3(detect_range, 0, 0), Color.red);
     }
-    public void PlayHitSound(){
+    public void PlayHitSound()
+    {
         transform.GetChild(3).GetChild(0).GetComponent<AudioSource>().Play();
     }
 }

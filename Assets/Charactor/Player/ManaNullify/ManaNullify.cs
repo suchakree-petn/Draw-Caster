@@ -56,7 +56,8 @@ public class ManaNullify : MonoBehaviour
     [SerializeField] private GameObject UI;
     public float bgFadeDuration;
     [SerializeField] private Collider2D player_hitbox;
-    void Start(){
+    void Start()
+    {
         vCam = GameController.Instance.transform.GetChild(2).GetComponent<CinemachineVirtualCamera>();
         originalSize = vCam.m_Lens.OrthographicSize;
     }
@@ -82,7 +83,8 @@ public class ManaNullify : MonoBehaviour
     {
         Gizmos.DrawWireSphere(DrawCasterUtil.GetMidTransformOf(transform.root).position, detectionRange);
     }
-    void PlaySoundTimestop(){
+    void PlaySoundTimestop()
+    {
         gameObject.GetComponentInChildren<AudioSource>().Play();
     }
     void Active()
@@ -107,7 +109,7 @@ public class ManaNullify : MonoBehaviour
             icon.fillAmount = 0;
             if (textCd == null)
             {
-                if(GameObject.Find("textCdMN") != null)textCd = GameObject.Find("textCdMN").gameObject.GetComponent<TextMeshProUGUI>();
+                if (GameObject.Find("textCdMN") != null) textCd = GameObject.Find("textCdMN").gameObject.GetComponent<TextMeshProUGUI>();
             }
         });
         sequence.AppendInterval(manaNullifyData.cooldown).OnUpdate(() =>
@@ -120,10 +122,14 @@ public class ManaNullify : MonoBehaviour
             gameObject.SetActive(true);
         });
     }
-    void ShowCooldown(){
-        if(_cooldown >= 1 && !textCd.enabled){
+    void ShowCooldown()
+    {
+        if (_cooldown >= 1 && !textCd.enabled)
+        {
             textCd.enabled = true;
-        }else if(textCd.text == "0"){
+        }
+        else if (textCd.text == "0")
+        {
             textCd.enabled = false;
         }
         textCd.text = (_cooldown -= Time.deltaTime).ToString("0");
@@ -248,10 +254,18 @@ public class ManaNullify : MonoBehaviour
                 Debug.Log("destroy " + allMarkObject[i].name);
                 allMarkObject.RemoveAt(i);
 
-                // Gain mana
-                float manaGain = manaGainBase * Mathf.Pow(1 + scores[i], 6);
-                Debug.Log(manaGainBase * Mathf.Pow(1 + scores[i], 6));
-                playerManager.GainMana(manaGain);
+
+                float manaGain = manaGainBase + (1 * playerManager.GetCharactorData()._manaBase);
+                if (score > 0.3f)
+                {
+                    // Gain mana
+                    playerManager.GainMana(manaGain);
+                }
+                else
+                {
+                    playerManager.GainMana(manaGain * 0.1f);
+                }
+
                 break;
             }
         }

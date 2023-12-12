@@ -26,7 +26,9 @@ namespace MoltenFire
         public EnemyManager moltenFireManager { get; set; }
         public EnemyData moltenFireData { get; set; }
         [SerializeField] private float stunTime;
+        [SerializeField] private float stunDamageMultiplier;
         [SerializeField] private Collider2D hitBox;
+
 
 
         public delegate void MoltenFireDelegate(Transform target);
@@ -446,6 +448,11 @@ namespace MoltenFire
 
         private void StartKB()
         {
+            Elemental stunDmg = Elemental.DamageCalculation(
+                ElementalType.Fire, target.gameObject, stunDamageMultiplier,
+                target.GetComponent<PlayerManager>().GetCharactorData().targetLayer, 0);
+            moltenFireManager.TakeDamage(stunDmg);
+            
             checkMeleeAttack.gameObject.SetActive(false);
             fireBallCol.gameObject.SetActive(false);
             flamePillarCol.gameObject.SetActive(false);
@@ -480,7 +487,7 @@ namespace MoltenFire
             OnMeleeAttack -= FacingToTarget;
 
         }
-        public void CoolDownFlamePillar(float activeDuration,GameObject gameObject)
+        public void CoolDownFlamePillar(float activeDuration, GameObject gameObject)
         {
             StartCoroutine(ActiveDuration(activeDuration, gameObject));
 
@@ -493,13 +500,16 @@ namespace MoltenFire
 
             gameObject.SetActive(false);
         }
-        public void PlayMeleeSound(){
+        public void PlayMeleeSound()
+        {
             transform.root.GetChild(7).GetChild(0).GetComponent<AudioSource>().Play();
         }
-        public void PlayFoot1Sound(){
+        public void PlayFoot1Sound()
+        {
             transform.root.GetChild(7).GetChild(1).GetComponent<AudioSource>().Play();
         }
-        public void PlayFoot2Sound(){
+        public void PlayFoot2Sound()
+        {
             transform.root.GetChild(7).GetChild(2).GetComponent<AudioSource>().Play();
         }
     }

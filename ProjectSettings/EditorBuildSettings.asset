@@ -68,4 +68,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene/Dimension_3/Dimension 3_4.unity
     guid: cd5316b3c17f346498b4d7d4a9df79f9
+  - enabled: 1
+    path: Assets/Scenes/Stage/Dimension Select/DimensionSelect.unity
+    guid: eda06644253dcac4b8de3b75bf702457
   m_configObjects: {}

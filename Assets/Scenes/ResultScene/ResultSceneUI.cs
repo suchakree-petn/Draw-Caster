@@ -17,6 +17,7 @@ public class ResultSceneUI : MonoBehaviour
     [SerializeField] private GameObject rewardIcon_prf;
     [SerializeField] private TextMeshProUGUI last_play_time_text;
     [SerializeField] private TextMeshProUGUI best_play_time_text;
+    [SerializeField] private TextMeshProUGUI dimension_name_text;
     [SerializeField] private Sprite gold_icon;
 
     private void UpdateRewardIcon()
@@ -90,6 +91,33 @@ public class ResultSceneUI : MonoBehaviour
         last_play_time_text.text = string.Format("{0:D2}:{1:D2}", last_play_time_span.Minutes, last_play_time_span.Seconds);
     }
 
+    private void UpdateDimensionName()
+    {
+        string id = resultManager.dimension_id;
+        string name = "Dimension ";
+        switch (id)
+        {
+            case "001":
+                name += "Tutortial";
+                break;
+            case "002":
+                name += "1";
+
+                break;
+            case "003":
+                name += "2";
+
+                break;
+            case "004":
+                name += "3";
+
+                break;
+            default:
+                Debug.LogError("To DImension to load");
+                break;
+        }
+        dimension_name_text.text = name;
+    }
     private void OnEnable()
     {
         ResultSceneManager.OnInitRewardSuccess += UpdateRewardIcon;
@@ -97,6 +125,8 @@ public class ResultSceneUI : MonoBehaviour
         OnUpdateRewardIcon += UpdateGoldIcon;
 
         ResultSceneManager.OnInitPlayTimeSuccess += UpdatePlayTime;
+
+        ResultSceneManager.OnInitDimensionIdSuccess += UpdateDimensionName;
 
     }
     private void OnDisable()
@@ -106,6 +136,8 @@ public class ResultSceneUI : MonoBehaviour
         OnUpdateRewardIcon -= UpdateGoldIcon;
 
         ResultSceneManager.OnInitPlayTimeSuccess -= UpdatePlayTime;
+
+        ResultSceneManager.OnInitDimensionIdSuccess -= UpdateDimensionName;
 
     }
 }

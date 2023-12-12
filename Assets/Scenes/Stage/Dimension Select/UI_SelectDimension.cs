@@ -37,14 +37,14 @@ public class UI_SelectDimension : MonoBehaviour
         }
         else
         {
-            name = index.ToString();
+            name = (index-1).ToString();
         }
         currentUI.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Dimension " + name;
         float best_play_time1 = dimensionData.best_play_time;
         TimeSpan best_play_time_span1 = TimeSpan.FromSeconds(best_play_time1);
         currentUI.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Best time: " + string.Format("{0:D2}:{1:D2}", best_play_time_span1.Minutes, best_play_time_span1.Seconds);
         currentUI.GetChild(1).GetChild(1).GetComponent<Image>().color = Color.white;
-        currentUI.GetChild(1).GetChild(1).GetComponent<Image>().sprite = dimension_icons[index-1];
+        currentUI.GetChild(1).GetChild(1).GetComponent<Image>().sprite = dimension_icons[index - 1];
 
         if (dimensionData.dimension_id != "001")
         {
@@ -96,5 +96,10 @@ public class UI_SelectDimension : MonoBehaviour
     {
         SelectDimensionManager.OnIntroSuccess += ShowDimensions;
         SelectDimensionManager.OnIntroSuccess += InitLoadData;
+    }
+    private void OnDisable()
+    {
+        SelectDimensionManager.OnIntroSuccess -= ShowDimensions;
+        SelectDimensionManager.OnIntroSuccess -= InitLoadData;
     }
 }
