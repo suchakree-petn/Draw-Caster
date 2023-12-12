@@ -83,8 +83,15 @@ public class ResultSceneUI : MonoBehaviour
     private void UpdatePlayTime()
     {
         float best_play_time = resultManager.best_play_time;
-        TimeSpan best_play_time_span = TimeSpan.FromSeconds(best_play_time);
-        best_play_time_text.text = string.Format("{0:D2}:{1:D2}", best_play_time_span.Minutes, best_play_time_span.Seconds);
+        if (best_play_time == -99)
+        {
+            best_play_time_text.text = "--";
+        }
+        else
+        {
+            TimeSpan best_play_time_span = TimeSpan.FromSeconds(best_play_time);
+            best_play_time_text.text = string.Format("{0:D2}:{1:D2}", best_play_time_span.Minutes, best_play_time_span.Seconds);
+        }
 
         float last_play_time = resultManager.last_play_time;
         TimeSpan last_play_time_span = TimeSpan.FromSeconds(last_play_time);

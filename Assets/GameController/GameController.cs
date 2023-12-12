@@ -101,7 +101,8 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(transform.root);
     }
 
-    void OpenInput(){
+    void OpenInput()
+    {
         PlayerInputSystem.Instance.playerAction.Player.PressAttack.Enable();
     }
 
@@ -195,6 +196,11 @@ public class GameController : MonoBehaviour
     }
 
     public void ToResultScene()
+    {
+        Invoke(nameof(ProcessToResultScene), 3);
+    }
+
+    private void ProcessToResultScene()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Destroy(player);

@@ -7,16 +7,19 @@ public class StageTimer : MonoBehaviour, IDataPersistence
 {
     public float stageTimer;
     public GameObject timerUIPrefab;
+    public bool isDimensionFailed;
     [SerializeField] private TextMeshProUGUI timer;
     private void OnEnable()
     {
         GameController.OnInstantiateUI += InitUI;
         GameController.WhileInGame += UpdateTimer;
+        GameController.OnPlayerDead += DimensionFailed;
     }
     private void OnDisable()
     {
         GameController.OnInstantiateUI -= InitUI;
         GameController.WhileInGame -= UpdateTimer;
+        GameController.OnPlayerDead -= DimensionFailed;
 
     }
 
@@ -49,8 +52,10 @@ public class StageTimer : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
+
         Debug.Log("Stage timer save");
         data.last_play_time = stageTimer;
+        if (isDimensionFailed) return;
         string dimension_id = RewardTrackerManager.Instance.dimension_id;
         if (data.dimensionData.Count == 0)
         {
@@ -83,7 +88,9 @@ public class StageTimer : MonoBehaviour, IDataPersistence
         }
 
         data.dimensionData.Add(new DimensionData(dimension_id, stageTimer));
-
-
+    }
+    private void DimensionFailed(GameObject player)
+    {
+        isDimensionFailed = true;
     }
 }
