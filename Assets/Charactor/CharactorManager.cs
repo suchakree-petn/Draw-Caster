@@ -51,8 +51,6 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     public abstract T GetCharactorData();
     protected virtual void OnEnable()
     {
-        GameController.OnStart += InitHp;
-        GameController.OnStart += InitMana;
         GameController.OnStart += InitKnockbackGauge;
         GameController.WhileInGame += RestoreKnockbackGauge;
 

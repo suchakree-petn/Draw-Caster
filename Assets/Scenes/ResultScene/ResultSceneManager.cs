@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DrawCaster.DataPersistence;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ResultSceneManager : Singleton<ResultSceneManager>
 {
@@ -72,4 +73,26 @@ public class ResultSceneManager : Singleton<ResultSceneManager>
             Debug.LogError("Reward Tracker Manager not found");
         }
     }
+    public void RetryDimension()
+    {
+        switch (dimension_id)
+        {
+            case "001":
+                SceneManager.LoadScene(1);
+                break;
+            case "002":
+                SceneManager.LoadScene(9);
+                break;
+            case "003":
+                SceneManager.LoadScene(13);
+                break;
+            case "004":
+                SceneManager.LoadScene(17);
+                break;
+            default:
+                Debug.LogError("No dimension to load");
+                break;
+        }
+    }
+
 }

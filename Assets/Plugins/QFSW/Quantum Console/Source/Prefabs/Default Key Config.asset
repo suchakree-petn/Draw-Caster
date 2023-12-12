@@ -15,9 +15,9 @@ MonoBehaviour:
   SubmitCommandKey: 13
   ShowConsoleKey:
     Key: 47
-    Ctrl: 0
+    Ctrl: 1
     Alt: 0
-    Shift: 0
+    Shift: 1
   HideConsoleKey:
     Key: 47
     Ctrl: 0
