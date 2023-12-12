@@ -1600,6 +1600,7 @@ MonoBehaviour:
   targetTag: Player
   target: {fileID: 0}
   stunTime: 4
+  stunDamageMultiplier: 18
   hitBox: {fileID: 1485282632517872218}
   wanderDistance: 5
   minWanderDuration: 1

@@ -33,6 +33,15 @@ public class SpellCooldown : MonoBehaviour
     [SerializeField] private Image iconShift;
     [SerializeField] private Image bgShift;
 
+    [Header("Reference")]
+    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private Image Q;
+    [SerializeField] private Image E;
+    [SerializeField] private Image R;
+    [SerializeField] private Image Shift;
+    [SerializeField] private Sprite normal_frame;
+    [SerializeField] private Sprite available_frame;
+
     void OnEnable()
     {
         GameController.OnBeforeStart += SetUpDefault;
@@ -40,6 +49,7 @@ public class SpellCooldown : MonoBehaviour
         GameController.WhileInGame += SpellECooldown;
         GameController.WhileInGame += SpellRCooldown;
         GameController.WhileInGame += SpellShiftCooldown;
+        GameController.WhileInGame += ShowAvailableSpells;
     }
     private void OnDisable()
     {
@@ -48,9 +58,63 @@ public class SpellCooldown : MonoBehaviour
         GameController.WhileInGame -= SpellECooldown;
         GameController.WhileInGame -= SpellRCooldown;
         GameController.WhileInGame -= SpellShiftCooldown;
+        GameController.WhileInGame -= ShowAvailableSpells;
+
+    }
+    void ShowAvailableSpells()
+    {
+        ShowAvailableQ();
+        ShowAvailableE();
+        ShowAvailableR();
+        ShowAvailableShift();
+    }
+    void ShowAvailableQ()
+    {
+        if (spellQ._isReadyToCast && playerManager.currentMana >= spellQ.spell._manaCost)
+        {
+            Q.sprite = available_frame;
+        }
+        else
+        {
+            Q.sprite = normal_frame;
+        }
+    }
+    void ShowAvailableE()
+    {
+        if (spellE._isReadyToCast && playerManager.currentMana >= spellE.spell._manaCost)
+        {
+            E.sprite = available_frame;
+        }
+        else
+        {
+            E.sprite = normal_frame;
+        }
+    }
+    void ShowAvailableR()
+    {
+        if (spellR._isReadyToCast && playerManager.currentMana >= spellR.spell._manaCost)
+        {
+            R.sprite = available_frame;
+        }
+        else
+        {
+            R.sprite = normal_frame;
+        }
+    }
+    void ShowAvailableShift()
+    {
+        if (spellShift._isReadyToCast && playerManager.currentMana >= spellShift.spell._manaCost)
+        {
+            Shift.sprite = available_frame;
+        }
+        else
+        {
+            Shift.sprite = normal_frame;
+        }
     }
     void SetUpDefault()
     {
+        playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
         iconQ.fillAmount = 1;
         iconE.fillAmount = 1;
         iconR.fillAmount = 1;
@@ -60,23 +124,26 @@ public class SpellCooldown : MonoBehaviour
         spellR = SpellHolder_R.Instance;
         spellShift = SpellHolder_Shift.Instance;
         if (spellQ.spell != null)
-            if (spellQ.spell._icon != null) {
+            if (spellQ.spell._icon != null)
+            {
                 iconQ.enabled = true;
                 bgQ.enabled = true;
                 iconQ.sprite = spellQ.spell._icon;
                 bgQ.sprite = spellQ.spell._icon;
             }
         if (spellE.spell != null)
-            if (spellE.spell._icon != null){
+            if (spellE.spell._icon != null)
+            {
                 iconE.enabled = true;
                 bgE.enabled = true;
                 iconE.sprite = spellE.spell._icon;
                 bgE.sprite = spellE.spell._icon;
             }
-                
+
 
         if (spellR.spell != null)
-            if (spellR.spell._icon != null) {
+            if (spellR.spell._icon != null)
+            {
                 iconR.enabled = true;
                 bgR.enabled = true;
                 iconR.sprite = spellR.spell._icon;
@@ -84,7 +151,8 @@ public class SpellCooldown : MonoBehaviour
             }
 
         if (spellShift.spell != null)
-            if (spellShift.spell._icon != null) {
+            if (spellShift.spell._icon != null)
+            {
                 iconShift.enabled = true;
                 bgShift.enabled = true;
                 iconShift.sprite = spellShift.spell._icon;
@@ -93,63 +161,83 @@ public class SpellCooldown : MonoBehaviour
     }
     void SpellQCooldown()
     {
-        
-        if (spellQ.spell != null){
+
+        if (spellQ.spell != null)
+        {
             iconQ.fillAmount = 1 - spellQ.cooldown / spellQ.spell._cooldown;
             ShowTextCooldownQ();
         }
     }
     void SpellECooldown()
     {
-        if (spellE.spell != null){
+        if (spellE.spell != null)
+        {
             iconE.fillAmount = 1 - spellE.cooldown / spellE.spell._cooldown;
             ShowTextCooldownE();
         }
     }
     void SpellRCooldown()
     {
-        if (spellR.spell != null){
+        if (spellR.spell != null)
+        {
             iconR.fillAmount = 1 - spellR.cooldown / spellR.spell._cooldown;
             ShowTextCooldownR();
         }
     }
     void SpellShiftCooldown()
     {
-        if (spellShift.spell != null){
+        if (spellShift.spell != null)
+        {
             iconShift.fillAmount = 1 - spellShift.cooldown / spellShift.spell._cooldown;
             ShowTextCooldownShift();
         }
     }
-    void ShowTextCooldownQ(){
-        if(spellQ.cooldown >= 1 && !textQ.enabled){
+    void ShowTextCooldownQ()
+    {
+        if (spellQ.cooldown >= 1 && !textQ.enabled)
+        {
             textQ.enabled = true;
-        }else if(textQ.text == "0"){
+        }
+        else if (textQ.text == "0")
+        {
             textQ.enabled = false;
         }
-        textQ.text =  spellQ.cooldown.ToString("0");
+        textQ.text = spellQ.cooldown.ToString("0");
     }
-    void ShowTextCooldownE(){
-        if(spellE.cooldown >= 1 && !textE.enabled){
+    void ShowTextCooldownE()
+    {
+        if (spellE.cooldown >= 1 && !textE.enabled)
+        {
             textE.enabled = true;
-        }else if(textE.text == "0"){
+        }
+        else if (textE.text == "0")
+        {
             textE.enabled = false;
         }
-        textE.text =  spellE.cooldown.ToString("0");
+        textE.text = spellE.cooldown.ToString("0");
     }
-    void ShowTextCooldownR(){
-        if(spellR.cooldown >= 1 && !textR.enabled){
+    void ShowTextCooldownR()
+    {
+        if (spellR.cooldown >= 1 && !textR.enabled)
+        {
             textR.enabled = true;
-        }else if(textR.text == "0"){
+        }
+        else if (textR.text == "0")
+        {
             textR.enabled = false;
         }
-        textR.text =  spellR.cooldown.ToString("0");
+        textR.text = spellR.cooldown.ToString("0");
     }
-    void ShowTextCooldownShift(){
-        if(spellShift.cooldown >= 1 && !textShift.enabled){
+    void ShowTextCooldownShift()
+    {
+        if (spellShift.cooldown >= 1 && !textShift.enabled)
+        {
             textShift.enabled = true;
-        }else if(textShift.text == "0"){
+        }
+        else if (textShift.text == "0")
+        {
             textShift.enabled = false;
         }
-        textShift.text =  spellShift.cooldown.ToString("0");
+        textShift.text = spellShift.cooldown.ToString("0");
     }
 }

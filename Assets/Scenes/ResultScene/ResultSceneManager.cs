@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ResultSceneManager : Singleton<ResultSceneManager>
 {
+    public string dimension_id;
     [Header("Reward Obtain")]
     public double obtain_gold;
     public List<Spell> obtain_spells = new();
@@ -17,6 +18,7 @@ public class ResultSceneManager : Singleton<ResultSceneManager>
 
     public static Action OnInitRewardSuccess;
     public static Action OnInitPlayTimeSuccess;
+    public static Action OnInitDimensionIdSuccess;
     protected override void InitAfterAwake()
     {
     }
@@ -24,8 +26,9 @@ public class ResultSceneManager : Singleton<ResultSceneManager>
     {
         DataPersistenceManager.Instance.SaveGame();
         DataPersistenceManager.Instance.LoadGame();
-        InitRewardData();
+        InitDimensionId();
         InitPlayTime();
+        InitRewardData();
     }
     private void InitPlayTime()
     {
@@ -52,5 +55,21 @@ public class ResultSceneManager : Singleton<ResultSceneManager>
             Debug.LogError("Reward Tracker Manager not found");
         }
         Destroy(rewardTrackerManager.gameObject);
+    }
+    private void InitDimensionId()
+    {
+        RewardTrackerManager rewardTrackerManager = RewardTrackerManager.Instance;
+
+        if (rewardTrackerManager != null)
+        {
+            dimension_id = rewardTrackerManager.dimension_id;
+
+            OnInitDimensionIdSuccess?.Invoke();
+            Debug.Log("Init dimension Id success");
+        }
+        else
+        {
+            Debug.LogError("Reward Tracker Manager not found");
+        }
     }
 }

@@ -256,8 +256,7 @@ public class DrawInput_R : MonoBehaviour
     }
     private void OnEnable()
     {
-        Time.timeScale = 0.5f;
-        Time.fixedDeltaTime = Time.timeScale * 0.01f;
+        Time.timeScale = 0;
 
         MouseTrail.Instance.EnableMouseTrail();
 
@@ -270,7 +269,6 @@ public class DrawInput_R : MonoBehaviour
     private void OnDisable()
     {
         Time.timeScale = 1;
-        Time.fixedDeltaTime = 0.02f;
 
         MouseTrail.Instance.DisableMouseTrail();
 

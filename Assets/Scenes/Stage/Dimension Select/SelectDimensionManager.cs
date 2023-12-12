@@ -7,6 +7,7 @@ using DG.Tweening.Core.Easing;
 using DrawCaster.DataPersistence;
 using QFSW.QC.Actions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SelectDimensionManager : Singleton<SelectDimensionManager>, IDataPersistence
 {
@@ -31,12 +32,19 @@ public class SelectDimensionManager : Singleton<SelectDimensionManager>, IDataPe
     [SerializeField] private float intro_zoom_ortho;
     [SerializeField] private AnimationCurve intro_zoom_curve;
 
+    [Header("Outro Config")]
+    [SerializeField] private float outro_zoom_duration;
+    [SerializeField] private float outro_zoom_ortho;
+    [SerializeField] private AnimationCurve outro_zoom_curve;
+
     public static Action OnIntroSuccess;
+    public static Action OnOutroSuccess;
     public static Action OnLoadSuccess;
 
     [Header("Reference")]
     [SerializeField] private Camera cam;
     [SerializeField] private Transform zoomDestination;
+    [SerializeField] private Transform zoomOutroDestination;
 
     protected override void InitAfterAwake()
     {
@@ -59,6 +67,39 @@ public class SelectDimensionManager : Singleton<SelectDimensionManager>, IDataPe
             OnIntroSuccess?.Invoke();
         });
     }
+
+    public void OnClickGo()
+    {
+        cam.transform.DOMove(zoomOutroDestination.position, outro_zoom_duration).SetEase(outro_zoom_curve);
+        cam.DOOrthoSize(outro_zoom_ortho, outro_zoom_duration).SetEase(outro_zoom_curve).OnComplete(() =>
+        {
+            OnOutroSuccess?.Invoke();
+        });
+
+    }
+    public void LoadDimension()
+    {
+        string id = current_dimension.dimension_id;
+
+        switch (id)
+        {
+            case "001":
+                SceneManager.LoadScene(1);
+                break;
+            case "002":
+                SceneManager.LoadScene(9);
+                break;
+            case "003":
+                SceneManager.LoadScene(13);
+                break;
+            case "004":
+                SceneManager.LoadScene(17);
+                break;
+            default:
+                Debug.LogError("To DImension to load");
+                break;
+        }
+    }
     public DimensionData GetDimensionData(string dimension_id)
     {
         foreach (DimensionData data in dimensionDatas)
@@ -77,5 +118,13 @@ public class SelectDimensionManager : Singleton<SelectDimensionManager>, IDataPe
 
     public void SaveData(ref GameData data)
     {
+    }
+    private void OnEnable()
+    {
+        OnOutroSuccess += LoadDimension;
+    }
+    private void OnDisable()
+    {
+        OnOutroSuccess -= LoadDimension;
     }
 }
