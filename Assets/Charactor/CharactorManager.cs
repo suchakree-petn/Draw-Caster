@@ -18,8 +18,8 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        InitHp();
-        InitMana();
+        // InitHp();
+        // InitMana();
     }
     public abstract void TakeDamage(Elemental elementalDamage);
     public abstract void StartKnockback(Elemental damage);
@@ -51,16 +51,16 @@ public abstract class CharactorManager<T> : MonoBehaviour, IDamageable
     public abstract T GetCharactorData();
     protected virtual void OnEnable()
     {
-        // GameController.OnBeforeStart += InitHp;
-        // GameController.OnBeforeStart += InitMana;
+        GameController.OnBeforeStart += InitHp;
+        GameController.OnBeforeStart += InitMana;
         GameController.OnBeforeStart += InitKnockbackGauge;
         GameController.WhileInGame += RestoreKnockbackGauge;
 
     }
     protected virtual void OnDisable()
     {
-        // GameController.OnBeforeStart -= InitHp;
-        // GameController.OnBeforeStart -= InitMana;
+        GameController.OnBeforeStart -= InitHp;
+        GameController.OnBeforeStart -= InitMana;
         GameController.OnBeforeStart -= InitKnockbackGauge;
         GameController.WhileInGame -= RestoreKnockbackGauge;
     }

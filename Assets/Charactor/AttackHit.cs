@@ -20,6 +20,7 @@ public class AttackHit : MonoBehaviour
                 damageable.TakeDamage(elementalDamage);
                 StartCoroutine(DelayCancelIgnoreLayer(other));
                 enemyManager.OnEnemyTakeDamage -= ShakeScreen;
+                StartCoroutine(DelayCancelIgnoreLayer(other));
             }
             else
             {

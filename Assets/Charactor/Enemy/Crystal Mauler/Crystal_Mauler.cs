@@ -49,6 +49,7 @@ public class Crystal_Mauler : EnemyManager
             chaseTime = ChaseTime;
         }
     }
+    
     private void MoveCharactor(Rigidbody2D rb, Transform target, float move_speed)
     {
         Vector2 dir = DrawCasterUtil.GetDirectionFromMid(rb.transform, target);
