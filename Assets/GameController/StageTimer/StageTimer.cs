@@ -67,8 +67,7 @@ public class StageTimer : MonoBehaviour, IDataPersistence
             int index = i;
             if (dimensionDatas[index].dimension_id == dimension_id)
             {
-
-                if (stageTimer < dimensionDatas[i].best_play_time)
+                if (stageTimer < dimensionDatas[i].best_play_time || dimensionDatas[i].best_play_time == -99)
                 {
 
                     data.dimensionData.RemoveAt(index);

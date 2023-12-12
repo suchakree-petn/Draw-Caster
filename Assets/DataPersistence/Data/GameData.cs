@@ -23,7 +23,12 @@ namespace DrawCaster.DataPersistence
             this.all_spells = new();
             this.player_equiped_spells = new();
             this.last_play_time = 0;
-            dimensionData = new();
+            List<DimensionData> temp = new();
+            for (int i = 0; i < 4; i++)
+            {
+                temp.Add(new("00" + (i + 1), -99));
+            }
+            dimensionData = temp;
         }
     }
 
