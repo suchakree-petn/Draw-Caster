@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860105f2e20e25845ab633f20aada1ab, type: 3}
   m_Name: MoltenFireGrowth
   m_EditorClassIdentifier: 
-  lgBaseAtk: 300
-  lgBaseHp: 5000
+  lgBaseAtk: 80
+  lgBaseHp: 8400
   lgBaseDef: 40
   lgBaseMoveS: 4.5
-  lgBaseKnckB: 500
-  lgBaseGold: 100
-  lgAtk: 30
-  lgHp: 2000
-  lgDef: 20
+  lgBaseKnckB: 1500
+  lgBaseGold: 20
+  lgAtk: 15
+  lgHp: 900
+  lgDef: 10
   lgMoveS: 0.15
   lgKnckB: 40
-  lgGold: 20
+  lgGold: 10

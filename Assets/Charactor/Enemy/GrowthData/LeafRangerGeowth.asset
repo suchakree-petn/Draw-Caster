@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: LeafRangerGeowth
   m_EditorClassIdentifier: 
   lgBaseAtk: 75
-  lgBaseHp: 700
+  lgBaseHp: 450
   lgBaseDef: 5
   lgBaseMoveS: 4.5
   lgBaseKnckB: 300
-  lgBaseGold: 2
+  lgBaseGold: 4
   lgAtk: 20
-  lgHp: 300
+  lgHp: 150
   lgDef: 0
   lgMoveS: 0.05
   lgKnckB: 40
-  lgGold: 4
+  lgGold: 2

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: CrystalMaulerGrowth
   m_EditorClassIdentifier: 
   lgBaseAtk: 65
-  lgBaseHp: 700
+  lgBaseHp: 600
   lgBaseDef: 30
   lgBaseMoveS: 4.5
   lgBaseKnckB: 300
-  lgBaseGold: 2
+  lgBaseGold: 4
   lgAtk: 10
-  lgHp: 300
+  lgHp: 250
   lgDef: 1
   lgMoveS: 0.15
   lgKnckB: 40
-  lgGold: 4
+  lgGold: 2

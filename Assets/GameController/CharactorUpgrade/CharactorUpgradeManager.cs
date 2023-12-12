@@ -15,7 +15,7 @@ public class CharactorUpgradeManager : Singleton<CharactorUpgradeManager>, IData
     {
         get
         {
-            return (int)(1.5f * 30 * playerStat._level + 30);
+            return (int)(40 * playerStat._level + 40);
         }
     }
 

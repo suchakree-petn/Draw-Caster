@@ -57,6 +57,8 @@ public class EnemyManager : CharactorManager<EnemyData>
         if (enemyData._level == 0)
         {
             enemyData._hpBase = 150;
+        }else if(enemyData._level == 1){
+            enemyData._hpBase = 300;
         }
         else
         {

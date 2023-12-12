@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312714215ded462499691cae985fafce, type: 3}
   m_Name: Mana Nullify Data
   m_EditorClassIdentifier: 
-  cooldown: 4
+  cooldown: 2
   sprites:
   - {fileID: 21300000, guid: 37307dcd7e8e50a479b6403ce2adad65, type: 3}
   - {fileID: 21300000, guid: 897a5b87f24230b418912d7cdb41e6e4, type: 3}

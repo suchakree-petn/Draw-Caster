@@ -255,7 +255,7 @@ public class ManaNullify : MonoBehaviour
                 allMarkObject.RemoveAt(i);
 
 
-                float manaGain = 0.2f * playerManager.GetCharactorData()._manaBase;
+                float manaGain = 0.35f * playerManager.GetCharactorData()._manaBase;
                 if (score > 0.3f)
                 {
                     // Gain mana

@@ -1700,7 +1700,7 @@ MonoBehaviour:
   iFrameMelee: 1
   iFramePillar: 1
   iFrameFireBall: 1
-  _baseFlamePillarDamageMultiplier: 1
+  _baseFlamePillarDamageMultiplier: 1.5
   firePillarKnockbackGaugeDeal: 100
   _flamePillarPrefab: {fileID: 1951053022745430761, guid: 875eb7d1759b47842ae9188198f6220a,
     type: 3}
@@ -1714,7 +1714,7 @@ MonoBehaviour:
   timeInterval: 0.3
   FlamePillarClip: {fileID: 7400000, guid: 181eeabffa67c9a48bb88a684d603dd0, type: 2}
   flamePillarCol: {fileID: 17295063727401887}
-  _baseFireBallDamageMultiplier: 0.7
+  _baseFireBallDamageMultiplier: 0.5
   fireBallKnockbackGaugeDeal: 50
   launchDuration: 0.05
   curveDuration: 0.8
