@@ -39,7 +39,7 @@ MonoBehaviour:
   _thunderBonusDamage: 0
   _frostBonusDamage: 0
   _windBonusDamage: 0
-  enemyLGData: {fileID: 11400000, guid: 2df34583adf56924a89621b01e835f83, type: 2}
+  enemyLGData: {fileID: 11400000, guid: 15387a339032af048bdca8bb0fdd5fde, type: 2}
   elementalType: 3
   elementalResistant: 4
   goldDrop: 18
