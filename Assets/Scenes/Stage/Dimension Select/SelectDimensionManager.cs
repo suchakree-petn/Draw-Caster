@@ -96,7 +96,7 @@ public class SelectDimensionManager : Singleton<SelectDimensionManager>, IDataPe
                 SceneManager.LoadScene(17);
                 break;
             default:
-                Debug.LogError("To DImension to load");
+                Debug.LogError("No dimension to load");
                 break;
         }
     }
