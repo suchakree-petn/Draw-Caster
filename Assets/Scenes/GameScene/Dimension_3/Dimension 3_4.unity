@@ -222,17 +222,17 @@ PrefabInstance:
     - target: {fileID: 8333480473091917096, guid: eff5f2792c571e040b464cb3f7c03fbe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8333480473091917096, guid: eff5f2792c571e040b464cb3f7c03fbe,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.122009516
+      value: 0.67
       objectReference: {fileID: 0}
     - target: {fileID: 8333480473091917096, guid: eff5f2792c571e040b464cb3f7c03fbe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.58038
+      value: 14.76
       objectReference: {fileID: 0}
     - target: {fileID: 8333480473091917096, guid: eff5f2792c571e040b464cb3f7c03fbe,
         type: 3}
@@ -278,6 +278,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MoltenFIre Lv 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333480473269611835, guid: eff5f2792c571e040b464cb3f7c03fbe,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.40943396
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333480473269611835, guid: eff5f2792c571e040b464cb3f7c03fbe,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.54278326
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333480473269611835, guid: eff5f2792c571e040b464cb3f7c03fbe,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eff5f2792c571e040b464cb3f7c03fbe, type: 3}
@@ -549,7 +564,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1571127905
 MonoBehaviour:

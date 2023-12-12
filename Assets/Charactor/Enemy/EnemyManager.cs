@@ -51,6 +51,7 @@ public class EnemyManager : CharactorManager<EnemyData>
     private void SetEnemyStat()
     {
         EnemyData enemyData = GetCharactorData();
+        
         enemyData._attackBase = enemyData.enemyLGData.lgAtk * enemyData._level + enemyData.enemyLGData.lgBaseAtk;
         enemyData._defenseBase = enemyData.enemyLGData.lgDef * enemyData._level + enemyData.enemyLGData.lgBaseDef;
         enemyData._hpBase = enemyData.enemyLGData.lgHp * enemyData._level + enemyData.enemyLGData.lgBaseHp;
@@ -61,6 +62,7 @@ public class EnemyManager : CharactorManager<EnemyData>
         {
             enemyData._moveSpeed = 7.5f;
         }
+        if(enemyData._level == 0)enemyData._hpBase = 150;
     }
 
     protected override void OnEnable()

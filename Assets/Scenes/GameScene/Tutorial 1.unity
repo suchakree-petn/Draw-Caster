@@ -630,6 +630,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crystal Mauler Lv 1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 987603996806590342, guid: 3267614bc476b394c8cee4f0b8a9f8ac,
+        type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2013f9ee3da81c349a1219144cf4faea,
+        type: 2}
     - target: {fileID: 987603996806590343, guid: 3267614bc476b394c8cee4f0b8a9f8ac,
         type: 3}
       propertyPath: m_RootOrder
@@ -753,7 +759,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2103954824
 PrefabInstance:
@@ -767,6 +773,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crystal Mauler Lv 1
       objectReference: {fileID: 0}
+    - target: {fileID: 987603996806590342, guid: 3267614bc476b394c8cee4f0b8a9f8ac,
+        type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2013f9ee3da81c349a1219144cf4faea,
+        type: 2}
     - target: {fileID: 987603996806590343, guid: 3267614bc476b394c8cee4f0b8a9f8ac,
         type: 3}
       propertyPath: m_RootOrder
@@ -913,7 +925,7 @@ PrefabInstance:
     - target: {fileID: 808624394743124874, guid: 77e88fd6bdc44284ea82f0c2c6663e41,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 808624394743124874, guid: 77e88fd6bdc44284ea82f0c2c6663e41,
         type: 3}
