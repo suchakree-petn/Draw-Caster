@@ -1037,6 +1037,7 @@ MonoBehaviour:
   playerKnockbackDistance: 1.29
   playerRB: {fileID: 2026698819}
   skillSlot: {fileID: 4059827016498840105}
+  hitbox: {fileID: 4713767990457361565}
 --- !u!1 &3653981621525836488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,6 +2089,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400973551547175085, guid: ff6b8d6c0fafde2419b935519271391f,
+        type: 3}
+      propertyPath: sideLenght
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 8832452641313115387, guid: ff6b8d6c0fafde2419b935519271391f,
         type: 3}

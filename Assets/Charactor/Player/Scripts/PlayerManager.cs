@@ -15,8 +15,10 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
     [SerializeField] private float playerKnockbackDistance;
     [SerializeField] private Rigidbody2D playerRB;
     [SerializeField] private GameObject skillSlot;
+    [SerializeField] private Collider2D hitbox;
     public Action OnPlayerKnockback;
-    void Start() {
+    void Start()
+    {
         skillSlot.SetActive(false);
         skillSlot.SetActive(true);
     }
@@ -119,7 +121,8 @@ public class PlayerManager : CharactorManager<PlayerData>, IDataPersistence
 
     public override void Dead(GameObject deadCharactor)
     {
-        Destroy(deadCharactor);
+        hitbox.enabled = false;
+        animator.SetTrigger("isDead");
         GameController.Instance.ToResultScene();
     }
     public void GainMana(float amount)

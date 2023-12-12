@@ -46,13 +46,13 @@ public class CosSim : MonoBehaviour
         float dotProduct = 0;
         float normA = 0;
         float normB = 0;
-
         for (int i = 0; i < vectorA.Length; i++)
         {
             dotProduct += vectorA[i] * vectorB[i];
             normA += vectorA[i] * vectorA[i];
             normB += vectorB[i] * vectorB[i];
         }
+        Debug.Log(normA);
 
         // Avoid division by zero
         if (normA == 0 || normB == 0)

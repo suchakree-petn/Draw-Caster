@@ -6088,7 +6088,7 @@ MonoBehaviour:
     type: 3}
   last_play_time_text: {fileID: 419342636}
   best_play_time_text: {fileID: 426920824}
-  dimension_name_text: {fileID: 0}
+  dimension_name_text: {fileID: 1819526672}
   gold_icon: {fileID: -1648772667, guid: 1ee8dd0a1137f4a488c89aa902138361, type: 3}
 --- !u!4 &1097489394
 Transform:
