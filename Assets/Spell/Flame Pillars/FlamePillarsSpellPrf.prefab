@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 880327045701680656}
   - component: {fileID: 7174156084620944364}
   - component: {fileID: 5921141306195641294}
+  - component: {fileID: 9096376382425293498}
   m_Layer: 0
   m_Name: FlamePillarsSpellPrf
   m_TagString: Untagged
@@ -268,6 +269,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9096376382425293498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951053022745430761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582926e33e2ea454aa6083adc26f956c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timedelay: 3
 --- !u!1 &8726033980592479852
 GameObject:
   m_ObjectHideFlags: 0

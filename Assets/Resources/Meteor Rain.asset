@@ -18,8 +18,8 @@ MonoBehaviour:
   _level: 0
   _spellType: 1
   _elementalType: 1
-  _cooldown: 25
-  _manaCost: 160
+  _cooldown: 12
+  _manaCost: 60
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -27,16 +27,16 @@ MonoBehaviour:
   UI_image: {fileID: 21300000, guid: 363a2e6450cea6f45ac025babb926bfb, type: 3}
   _lowThreshold: 0.1
   _midThreshold: 0.3
-  _baseSkillDamageMultiplier: 2
-  _damageSpellLevelMultiplier1: 0.7
-  _damageSpellLevelMultiplier2: 1
-  _damageSpellLevelMultiplier3: 1.1
+  _baseSkillDamageMultiplier: 1
+  _damageSpellLevelMultiplier1: 0.3
+  _damageSpellLevelMultiplier2: 0.3
+  _damageSpellLevelMultiplier3: 0.3
   selectedPositionDuration: 5
   knockbackGaugeDeal: 80
   iFrame: 1
   meteorAmount1: 7
-  meteorAmount2: 14
-  meteorAmount3: 19
+  meteorAmount2: 11
+  meteorAmount3: 17
   meteorMoveSpeed: 0.2
   randomPositionRadius: 3
   _meteorPrefab: {fileID: 2792028505011184367, guid: 66f3a50808acc884887d3804eeca82b1,
@@ -46,5 +46,5 @@ MonoBehaviour:
   DurationBarPrefab: {fileID: 7614731784926023167, guid: d426b96bd75acfe4fab565f0fac64f93,
     type: 3}
   boomEffectClip: {fileID: 7400000, guid: ba3da7a6f76d141408b702014aa5d106, type: 2}
-  selectedPosition: {x: 3.5198317, y: 7.1326284}
+  selectedPosition: {x: 2.5092983, y: 2.0771964}
   isSelected: 1

@@ -17,9 +17,8 @@ public class Dotdamga : MonoBehaviour
         if(coroutine==null)coroutine = StartCoroutine(Delay(_timedelay));
     }
     IEnumerator Delay(float timedelay){
-        yield return new WaitForSeconds(timedelay);
         collider2D.enabled = false;
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(timedelay);
         collider2D.enabled = true;
         coroutine = null;
     }

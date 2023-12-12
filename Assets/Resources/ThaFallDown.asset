@@ -19,8 +19,8 @@ MonoBehaviour:
   _level: 0
   _spellType: 2
   _elementalType: 3
-  _cooldown: 19
-  _manaCost: 130
+  _cooldown: 8
+  _manaCost: 70
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -28,13 +28,13 @@ MonoBehaviour:
   UI_image: {fileID: 21300000, guid: 4248802874687284aa4db5dd140d989a, type: 3}
   _lowThreshold: 0.1
   _midThreshold: 0.3
-  _baseSkillDamageMultiplier: 1.5
-  _damageSpellLevelMultiplier1: 0.5
-  _damageSpellLevelMultiplier2: 0.8
-  _damageSpellLevelMultiplier3: 1
+  _baseSkillDamageMultiplier: 0.2
+  _damageSpellLevelMultiplier1: 0
+  _damageSpellLevelMultiplier2: 0
+  _damageSpellLevelMultiplier3: 0
   _delayTime: 1
   _amountLevel1: 1
-  knockback1: 1
+  knockback1: 20
   _amountLevel2: 1
   knockback2: 1
   _amountLevel3: 1

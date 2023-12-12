@@ -18,7 +18,7 @@ MonoBehaviour:
   lgBaseMoveS: 4.5
   lgBaseKnckB: 300
   lgBaseGold: 2
-  lgAtk: 8
+  lgAtk: 20
   lgHp: 300
   lgDef: 0
   lgMoveS: 0.05
