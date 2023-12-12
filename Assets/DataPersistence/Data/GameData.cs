@@ -57,11 +57,11 @@ namespace DrawCaster.DataPersistence
         public PlayerStat(int _level, float _moveSpeed, float _hpBase, float _manaBase, float _attackBase, float _defenseBase)
         {
             this._level = 1;
-            this._attackBase = 50;
-            this._hpBase = 2000;
-            this._manaBase = 300;
+            this._attackBase = 65;
+            this._hpBase = 2200;
+            this._manaBase = 315;
             this._moveSpeed = 5;
-            this._defenseBase = 100;
+            this._defenseBase = 103;
         }
     }
 
