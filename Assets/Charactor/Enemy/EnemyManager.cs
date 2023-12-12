@@ -70,6 +70,8 @@ public class EnemyManager : CharactorManager<EnemyData>
     protected override void OnEnable()
     {
         base.OnEnable();
+        GameController.OnStart += InitHp;
+
         OnEnemyTakeDamage += KnockBackGauge;
         OnEnemyTakeDamage += CheckDead;
         OnEnemyDead += Dead;
@@ -81,6 +83,8 @@ public class EnemyManager : CharactorManager<EnemyData>
     protected override void OnDisable()
     {
         base.OnDisable();
+        GameController.OnStart -= InitHp;
+
         OnEnemyTakeDamage -= KnockBackGauge;
         OnEnemyTakeDamage -= CheckDead;
         OnEnemyDead -= Dead;
