@@ -26,7 +26,9 @@ public class EnemyManager : CharactorManager<EnemyData>
         float damageDeal = 0;
         if (currentHp > 0)
         {
-            damageDeal = CalcDamageRecieve(GetCharactorData(), damage);
+            EnemyData enemyData = GetCharactorData();
+            damageDeal = CalcDamageRecieve(enemyData, damage);
+            if(enemyData.elementalResistant == damage._elementalType)damageDeal = damageDeal/2f;
             currentHp -= damageDeal;
             TextDamageAsset.Instance.CreateTextDamage(DrawCasterUtil.GetMidTransformOf(transform).position, damageDeal, damage._elementalType);
         }
@@ -46,6 +48,20 @@ public class EnemyManager : CharactorManager<EnemyData>
     {
         RewardTrackerManager.Instance.AddGoldObtain(enemyData.goldDrop);
     }
+    private void SetEnemyStat()
+    {
+        EnemyData enemyData = GetCharactorData();
+        enemyData._attackBase = enemyData.enemyLGData.lgAtk * enemyData._level + enemyData.enemyLGData.lgBaseAtk;
+        enemyData._defenseBase = enemyData.enemyLGData.lgDef * enemyData._level + enemyData.enemyLGData.lgBaseDef;
+        enemyData._hpBase = enemyData.enemyLGData.lgHp * enemyData._level + enemyData.enemyLGData.lgBaseHp;
+        enemyData._moveSpeed = enemyData.enemyLGData.lgMoveS * enemyData._level + enemyData.enemyLGData.lgBaseMoveS;
+        enemyData._knockbackBase = enemyData.enemyLGData.lgKnckB * enemyData._level + enemyData.enemyLGData.lgBaseKnckB;
+        enemyData.goldDrop = enemyData.enemyLGData.lgGold * enemyData._level + enemyData.enemyLGData.lgBaseGold;
+        if (enemyData._moveSpeed > 7.5f)
+        {
+            enemyData._moveSpeed = 7.5f;
+        }
+    }
 
     protected override void OnEnable()
     {
@@ -54,7 +70,7 @@ public class EnemyManager : CharactorManager<EnemyData>
         OnEnemyTakeDamage += CheckDead;
         OnEnemyDead += Dead;
         OnEnemyDead += AddGoldToRewardTracker;
-
+        GameController.OnInstantiateUI += SetEnemyStat;
     }
 
 
@@ -65,7 +81,7 @@ public class EnemyManager : CharactorManager<EnemyData>
         OnEnemyTakeDamage -= CheckDead;
         OnEnemyDead -= Dead;
         OnEnemyDead -= AddGoldToRewardTracker;
-    
+        GameController.OnInstantiateUI -= SetEnemyStat;
     }
     public override void KnockBackGauge(GameObject charactor, Elemental damage)
     {

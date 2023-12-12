@@ -13,31 +13,34 @@ MonoBehaviour:
   m_Name: LeafRanger 1
   m_EditorClassIdentifier: 
   _name: Leaf Ranger
-  _level: 1
+  _level: 2
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
-  _moveSpeed: 3.5
-  _hpBase: 200
+  _moveSpeed: 4.7
+  _hpBase: 4800
   _hpMultiplier: 0
   _hpBonus: 0
   _manaBase: 0
   _manaMultiplier: 0
   _manaBonus: 0
-  _attackBase: 120
+  _attackBase: 520
   _attackMultiplier: 0
   _attackBonus: 0
   _bonusDamage: 0
-  _defenseBase: 0
+  _defenseBase: 80
   _defenseMultiplier: 0
   _defenseBonus: 0
   _bonusDamageReduction: 0
-  _knockbackBase: 150
+  _knockbackBase: 360
   _knockbackMultiplier: 0
   _knockbackBonus: 0
   _fireBonusDamage: 0
   _thunderBonusDamage: 0
   _frostBonusDamage: 0
-  _windBonusDamage: 0.5
-  CharactorPrefab: {fileID: 0}
+  _windBonusDamage: 0
+  enemyLGData: {fileID: 11400000, guid: 257dae62336e02b459d0b7a53c3297ef, type: 2}
   elementalType: 4
+  elementalResistant: 0
+  goldDrop: 18
+  spellDrop: {fileID: 0}

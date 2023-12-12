@@ -342,7 +342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4844275584343983558
 Transform:
   m_ObjectHideFlags: 0
@@ -408,6 +408,7 @@ GameObject:
   - component: {fileID: 6284397566699201736}
   - component: {fileID: 1535620645417893369}
   - component: {fileID: 6755038774866215255}
+  - component: {fileID: 3453540273548504221}
   m_Layer: 0
   m_Name: FireBallPrefab
   m_TagString: Hitbox
@@ -576,3 +577,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3453540273548504221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9143974807770408128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96180a92c00af7344acaa23626741c06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
